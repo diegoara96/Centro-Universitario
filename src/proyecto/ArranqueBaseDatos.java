@@ -3,10 +3,13 @@ package proyecto;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -108,6 +111,9 @@ public class ArranqueBaseDatos {
 		ArrayList<ArrayList<String>> listaAlumnos = leer("alumnos.txt");
 		for (int i = 0; i < listaAlumnos.size(); i++) {
 			String clave = listaAlumnos.get(i).get(0).toString();
+			for(int a=0; a<listaAlumnos.get(i).size();a++) {
+				System.out.println(listaAlumnos.get(i).get(a));
+			}
 			alumnos.put(clave,
 					new Alumno(listaAlumnos.get(i).get(0).toString(), listaAlumnos.get(i).get(1).toString(),
 							listaAlumnos.get(i).get(2).toString(), listaAlumnos.get(i).get(3).toString(),
@@ -132,21 +138,32 @@ public class ArranqueBaseDatos {
 		ArrayList<String> lista =  new ArrayList<String>();
 		ArrayList<ArrayList<String>> listas = new ArrayList<ArrayList<String>>();
 		String lineas;
-		FileReader fichero = null;
+		FileInputStream fichero = null;
+		InputStreamReader isr =null;
 		// bloque try-catch si sale un error intenta el catch (mensaje de error y salir)
 		try {
-			fichero = new FileReader(archivo);
+			fichero = new FileInputStream(archivo);
+			isr = new InputStreamReader(fichero,"ISO-8859-1");
 		} catch (FileNotFoundException e) {
 			// en caso de error imprime mensaje y sale del programa
 			File generarfichero = new File(archivo);
+			
 			System.exit(1);
 		}
-		BufferedReader lectura = new BufferedReader(fichero);
+		BufferedReader lectura = new BufferedReader(isr);
 
 		// lectura linea a linea del fichero hasta el final y lo guarda en el araylist
+		lineas=lectura.readLine();
+		if(lineas.contains("ï»¿")) {
+			lineas=lineas.substring(3, lineas.length());
+		}
+		
+		lista.add(lineas.trim());
 		while ((lineas = lectura.readLine()) != null) {
+			
 			if (lineas.isEmpty())lista.add(null);
 			else if (lineas.toCharArray()[0] != '*') {
+				//System.out.println(lineas);
 				lista.add(lineas.trim());
 				
 				
@@ -161,7 +178,7 @@ public class ArranqueBaseDatos {
 
 		}
 		listas.add(lista);
-		
+	
 		lectura.close(); // cerramos el objeto
 		return listas;
 
@@ -178,7 +195,7 @@ public class ArranqueBaseDatos {
 			fichero = new FileReader(archivo);
 		} catch (FileNotFoundException e) {
 			// en caso de error imprime mensaje y sale del programa
-			System.out.println();
+			System.out.println("444");
 			System.exit(1);
 		}
 		

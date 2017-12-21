@@ -22,7 +22,7 @@ public abstract class Persona implements EscribibleEnFichero {
 		this.dni=dni;
 		this.nombre=nombre;
 		this.fechaNacimiento= fechaToGregorianCalendar(fechaNacimiento);
-		System.out.println(getFechaNacimientoFormateada());
+		//System.out.println(getFechaNacimientoFormateada());
 	}
 	
 	public Persona(String dni,String nombre,String email,String fechaNacimiento) {
@@ -58,6 +58,7 @@ public abstract class Persona implements EscribibleEnFichero {
 	
 	public static boolean comprobarDNI(String dni) {
 		char[] digitosdni= dni.toCharArray();
+		//System.out.println(digitosdni[0]);
 		
 		// longitud correcta?
 		if(dni.length() != 9) {

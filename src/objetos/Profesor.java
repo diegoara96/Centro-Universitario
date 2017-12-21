@@ -11,8 +11,12 @@ public class Profesor extends Persona implements EscribibleEnFichero {
 	public Profesor(String dni, String nombre, String fechaNacimiento, String categoria, String departamento, String docenciaImpartida) {
 		super(dni,nombre,fechaNacimiento);
 		//comprobaciones de dni
+	
+		
 		boolean dniCorrecto = Persona.comprobarDNI(dni);
-		if (dniCorrecto==false)System.out.println("error dni profesor");
+		if (dniCorrecto==false) {
+			
+		}
 		/**
 		 * Se deber�n insertar posteriormente la gesti�n de errores asociada a dni incorrecto
 		 */

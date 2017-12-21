@@ -38,9 +38,9 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 	
 		//procedemos a trocear asignaturasSuperadas para luego tener los campos facilmente manipulables
 		//Procedimiento: se trocea el String asignaturasSuperadas en sus respectivos campos siglasAsignaturasSuperadas, cursoAcademico y nota
-
+		
 		String[] superadas = asignaturasSuperadas.split(";");
-		String[] actuales = asignaturasSuperadas.split(";");
+		String[] actuales = docenciaRecibida.split(";");
 
 		siglasAsignaturaSuperada=new String [superadas.length];
 		cursoAcademico=new String [superadas.length];
