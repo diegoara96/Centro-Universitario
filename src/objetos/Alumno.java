@@ -36,35 +36,45 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 		 * Se debera incorporar la gestion de errores pertinente asociada a la fecha de ingreso
 		 */
 	
-		//procedemos a trocear asignaturasSuperadas para luego tener los campos facilmente manipulables
-		//Procedimiento: se trocea el String asignaturasSuperadas en sus respectivos campos siglasAsignaturasSuperadas, cursoAcademico y nota
+		//si aisgnaturassuperadas no esta vacia procedemos a trocear y a guardarla en el objeto
 		
+		if(asignaturasSuperadas!=null) {
 		String[] superadas = asignaturasSuperadas.split(";");
-		String[] actuales = docenciaRecibida.split(";");
-
+		
 		siglasAsignaturaSuperada=new String [superadas.length];
 		cursoAcademico=new String [superadas.length];
 		notaAsignatura=new float [superadas.length];
-		siglasAsignaturaActual=new String [actuales.length];
-		tipoGrupo=new String [actuales.length];
-		idGrupo=new String [actuales.length];
-		
-		
+	
 		for(int i=0;i<superadas.length;i++) {
 			String[] campos= superadas[i].trim().split(" ");
 			this.siglasAsignaturaSuperada[i]= campos[0];
 			this.cursoAcademico[i] = campos[1];
 			this.notaAsignatura[i] = Float.parseFloat(campos[2]);
 		}	
-		//Tenemos que hacer lo de trocear tambien con docenciaRecibida
-		//Procedimiento: Se trocea el String docenciaRecibida en sus respectivos campos siglasAsignaturaActual y con el trim() se quitan los posibles espacios antes de las palabras
+		}
+			
+		//si docenciaREcibida no esta vacia procedemos a trocear y a guardarla en el objeto
+		if(docenciaRecibida!= null) {
+		String[] actuales = docenciaRecibida.split(";");
+		
+		siglasAsignaturaActual=new String [actuales.length];
+		tipoGrupo=new String [actuales.length];
+		idGrupo=new String [actuales.length];
 		
 		for(int i=0;i<actuales.length;i++) {
 			String[] campos= actuales[i].trim().split(" ");
 			this.siglasAsignaturaActual[i]= campos[0];
+			if(campos.length!= 3) {
+				this.tipoGrupo[i] = null;
+				this.idGrupo[i] = null;
+			}
+			else {
 			this.tipoGrupo[i] = campos[1];
 			this.idGrupo[i] = campos[2];
+			}
 		}	
+		}
+		
 		this.fechaIngreso=Persona.fechaToGregorianCalendar(fechaIngreso);
 		
 		//System.out.println(toTexto());

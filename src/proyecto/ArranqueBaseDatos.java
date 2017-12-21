@@ -115,10 +115,10 @@ public class ArranqueBaseDatos {
 				System.out.println(listaAlumnos.get(i).get(a));
 			}
 			alumnos.put(clave,
-					new Alumno(listaAlumnos.get(i).get(0).toString(), listaAlumnos.get(i).get(1).toString(),
-							listaAlumnos.get(i).get(2).toString(), listaAlumnos.get(i).get(3).toString(),
-							listaAlumnos.get(i).get(4).toString(), listaAlumnos.get(i).get(5).toString(),
-							listaAlumnos.get(i).get(6).toString()));
+					new Alumno(listaAlumnos.get(i).get(0), listaAlumnos.get(i).get(1),
+							listaAlumnos.get(i).get(2), listaAlumnos.get(i).get(3),
+							listaAlumnos.get(i).get(4), listaAlumnos.get(i).get(5),
+							listaAlumnos.get(i).get(6)));
 		}
 
 	}
