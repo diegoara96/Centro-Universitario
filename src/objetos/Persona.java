@@ -22,7 +22,7 @@ public abstract class Persona implements EscribibleEnFichero {
 		this.dni=dni;
 		this.nombre=nombre;
 		this.fechaNacimiento= fechaToGregorianCalendar(fechaNacimiento);
-		//System.out.println(getFechaNacimientoFormateada());
+		
 	}
 	
 	public Persona(String dni,String nombre,String email,String fechaNacimiento) {

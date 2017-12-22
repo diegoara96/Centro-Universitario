@@ -111,9 +111,6 @@ public class ArranqueBaseDatos {
 		ArrayList<ArrayList<String>> listaAlumnos = leer("alumnos.txt");
 		for (int i = 0; i < listaAlumnos.size(); i++) {
 			String clave = listaAlumnos.get(i).get(0).toString();
-			for(int a=0; a<listaAlumnos.get(i).size();a++) {
-				System.out.println(listaAlumnos.get(i).get(a));
-			}
 			alumnos.put(clave,
 					new Alumno(listaAlumnos.get(i).get(0), listaAlumnos.get(i).get(1),
 							listaAlumnos.get(i).get(2), listaAlumnos.get(i).get(3),
@@ -201,13 +198,20 @@ public class ArranqueBaseDatos {
 		
 		BufferedReader lectura = new BufferedReader(fichero);
 		while ((lineas = lectura.readLine()) != null) {
+			if (lineas.isEmpty())break;
+			
 			if(lineas.toCharArray()[0]=='*'||lineas.toCharArray()[1]=='*') {
-			//	System.out.println(lineas.toCharArray()[0]);
+				//System.out.println(lineas.toCharArray()[0]);
 				continue;
 			}
 			else {
-				System.out.println(lineas.toCharArray()[0]);
-				String imput[]=lineas.split(" ");
+			//	System.out.println(lineas.toCharArray()[0]);
+				lineas=lineas.replaceAll("\\s+"," ");
+				String imput[]=lineas.trim().split(" ");
+				for (int i=0;i<imput.length;i++) {
+					System.out.println(imput[i].trim());
+				}
+			//	System.out.println(imput[2]);
 				Comandos.comandos(imput);
 			}	
 
