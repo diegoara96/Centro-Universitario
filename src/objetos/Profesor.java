@@ -1,5 +1,7 @@
 package objetos;
 
+import proyecto.GestionErrores;
+
 public class Profesor extends Persona implements EscribibleEnFichero {
 
 	private String categoria;
@@ -15,7 +17,8 @@ public class Profesor extends Persona implements EscribibleEnFichero {
 		
 		boolean dniCorrecto = Persona.comprobarDNI(dni);
 		if (dniCorrecto==false) {
-			
+			GestionErrores.errorComando("IP", "Dni incorrecto");
+			return;
 		}
 		/**
 		 * Se deber�n insertar posteriormente la gesti�n de errores asociada a dni incorrecto
@@ -23,7 +26,10 @@ public class Profesor extends Persona implements EscribibleEnFichero {
 		
 		//comprobaciones FechaNacimiento
 		boolean fechaNacimientoCorrecta = Persona.comprobarFecha(fechaNacimiento);
-		if(fechaNacimientoCorrecta==false) System.out.println("error fecha nacimiento profesor");
+		if(fechaNacimientoCorrecta==false) {
+			GestionErrores.errorComando("IP", "Fecha incorrecta");
+			return;
+		}
 		/**
 		 * Se deber�n insertar posteriormente la gesti�n de errores asociada a fecha de nacimiento incorrecta
 		 */

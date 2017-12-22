@@ -2,6 +2,8 @@ package objetos;
 
 import java.util.GregorianCalendar;
 
+import proyecto.GestionErrores;
+
 public class Alumno extends Persona implements EscribibleEnFichero {
 	
 	
@@ -17,25 +19,30 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 		super(dni,nombre,email,fechaNacimiento);
 		//comprobaciones de dni
 		boolean dniCorrecto = Persona.comprobarDNI(dni);
-		if(dniCorrecto==false)System.out.println("error en el dni");
-		/**
-		 * Se debera incorporar la gestion de errores pertinente asociada al dni incorrecto
-		 */
+		if(dniCorrecto==false) {
+			//sacamos por avisos el error correspondiente
+			GestionErrores.errorComando("IP", "Dni incorrecto");
+			return;
+		}
+		
 		
 		//comprobaciones FechaNacimiento
 		boolean fechaNacimientoCorrecta = Persona.comprobarFecha(fechaNacimiento);
-		if (fechaNacimientoCorrecta==false)System.out.println("error fecha nacimiento alumno");
-		/**
-		 *Se debera incorporar la gestion de errores pertinente asociada a la fecha de nacimiento 
-		 */
+		if (fechaNacimientoCorrecta==false) {
+			//sacamos por avisos el error correspondiente
+			GestionErrores.errorComando("IP", "Fecha incorrecta");
+			return;
+		}
+		
 		
 		//comprobaciones fechaIngreso
 		boolean fechaIngresoCorrecta = Persona.comprobarFechaIngreso(fechaNacimiento, fechaIngreso);
-		if (fechaIngresoCorrecta==false)System.out.println("error fecha ingreso alumno");
-		/**
-		 * Se debera incorporar la gestion de errores pertinente asociada a la fecha de ingreso
-		 */
-	
+		if (fechaIngresoCorrecta==false) {
+			//sacamos por avisos el error correspondiente
+			GestionErrores.errorComando("IP", "Fecha de ingreso incorrecta");
+			return;
+		}
+		
 		//si aisgnaturassuperadas no esta vacia procedemos a trocear y a guardarla en el objeto
 		
 		if(asignaturasSuperadas!=null) {

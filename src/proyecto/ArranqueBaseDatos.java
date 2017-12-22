@@ -208,9 +208,7 @@ public class ArranqueBaseDatos {
 			//	System.out.println(lineas.toCharArray()[0]);
 				lineas=lineas.replaceAll("\\s+"," ");
 				String imput[]=lineas.trim().split(" ");
-				for (int i=0;i<imput.length;i++) {
-					System.out.println(imput[i].trim());
-				}
+
 			//	System.out.println(imput[2]);
 				Comandos.comandos(imput);
 			}	
