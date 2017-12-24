@@ -13,7 +13,7 @@ public class Profesor extends Persona implements EscribibleEnFichero {
 	public Profesor(String dni, String nombre, String fechaNacimiento, String categoria, String departamento, String docenciaImpartida) {
 		super(dni,nombre,fechaNacimiento);
 		//comprobaciones de dni
-	
+		
 		
 		boolean dniCorrecto = Persona.comprobarDNI(dni);
 		if (dniCorrecto==false) {
@@ -57,6 +57,15 @@ public class Profesor extends Persona implements EscribibleEnFichero {
 			this.idGrupo[i] = campos[2].toCharArray()[0];
 			}
 		}	
+		this.categoria= categoria;
+		this.departamento=departamento;
+		
+		//System.out.println(toTexto()+"\n");
+		
+	}
+	public Profesor(String dni, String nombre, String fechaNacimiento, String categoria, String departamento) {
+		super(dni,nombre,fechaNacimiento);
+		
 		this.categoria= categoria;
 		this.departamento=departamento;
 		

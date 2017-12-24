@@ -86,6 +86,18 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 		
 		//System.out.println(toTexto());
 		// TODO: inicializar objeto
+	}
+		
+		public Alumno(String dni,String nombre,String fechaNacimiento,String fechaIngreso) {
+			super(dni,nombre,fechaNacimiento);
+			
+			
+			this.fechaIngreso=Persona.fechaToGregorianCalendar(fechaIngreso);
+			
+			//System.out.println(toTexto());
+			// TODO: inicializar objeto
+			
+		
 		
 	}	
 	
@@ -127,6 +139,7 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 		
 		// Asignaturas superadas (recorremos los arrays)
 		StringBuffer buffer = new StringBuffer();
+		if(siglasAsignaturaSuperada!=null) {
 		for(int i = 0; i<siglasAsignaturaSuperada.length; i++) {
 			buffer.append(siglasAsignaturaSuperada[i] + " " + cursoAcademico[i] + " " + notaAsignatura[i] + ";\n");
 		}
@@ -135,7 +148,7 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 		for(int i = 0; i<siglasAsignaturaActual.length; i++) {
 			buffer.append(siglasAsignaturaActual[i] + " [" + tipoGrupo[i] + idGrupo[i] + "];\n");
 		}
-		
+		}
 		// Juntamos todo en un mismo String
 		String cadena = inicio.concat(new String(buffer));
 		return cadena.substring(0, cadena.length()-2); // elimina el último salto de línea

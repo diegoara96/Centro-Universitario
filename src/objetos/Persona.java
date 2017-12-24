@@ -85,19 +85,41 @@ public abstract class Persona implements EscribibleEnFichero {
 	
 	public static boolean comprobarFecha(String fecha) {
 		
+		
+		try {
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+            formatoFecha.setLenient(false);
+            formatoFecha.parse(fecha);
+            System.out.println(formatoFecha.parse(fecha));
+            Date date=formatoFecha.parse(fecha);
+            Date minimaldate = dateFormat.parse("01/01/1960");
+			Date maximaldate = dateFormat.parse("01/01/2018");
+			if(date.before(minimaldate) || date.after(maximaldate)) {
+				return false;
+			}
+            
+        } catch (ParseException e) {
+            return false;
+        }
+		
+		return true;
+	}
+    
+		/*
+		
 		try {
 			
 			dateFormat.setLenient(false);
 			//desactivamos el lenient para que, por ejemplo, al aparecer 32 de enero salte error
 			Date date = dateFormat.parse(transformarfecha(fecha));
-			//System.out.println(date);
+			System.out.println(date);
 			//la fecha de nacimiento tiene que estar acotada entre dos fechas, sino error.
 			Date minimaldate = dateFormat.parse("01/01/1960");
 			Date maximaldate = dateFormat.parse("01/01/2018");
-			
 			if(date.before(minimaldate) || date.after(maximaldate)) {
 				return false;
 			}
+			
 			
 		} catch (ParseException e) {
 			
@@ -107,7 +129,7 @@ public abstract class Persona implements EscribibleEnFichero {
 		return true;
 		
 	}
-	
+	*/
 	public static boolean comprobarFechaIngreso(String fechaNacimiento, String fechaIngreso) {
 
 		try {
@@ -130,20 +152,14 @@ public abstract class Persona implements EscribibleEnFichero {
 	}
 	
 	public static GregorianCalendar fechaToGregorianCalendar(String fecha) {
-		try {
-			Date date = dateFormat.parse(transformarfecha(fecha));
-			GregorianCalendar gc = new GregorianCalendar();
-			String []prueba=fecha.split("/");
-			int año = Integer.parseInt(prueba[2]);
-			int mes = Integer.parseInt(prueba[1]);
-			int dia = Integer.parseInt(prueba[0]);
-			gc.set(año,mes-1,dia);
-			//gc.setTime(date);
-			return gc;
-		} catch (ParseException e) {
-			// Deberia de haberse comprobado previamente con #comprobarFecha()
-			return null;
-		}
+		GregorianCalendar gc = new GregorianCalendar();
+		String []prueba=fecha.split("/");
+		int año = Integer.parseInt(prueba[2]);
+		int mes = Integer.parseInt(prueba[1]);
+		int dia = Integer.parseInt(prueba[0]);
+		gc.set(año,mes-1,dia);
+		//gc.setTime(date);
+		return gc;
 
 	}
 	public static String transformarfecha(String fecha) {
