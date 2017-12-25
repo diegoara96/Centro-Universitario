@@ -1,6 +1,7 @@
 package proyecto;
 
 import objetos.Alumno;
+import objetos.EscribibleEnFichero;
 import objetos.Persona;
 import objetos.Profesor;
 import proyecto.GestionErrores;
@@ -103,7 +104,7 @@ public class Comandos {
 			else {
 				ArranqueBaseDatos.profesores.put(parametros[2],
 				new Profesor(parametros[2], parametros[3], parametros[4], parametros[5], parametros[6]));
-				System.out.println(ArranqueBaseDatos.profesores);
+			//	System.out.println(ArranqueBaseDatos.profesores);
 				
 			}
 		}
@@ -136,8 +137,9 @@ public class Comandos {
 			else {
 				ArranqueBaseDatos.alumnos.put(parametros[2],
 				new Alumno(parametros[2], parametros[3], parametros[4], parametros[5]));
-				System.out.println(ArranqueBaseDatos.alumnos);
-				System.out.println(ArranqueBaseDatos.alumnos.get(parametros[2]).toTexto());
+			//	System.out.println(ArranqueBaseDatos.alumnos);
+			//	System.out.println(ArranqueBaseDatos.alumnos.get(parametros[2]).toTexto());
+				ArranqueBaseDatos.sobreescribirFichero("alumnos.txt", ArranqueBaseDatos.alumnos);
 				
 			}
 		

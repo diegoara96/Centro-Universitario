@@ -12,7 +12,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Set;
 
 import objetos.*;
 
@@ -222,8 +224,13 @@ public class ArranqueBaseDatos {
 	 * @param nombreFichero (String): nombre del fichero, con su extensión (.txt)
 	 * @param mapa (LinkedHashMap): mapa a escribir en el fichero especificado
 	 */
-	private static void sobreescribirFichero(String nombreFichero, LinkedHashMap<String, EscribibleEnFichero> mapa) {
+	public static void sobreescribirFichero(String nombreFichero, LinkedHashMap<String, Alumno> mapa) {
+		Set<String> claves = mapa.keySet();
 		
+		for(String clave : claves){ 
+		System.out.println(mapa.get(clave.toString()).toTexto());
+		System.out.println("*");
+			} 
 	}
 	
 }

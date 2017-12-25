@@ -1,14 +1,19 @@
 package objetos;
 
+import java.util.ArrayList;
+
 import proyecto.GestionErrores;
 
 public class Profesor extends Persona implements EscribibleEnFichero {
 
 	private String categoria;
 	private String departamento;
-	private String[] siglasAsignatura ;
-	private char[] tipoGrupo;
-	private char[] idGrupo;
+	private ArrayList<String> siglasAsignatura ;
+	private ArrayList<Character> tipoGrupo;
+	private ArrayList <Character>idGrupo;
+//	private ArrayList sigla;
+	
+	
 	
 	public Profesor(String dni, String nombre, String fechaNacimiento, String categoria, String departamento, String docenciaImpartida) {
 		super(dni,nombre,fechaNacimiento);
@@ -36,9 +41,9 @@ public class Profesor extends Persona implements EscribibleEnFichero {
 		
 		String[] docencia = docenciaImpartida.split(";");
 		
-		siglasAsignatura=new String [docencia.length];
-		tipoGrupo=new char [docencia.length];
-		idGrupo=new char [docencia.length];
+		siglasAsignatura=new ArrayList<String>();
+		tipoGrupo=new ArrayList<Character>();
+		idGrupo=new ArrayList<Character>();
 		
 		for(int i=0;i<docencia.length;i++) {
 			
@@ -46,15 +51,16 @@ public class Profesor extends Persona implements EscribibleEnFichero {
 
 			if (campos[1].length()>1) {
 				char algo [] =campos[1].toCharArray();
-				this.siglasAsignatura[i]= campos[0];
-				this.tipoGrupo[i] = algo[0];
-				this.idGrupo[i] = algo[1];
+				this.siglasAsignatura.add(campos[0]);
+				this.tipoGrupo.add(algo[0]);
+				this.idGrupo.add(algo[1]);
+				
 				
 			}
 			else {
-			this.siglasAsignatura[i]= campos[0];
-			this.tipoGrupo[i] = campos[1].toCharArray()[0];
-			this.idGrupo[i] = campos[2].toCharArray()[0];
+			this.siglasAsignatura.add(campos[0]);
+			this.tipoGrupo.add(campos[1].toCharArray()[0]);
+			this.idGrupo.add(campos[2].toCharArray()[0]);
 			}
 		}	
 		this.categoria= categoria;
@@ -80,13 +86,13 @@ public class Profesor extends Persona implements EscribibleEnFichero {
 		return departamento;
 	}
 	public String getSiglas_Asignatura(int i) {
-		return siglasAsignatura[i];
+		return siglasAsignatura.get(i);
 	}
 	public char getId_Grupo(int i) {
-		return idGrupo[i];
+		return idGrupo.get(i);
 	}
 	public char getTipoGrupo(int i) {
-		return tipoGrupo[i];
+		return tipoGrupo.get(i);
 	}
 	
 	/**
@@ -101,8 +107,8 @@ public class Profesor extends Persona implements EscribibleEnFichero {
 		
 		// Docencia impartida (recorremos los arrays)
 		StringBuffer buffer = new StringBuffer();
-		for(int i = 0; i<siglasAsignatura.length; i++) {
-			buffer.append(siglasAsignatura[i] + " " + tipoGrupo[i] + " " + idGrupo[i] + ";\n");
+		for(int i = 0; i<siglasAsignatura.size(); i++) {
+			buffer.append(siglasAsignatura.get(i) + " " + tipoGrupo.get(i) + " " + idGrupo.get(i) + ";\n");
 		}
 		
 		// Juntamos todo en un mismo String

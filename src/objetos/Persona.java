@@ -90,7 +90,6 @@ public abstract class Persona implements EscribibleEnFichero {
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
             formatoFecha.setLenient(false);
             formatoFecha.parse(fecha);
-            System.out.println(formatoFecha.parse(fecha));
             Date date=formatoFecha.parse(fecha);
             Date minimaldate = dateFormat.parse("01/01/1960");
 			Date maximaldate = dateFormat.parse("01/01/2018");

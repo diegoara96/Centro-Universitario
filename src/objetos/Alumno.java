@@ -1,5 +1,6 @@
 package objetos;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import proyecto.GestionErrores;
@@ -7,13 +8,13 @@ import proyecto.GestionErrores;
 public class Alumno extends Persona implements EscribibleEnFichero {
 	
 	
-	private String[] cursoAcademico;
-	private float[] notaAsignatura;
-	private String[] siglasAsignaturaActual;
+	private ArrayList<String> cursoAcademico;
+	private ArrayList<Float> notaAsignatura;
+	private ArrayList<String> siglasAsignaturaActual;
 	private GregorianCalendar fechaIngreso;
-	private String[] siglasAsignaturaSuperada;
-	private String[] tipoGrupo;
-	private String[] idGrupo;
+	private ArrayList<String> siglasAsignaturaSuperada;
+	private ArrayList<String> tipoGrupo;
+	private ArrayList<String> idGrupo;
 	
 	public Alumno(String dni,String nombre,String email,String fechaNacimiento,String fechaIngreso, String asignaturasSuperadas, String docenciaRecibida) {
 		super(dni,nombre,email,fechaNacimiento);
@@ -48,15 +49,15 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 		if(asignaturasSuperadas!=null) {
 		String[] superadas = asignaturasSuperadas.split(";");
 		
-		siglasAsignaturaSuperada=new String [superadas.length];
-		cursoAcademico=new String [superadas.length];
-		notaAsignatura=new float [superadas.length];
+		siglasAsignaturaSuperada=new ArrayList<String>();
+		cursoAcademico=new ArrayList<String>();
+		notaAsignatura=new ArrayList<Float>();
 	
 		for(int i=0;i<superadas.length;i++) {
 			String[] campos= superadas[i].trim().split(" ");
-			this.siglasAsignaturaSuperada[i]= campos[0];
-			this.cursoAcademico[i] = campos[1];
-			this.notaAsignatura[i] = Float.parseFloat(campos[2]);
+			this.siglasAsignaturaSuperada.add(campos[0]);// campos[0];
+			this.cursoAcademico.add(campos[1]);
+			this.notaAsignatura.add(Float.parseFloat(campos[2]));
 		}	
 		}
 			
@@ -64,20 +65,20 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 		if(docenciaRecibida!= null) {
 		String[] actuales = docenciaRecibida.split(";");
 		
-		siglasAsignaturaActual=new String [actuales.length];
-		tipoGrupo=new String [actuales.length];
-		idGrupo=new String [actuales.length];
+		siglasAsignaturaActual=new ArrayList<String>();
+		tipoGrupo=new ArrayList<String>();
+		idGrupo=new ArrayList<String>();
 		
 		for(int i=0;i<actuales.length;i++) {
 			String[] campos= actuales[i].trim().split(" ");
-			this.siglasAsignaturaActual[i]= campos[0];
+			this.siglasAsignaturaActual.add(campos[0]);
 			if(campos.length!= 3) {
-				this.tipoGrupo[i] = null;
-				this.idGrupo[i] = null;
+				this.tipoGrupo.add(null);
+				this.idGrupo.add( null);
 			}
 			else {
-			this.tipoGrupo[i] = campos[1];
-			this.idGrupo[i] = campos[2];
+			this.tipoGrupo.add(campos[1]);
+			this.idGrupo.add(campos[2]);
 			}
 		}	
 		}
@@ -109,22 +110,22 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 		return dateFormat.format(fechaIngreso.getTime());
 	}
 	public String getId_Grupo(int i) {
-		return idGrupo[i];
+		return idGrupo.get(i);
 	}
 	public String getTipoGrupo(int i) {
-		return tipoGrupo[i];
+		return tipoGrupo.get(i);
 	}
 	public String getSiglas_Asignaturas_Superada(int i) {
-		return siglasAsignaturaSuperada[i];
+		return siglasAsignaturaSuperada.get(i);
 	}
 	public String getCurso_Academico(int i) {
-		return cursoAcademico[i];
+		return cursoAcademico.get(i);
 	}
 	public float getNota(int i) {
-		return notaAsignatura[i];
+		return notaAsignatura.get(i);
 	}
 	public String getSiglas_Asignatura_Actual(int i) {
-		return siglasAsignaturaActual[i];
+		return siglasAsignaturaActual.get(i);
 	}
 	
 	/**
@@ -140,15 +141,19 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 		// Asignaturas superadas (recorremos los arrays)
 		StringBuffer buffer = new StringBuffer();
 		if(siglasAsignaturaSuperada!=null) {
-		for(int i = 0; i<siglasAsignaturaSuperada.length; i++) {
-			buffer.append(siglasAsignaturaSuperada[i] + " " + cursoAcademico[i] + " " + notaAsignatura[i] + ";\n");
+		for(int i = 0; i<siglasAsignaturaSuperada.size(); i++) {
+			buffer.append(siglasAsignaturaSuperada.get(i) + " " + cursoAcademico.get(i) + " " + notaAsignatura.get(i) + ";");
 		}
-		
+		}
+		buffer.append("\n");
+		if(siglasAsignaturaActual!=null) {
 		// Docencia recibida (recorremos los arrays)
-		for(int i = 0; i<siglasAsignaturaActual.length; i++) {
-			buffer.append(siglasAsignaturaActual[i] + " [" + tipoGrupo[i] + idGrupo[i] + "];\n");
+		for(int i = 0; i<siglasAsignaturaActual.size(); i++) {
+			buffer.append(siglasAsignaturaActual.get(i) + " " + tipoGrupo.get(i) + " "+ idGrupo.get(i)+ "; ");
 		}
 		}
+		buffer.append("\n");
+		
 		// Juntamos todo en un mismo String
 		String cadena = inicio.concat(new String(buffer));
 		return cadena.substring(0, cadena.length()-2); // elimina el último salto de línea
