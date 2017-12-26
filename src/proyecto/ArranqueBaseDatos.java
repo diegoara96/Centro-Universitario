@@ -53,30 +53,9 @@ public class ArranqueBaseDatos {
 
 		for (int i = 0; i < listaAsignaturas.size(); i++) {
 			
-			String clave = listaAsignaturas.get(i).get(4);		
-			String pre_requisitos = listaAsignaturas.get(i).get(5);
-			
-			if(pre_requisitos==null ) {
-				//si pre_requisitos es null significa que en la linea que irian las asignaturas de pre requisitos han metido una linea en blanco
-				//metemos en el constructor null en su posicion
-				asignaturas.put(clave,
-						new Asignatura(listaAsignaturas.get(i).get(0).toString(), listaAsignaturas.get(i).get(1),
-								listaAsignaturas.get(i).get(2), listaAsignaturas.get(i).get(3),
-								listaAsignaturas.get(i).get(4), null,
-								listaAsignaturas.get(i).get(6), listaAsignaturas.get(i).get(7),
-								listaAsignaturas.get(i).get(8), listaAsignaturas.get(i).get(9)));
-				
-			}else if(pre_requisitos.length()==1){
-				//hay veces que pueden saltarse la linea en la que van los pre requisitos y saltan al siguiente campo que son horas, por lo que si
-				//pre_requisitos es de tama�o 1 metieron una hora, por lo que en el constructor en pre requisitos metemos null
-				asignaturas.put(clave,
-						new Asignatura(listaAsignaturas.get(i).get(0).toString(), listaAsignaturas.get(i).get(1),
-								listaAsignaturas.get(i).get(2), listaAsignaturas.get(i).get(3),
-								listaAsignaturas.get(i).get(4), null,
-								listaAsignaturas.get(i).get(5), listaAsignaturas.get(i).get(6),
-								listaAsignaturas.get(i).get(7), listaAsignaturas.get(i).get(8)));		
-			}
-			else{
+			String clave = listaAsignaturas.get(i).get(0);		
+		//	String pre_requisitos = listaAsignaturas.get(i).get(5);
+		
 				//Aqui vamos si han metido todos los campos seguidos sin que falte ninguno tal y como hemos planeado
 			asignaturas.put(clave,
 					new Asignatura(listaAsignaturas.get(i).get(0).toString(), listaAsignaturas.get(i).get(1),
@@ -85,8 +64,14 @@ public class ArranqueBaseDatos {
 							listaAsignaturas.get(i).get(6), listaAsignaturas.get(i).get(7),
 							listaAsignaturas.get(i).get(8), listaAsignaturas.get(i).get(9)));
 			}
-			}
-
+			System.out.println(asignaturas);
+		Set<String> claves = asignaturas.keySet();
+		for (String clave:claves) {
+			System.out.println(asignaturas.get(clave).getSiglas());
+		}
+		
+		
+		
 		// lectura pod
 
 		ArrayList<ArrayList<String>> listaPod = leer("pod.txt");
@@ -104,15 +89,17 @@ public class ArranqueBaseDatos {
 		System.out.println(listaProfesores);
 		for (int i = 0; i < listaProfesores.size(); i++) {
 			String clave = listaProfesores.get(i).get(0).toString();
+			//System.out.println(clave+listaProfesores.get(i).size());
 			profesores.put(clave,
 					new Profesor(listaProfesores.get(i).get(0).toString(), listaProfesores.get(i).get(1).toString(),
 							listaProfesores.get(i).get(2).toString(), listaProfesores.get(i).get(3).toString(),
-							listaProfesores.get(i).get(4).toString(), listaProfesores.get(i).get(5).toString()));
+							listaProfesores.get(i).get(4).toString(), 
+							listaProfesores.get(i).get(5)));
 		}
 
 		// lectura alumnos
 		ArrayList<ArrayList<String>> listaAlumnos = leer("alumnos.txt");
-		System.out.println(listaAlumnos);
+		//System.out.println(listaAlumnos);
 		for (int i = 0; i < listaAlumnos.size(); i++) {
 			String clave = listaAlumnos.get(i).get(0).toString();
 			alumnos.put(clave,
@@ -270,7 +257,7 @@ public class ArranqueBaseDatos {
 			if(clave!=ultima) {	bw.write("\n*\n");
 			System.out.println("*");
 			}
-			else {//bw.write("\n");
+			else {bw.write("\n");
 			System.out.println();
 			}
 		
