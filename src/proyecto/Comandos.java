@@ -104,7 +104,8 @@ public class Comandos {
 			else {
 				ArranqueBaseDatos.profesores.put(parametros[2],
 				new Profesor(parametros[2], parametros[3], parametros[4], parametros[5], parametros[6]));
-			//	System.out.println(ArranqueBaseDatos.profesores);
+				//System.out.println(ArranqueBaseDatos.profesores);
+				//ArranqueBaseDatos.sobreescribirFicheroProfesores("prueba.txt", ArranqueBaseDatos.profesores);
 				
 			}
 		}
@@ -139,7 +140,7 @@ public class Comandos {
 				new Alumno(parametros[2], parametros[3], parametros[4], parametros[5]));
 			//	System.out.println(ArranqueBaseDatos.alumnos);
 			//	System.out.println(ArranqueBaseDatos.alumnos.get(parametros[2]).toTexto());
-				ArranqueBaseDatos.sobreescribirFichero("alumnos.txt", ArranqueBaseDatos.alumnos);
+				ArranqueBaseDatos.sobreescribirFicheroAlumnos("alumnos.txt", ArranqueBaseDatos.alumnos);
 				
 			}
 		

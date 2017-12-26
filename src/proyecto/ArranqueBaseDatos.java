@@ -101,6 +101,7 @@ public class ArranqueBaseDatos {
 		// lectura profesores
 
 		ArrayList<ArrayList<String>> listaProfesores = leer("profesores.txt");
+		System.out.println(listaProfesores);
 		for (int i = 0; i < listaProfesores.size(); i++) {
 			String clave = listaProfesores.get(i).get(0).toString();
 			profesores.put(clave,
@@ -111,6 +112,7 @@ public class ArranqueBaseDatos {
 
 		// lectura alumnos
 		ArrayList<ArrayList<String>> listaAlumnos = leer("alumnos.txt");
+		System.out.println(listaAlumnos);
 		for (int i = 0; i < listaAlumnos.size(); i++) {
 			String clave = listaAlumnos.get(i).get(0).toString();
 			alumnos.put(clave,
@@ -224,13 +226,61 @@ public class ArranqueBaseDatos {
 	 * @param nombreFichero (String): nombre del fichero, con su extensión (.txt)
 	 * @param mapa (LinkedHashMap): mapa a escribir en el fichero especificado
 	 */
-	public static void sobreescribirFichero(String nombreFichero, LinkedHashMap<String, Alumno> mapa) {
+	public static void sobreescribirFicheroAlumnos(String nombreFichero, LinkedHashMap<String, Alumno> mapa) {
 		Set<String> claves = mapa.keySet();
-		
+		String ultima=null;
 		for(String clave : claves){ 
-		System.out.println(mapa.get(clave.toString()).toTexto());
-		System.out.println("*");
+			ultima=clave;
+		}
+		try {
+			FileWriter fw = new FileWriter(nombreFichero);
+			BufferedWriter bw= new BufferedWriter(fw);
+			for(String clave : claves){ 
+				
+				System.out.println(mapa.get(clave.toString()).toTexto());
+				bw.write(mapa.get(clave.toString()).toTexto());
+			if(clave!=ultima) {	bw.write("\n*\n");
+			System.out.println("*");
+			}
+			else {bw.write("\n");
+			System.out.println();
+			}
+		
+		
 			} 
+			bw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
+	}
+	public static void sobreescribirFicheroProfesores(String nombreFichero, LinkedHashMap<String, Profesor> mapa) {
+		Set<String> claves = mapa.keySet();
+		String ultima=null;
+		for(String clave : claves){ 
+			ultima=clave;
+		}
+		try {
+			FileWriter fw = new FileWriter(nombreFichero);
+			BufferedWriter bw= new BufferedWriter(fw);
+			for(String clave : claves){ 
+				
+				System.out.println(mapa.get(clave.toString()).toTexto());
+				bw.write(mapa.get(clave.toString()).toTexto());
+			if(clave!=ultima) {	bw.write("\n*\n");
+			System.out.println("*");
+			}
+			else {//bw.write("\n");
+			System.out.println();
+			}
+		
+		
+			} 
+			bw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
 	}
 	
 }

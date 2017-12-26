@@ -29,7 +29,9 @@ public abstract class Persona implements EscribibleEnFichero {
 		this.dni=dni;
 		this.nombre=nombre;
 		this.fechaNacimiento= fechaToGregorianCalendar(fechaNacimiento);
-		this.email=email;
+		if(email==null)this.email="";
+		else this.email=email;
+		
 	}
 	
 	public String getEmail() {
