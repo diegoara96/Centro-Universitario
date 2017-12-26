@@ -17,33 +17,14 @@ public class Profesor extends Persona implements EscribibleEnFichero {
 	
 	public Profesor(String dni, String nombre, String fechaNacimiento, String categoria, String departamento, String docenciaImpartida) {
 		super(dni,nombre,fechaNacimiento);
-		//comprobaciones de dni
-		
-		
-		boolean dniCorrecto = Persona.comprobarDNI(dni);
-		if (dniCorrecto==false) {
-			GestionErrores.errorComando("IP", "Dni incorrecto");
-			return;
-		}
-		/**
-		 * Se deber�n insertar posteriormente la gesti�n de errores asociada a dni incorrecto
-		 */
-		
-		//comprobaciones FechaNacimiento
-		boolean fechaNacimientoCorrecta = Persona.comprobarFecha(fechaNacimiento);
-		if(fechaNacimientoCorrecta==false) {
-			GestionErrores.errorComando("IP", "Fecha incorrecta");
-			return;
-		}
-		/**
-		 * Se deber�n insertar posteriormente la gesti�n de errores asociada a fecha de nacimiento incorrecta
-		 */
-		
-		String[] docencia = docenciaImpartida.split(";");
-		
+	
 		siglasAsignatura=new ArrayList<String>();
 		tipoGrupo=new ArrayList<Character>();
 		idGrupo=new ArrayList<Character>();
+		
+		if(docenciaImpartida!=null) {
+		String[] docencia = docenciaImpartida.split(";");
+		
 		
 		for(int i=0;i<docencia.length;i++) {
 			
@@ -62,7 +43,8 @@ public class Profesor extends Persona implements EscribibleEnFichero {
 			this.tipoGrupo.add(campos[1].toCharArray()[0]);
 			this.idGrupo.add(campos[2].toCharArray()[0]);
 			}
-		}	
+		}
+		}
 		this.categoria= categoria;
 		this.departamento=departamento;
 		
@@ -71,6 +53,10 @@ public class Profesor extends Persona implements EscribibleEnFichero {
 	}
 	public Profesor(String dni, String nombre, String fechaNacimiento, String categoria, String departamento) {
 		super(dni,nombre,fechaNacimiento);
+		
+		siglasAsignatura=new ArrayList<String>();
+		tipoGrupo=new ArrayList<Character>();
+		idGrupo=new ArrayList<Character>();
 		
 		this.categoria= categoria;
 		this.departamento=departamento;
@@ -107,13 +93,17 @@ public class Profesor extends Persona implements EscribibleEnFichero {
 		
 		// Docencia impartida (recorremos los arrays)
 		StringBuffer buffer = new StringBuffer();
+		if (!siglasAsignatura.isEmpty()) {
 		for(int i = 0; i<siglasAsignatura.size(); i++) {
-			buffer.append(siglasAsignatura.get(i) + " " + tipoGrupo.get(i) + " " + idGrupo.get(i) + ";\n");
+			if(i==siglasAsignatura.size()-1) {
+				buffer.append(siglasAsignatura.get(i) + " " + tipoGrupo.get(i) + " " + idGrupo.get(i) + "\n");
+			}
+		else buffer.append(siglasAsignatura.get(i) + " " + tipoGrupo.get(i) + " " + idGrupo.get(i) + "; ");
 		}
-		
+		}else buffer.append("\n");
 		// Juntamos todo en un mismo String
 		String cadena = inicio.concat(new String(buffer));
-		return cadena.substring(0, cadena.length()-2); // elimina el último salto de línea
+		return cadena.substring(0, cadena.length()-1); // elimina el último salto de línea
 		
 		
 	}

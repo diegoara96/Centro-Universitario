@@ -1,4 +1,4 @@
-P-I
+PI
 Programacion I
 1
 2
@@ -9,12 +9,12 @@ Programacion I
 1 M 15 T201; 2 L 15 T201 
 1 L 17 AS02; 2 X 16 AS02; 3 J 15 AS02; 4 J 17 AS02
 ************************************************************************
-P-II                                             
+PII                                             
 Programacion II 		 			 
 2			 
 1			 
 44331040D
-P-I
+PI
 2
 2
 1 L 9 T218; 2 J 9 T213

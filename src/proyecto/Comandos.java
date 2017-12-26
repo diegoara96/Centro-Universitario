@@ -14,7 +14,7 @@ public class Comandos {
 			insertaPersona(imput);
 			break;
 		case "AsignaGrupo": // WIP
-			// asignaGrupo();
+		//	 asignaGrupo(imput);
 			break;
 		case "Matricula": // WIP
 			// matricula();
@@ -40,9 +40,7 @@ public class Comandos {
 	}
 
 	public static void insertaPersona(String imput[]) {
-		/*
-		 * for(int i=0;i<imput.length;i++) { System.out.println(imput[i]); }
-		 */
+		
 		if (imput.length < 9) {
 			GestionErrores.errorComando("IP", "numero de argumentos incorrecto");
 		}
@@ -105,7 +103,7 @@ public class Comandos {
 				ArranqueBaseDatos.profesores.put(parametros[2],
 				new Profesor(parametros[2], parametros[3], parametros[4], parametros[5], parametros[6]));
 				//System.out.println(ArranqueBaseDatos.profesores);
-				//ArranqueBaseDatos.sobreescribirFicheroProfesores("prueba.txt", ArranqueBaseDatos.profesores);
+				ArranqueBaseDatos.sobreescribirFicheroProfesores("profesores.txt", ArranqueBaseDatos.profesores);
 				
 			}
 		}
@@ -148,5 +146,45 @@ public class Comandos {
 		
 		
 	}
+	
+	/*public static void  asignaGrupo(String[] imput) {
+		if (imput.length < 7) {
+			GestionErrores.errorComando("AGRUPO", "numero de argumentos incorrecto");
+		}
+		String parametros[] = new String[imput.length];
+		for (int i = 1; i < parametros.length; i++) {
+		
+				parametros[i-1] = imput[i];
+			}
+		if (parametros[1].contains("profesor")) {
+			System.out.println("profe");
+			if(!ArranqueBaseDatos.profesores.containsKey(parametros[2])) {
+				GestionErrores.errorComando("AGRUPO", "profesor inexistente");
+				return;
+			}
+			if(!ArranqueBaseDatos.asignaturas.containsKey(parametros[3])) {
+				GestionErrores.errorComando("AGRUPO", "Asignatura inexistente");
+				return;
+			}
+			
+			if(!ArranqueBaseDatos.asignaturas.get(parametros[3]).getCurso()) {
+				GestionErrores.errorComando("AGRUPO", "Asignatura inexistente");
+				return;
+			}
+			
+		}
+		//
+		
+		if(parametros[1].contains("alumno")) {
+			System.out.println("alumno");
+		}
+		
+		
+			
+		}*/
+		
+		
+		
+	}
 
-}
+
