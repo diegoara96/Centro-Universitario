@@ -1,19 +1,29 @@
 package objetos;
 
+import java.util.ArrayList;
+
 public class Pod implements EscribibleEnFichero {
 	
 	private String dni; 
-	private String asignatura;
-	private char tipoGrupo; //A o B
-	private float numeroGrupos; // numero real de maximo 2 digitos y 2 decimales
+	private ArrayList<String> asignatura;
+	private ArrayList<Character> tipoGrupo; //A o B
+	private ArrayList<Float> numeroGrupos; // numero real de maximo 2 digitos y 2 decimales
 	
-	public Pod(String dni,String asignatura,String tipoGrupo,String numeroGrupos) {
+	public Pod(String dni,String grupos) {
+		this.asignatura = new ArrayList<String>();
+		this.tipoGrupo = new ArrayList<Character>();
+		this.numeroGrupos = new ArrayList<Float>();
 		
 		this.dni=dni;
-		this.asignatura=asignatura;
-		
-		this.tipoGrupo=tipoGrupo.toCharArray()[0];
-		this.numeroGrupos=Float.parseFloat(numeroGrupos);
+		grupos=grupos.replaceAll("\\s+"," ");
+        String[] grupo = grupos.split(";");
+		for (int i = 0; i < grupo.length; i++) {
+			String[] campos = grupo[i].trim().split(" ");
+			this.asignatura.add(campos[0]);
+			this.tipoGrupo.add(campos[1].trim().toCharArray()[0]);
+			this.numeroGrupos.add(Float.parseFloat(campos[2]));
+		}
+	
 		
 		/**
 		 * Se guardan los datos correctamente
@@ -24,16 +34,16 @@ public class Pod implements EscribibleEnFichero {
 		return dni;
 	}
 	
-	public String getAsignatura() {
-		return asignatura;
+	public String getAsignatura(int i) {
+		return asignatura.get(i);
 	}
 	
-	public char getTipoGrupo() {
-		return tipoGrupo;
+	public char getTipoGrupo(int i) {
+		return tipoGrupo.get(i);
 	}
 	
-	public float getNumeroGrupos() {
-		return numeroGrupos;
+	public float getNumeroGrupos(int i) {
+		return numeroGrupos.get(i);
 	}
 	
 	/**
