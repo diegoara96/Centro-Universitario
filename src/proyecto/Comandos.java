@@ -270,8 +270,8 @@ public class Comandos {
 			
 		 //agregamos el grupo al profesor
 			ArranqueBaseDatos.profesores.get(parametros[2]).asignagrupo(parametros[3], parametros[4].toCharArray()[0], Integer.parseInt(parametros[5]));
-			System.out.println(ArranqueBaseDatos.profesores.get(parametros[2]).getSiglasAsignatura());
 			
+			ArranqueBaseDatos.sobreescribirFicheroProfesores("profesores.txt", ArranqueBaseDatos.profesores);
 			
 		}
 		
@@ -279,21 +279,88 @@ public class Comandos {
 		if(parametros[1].contains("alumno")) {
 			System.out.println("alumno");
 			
+			//alumno inexistente
+			if(!ArranqueBaseDatos.alumnos.containsKey(parametros[2])) {
+				GestionErrores.errorComando("AGRUPO", "alumno inexistente");
+				return;		
+		}
+			//asignatura inexistente
+			if(!ArranqueBaseDatos.asignaturas.containsKey(parametros[3])) {
+				GestionErrores.errorComando("AGRUPO", "Asignatura inexistente");
+				return;
+			}
+			//tipo de grupo incorrecto
+			if(parametros[4].toCharArray()[0]!='A'&&parametros[4].toCharArray()[0]!='B') {
+				GestionErrores.errorComando("AGRUPO", "Tipo de grupo incorrecto");
+				return;
+			}
 			
+			//Alumno no matriculado
+
+			if(!ArranqueBaseDatos.alumnos.get(parametros[2]).getSiglasAsignaturaActual().contains(parametros[3].trim())) {
+				System.out.println(ArranqueBaseDatos.alumnos.get(parametros[2]).getSiglasAsignaturaActual()+" "+parametros[3].trim()+"1");
+				GestionErrores.errorComando("AGRUPO", "Alumno no matriculado");
+				return;		
+		}
+			//Solape alumno
 			
+			int cuatrimestre=ArranqueBaseDatos.asignaturas.get(parametros[3]).getCuatrimestre();
+			int curso = ArranqueBaseDatos.asignaturas.get(parametros[3]).getCurso();
 			
+			for(int i=0;i<ArranqueBaseDatos.alumnos.get(parametros[2]).getSiglasAsignaturaActual().size();i++) {
+				if (curso==ArranqueBaseDatos.asignaturas.get(ArranqueBaseDatos.alumnos.get(parametros[2]).getSiglas_Asignatura_Actual(i)).getCurso()) {
+					if(cuatrimestre==ArranqueBaseDatos.asignaturas.get(ArranqueBaseDatos.alumnos.get(parametros[2]).getSiglas_Asignatura_Actual(i)).getCuatrimestre()) {
+						String hora =null;
+						if(ArranqueBaseDatos.alumnos.get(parametros[2]).getTipoGrupo(i)=='0') {
+							continue;
+						}
+						else hora=ArranqueBaseDatos.asignaturas.get(ArranqueBaseDatos.alumnos.get(parametros[2]).getSiglas_Asignatura_Actual(i)).gethora(ArranqueBaseDatos.alumnos.get(parametros[2]).getTipoGrupo(i),ArranqueBaseDatos.alumnos.get(parametros[2]).getId_Grupo(i));
+						if(ArranqueBaseDatos.asignaturas.get(parametros[3]).gethora(parametros[4].toCharArray()[0], Integer.parseInt(parametros[5])).equals(hora)) {
+							GestionErrores.errorComando("AGRUPO", "Solape alumno");
+							return;
+						}
+					}
+				}
+				
+				
+				
+			}
 			
+			//aula ocupada
 			
+			Set<String> claves= ArranqueBaseDatos.alumnos.keySet();
+			int numeropersonas=0;
 			
-			
+			for(String clave:claves) {
+				for(int i=0;i<ArranqueBaseDatos.alumnos.get(clave).getSiglasAsignaturaActual().size();i++) {
+				if(ArranqueBaseDatos.alumnos.get(clave).getSiglas_Asignatura_Actual(i).equals(parametros[3])) {
+					if((ArranqueBaseDatos.alumnos.get(clave).getTipoGrupo(i)==parametros[4].toCharArray()[0])) {
+						if(ArranqueBaseDatos.alumnos.get(clave).getId_Grupo(i)==Integer.parseInt(parametros[5])) {
+							numeropersonas++;
+							System.out.println("prueba");
+						}
+					}
+				}
+				
+				}
+				
+			}	
+			System.out.println(numeropersonas);
+				if(ArranqueBaseDatos.aulas.get(ArranqueBaseDatos.asignaturas.get(parametros[3]).getclase(parametros[4].trim().toCharArray()[0], Integer.parseInt(parametros[5]))).getCapacidad()<numeropersonas+1) {
+					GestionErrores.errorComando("AGRUPO", "Aula completa");
+					return;
+				}
+				
+			//si llega aqui todo correcto	
+			//guardamos el grupo en el alumno
+			ArranqueBaseDatos.alumnos.get(parametros[2]).asignargrupo(parametros[3], parametros[4].toCharArray()[0], Integer.parseInt(parametros[5]));
+			System.out.println(ArranqueBaseDatos.alumnos.get(parametros[2]).getTipoGrupo());
+			ArranqueBaseDatos.sobreescribirFicheroAlumnos("alumnos.txt", ArranqueBaseDatos.alumnos);
+		
 			
 		}
 		
-		
-			
-		}
-		
-		
+	}
 		
 	}
 

@@ -12,44 +12,20 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 	public ArrayList<String> siglasAsignaturaActual;
 	private GregorianCalendar fechaIngreso;
 	private ArrayList<String> siglasAsignaturaSuperada;
-	private ArrayList<String> tipoGrupo;
-	private ArrayList<String> idGrupo;
+	private ArrayList<Character> tipoGrupo;
+	private ArrayList<Integer> idGrupo;
 
 	public Alumno(String dni, String nombre, String email, String fechaNacimiento, String fechaIngreso,
 			String asignaturasSuperadas, String docenciaRecibida) {
 		super(dni, nombre, email, fechaNacimiento);
-		// comprobaciones de dni
-		boolean dniCorrecto = Persona.comprobarDNI(dni);
-		if (dniCorrecto == false) {
-			// sacamos por avisos el error correspondiente
-			GestionErrores.errorComando("IP", "Dni incorrecto");
-			return;
-		}
-
-		// comprobaciones FechaNacimiento
-		boolean fechaNacimientoCorrecta = Persona.comprobarFecha(fechaNacimiento);
-		if (fechaNacimientoCorrecta == false) {
-			// sacamos por avisos el error correspondiente
-			GestionErrores.errorComando("IP", "Fecha incorrecta");
-			return;
-		}
-
-		// comprobaciones fechaIngreso
-		boolean fechaIngresoCorrecta = Persona.comprobarFechaIngreso(fechaNacimiento, fechaIngreso);
-		if (fechaIngresoCorrecta == false) {
-			// sacamos por avisos el error correspondiente
-			GestionErrores.errorComando("IP", "Fecha de ingreso incorrecta");
-			return;
-		}
-
 		// si aisgnaturassuperadas no esta vacia procedemos a trocear y a guardarla en
 		// el objeto
 		siglasAsignaturaSuperada = new ArrayList<String>();
 		cursoAcademico = new ArrayList<String>();
 		notaAsignatura = new ArrayList<Float>();
 		siglasAsignaturaActual = new ArrayList<String>();
-		tipoGrupo = new ArrayList<String>();
-		idGrupo = new ArrayList<String>();
+		tipoGrupo = new ArrayList<Character>();
+		idGrupo = new ArrayList<Integer>();
 
 		if (asignaturasSuperadas != null) {
 			String[] superadas = asignaturasSuperadas.split(";");
@@ -71,11 +47,11 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 				String[] campos = actuales[i].trim().split(" ");
 				this.siglasAsignaturaActual.add(campos[0]);
 				if (campos.length != 3) {
-					this.tipoGrupo.add("");
-					this.idGrupo.add("");
+					this.tipoGrupo.add('0');
+					this.idGrupo.add(0);
 				} else {
-					this.tipoGrupo.add(campos[1]);
-					this.idGrupo.add(campos[2]);
+					this.tipoGrupo.add(campos[1].trim().toCharArray()[0]);
+					this.idGrupo.add(Integer.parseInt(campos[2]));
 				}
 			}
 		}
@@ -92,8 +68,8 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 		cursoAcademico = new ArrayList<String>();
 		notaAsignatura = new ArrayList<Float>();
 		siglasAsignaturaActual = new ArrayList<String>();
-		tipoGrupo = new ArrayList<String>();
-		idGrupo = new ArrayList<String>();
+		tipoGrupo = new ArrayList<Character>();
+		idGrupo = new ArrayList<Integer>();
 
 		this.fechaIngreso = Persona.fechaToGregorianCalendar(fechaIngreso);
 
@@ -110,11 +86,11 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 		return dateFormat.format(fechaIngreso.getTime());
 	}
 
-	public String getId_Grupo(int i) {
+	public int getId_Grupo(int i) {
 		return idGrupo.get(i);
 	}
 
-	public String getTipoGrupo(int i) {
+	public char getTipoGrupo(int i) {
 		return tipoGrupo.get(i);
 	}
 
@@ -132,6 +108,53 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 
 	public String getSiglas_Asignatura_Actual(int i) {
 		return siglasAsignaturaActual.get(i);
+	}
+	
+	
+	
+	public ArrayList<String> getSiglasAsignaturaActual() {
+		return siglasAsignaturaActual;
+	}
+
+	public ArrayList<String> getSiglasAsignaturaSuperada() {
+		return siglasAsignaturaSuperada;
+	}
+
+	public ArrayList<Character> getTipoGrupo() {
+		return tipoGrupo;
+	}
+	
+	/**
+	 * añade un grupo a un objeto alumno
+	 * @param asignatura
+	 * @param grupo
+	 * @param idgrupo
+	 */
+	public void asignargrupo(String asignatura, char grupo,int idgrupo) {
+		boolean repetida=false;
+		for(int i=0;i<siglasAsignaturaActual.size();i++) {
+			if(siglasAsignaturaActual.get(i).equals(asignatura.trim())) {
+				
+				if(this.tipoGrupo.get(i).equals(grupo)) {
+					repetida=true;
+					this.idGrupo.add(i, idgrupo);
+					return;
+				}
+				if(this.tipoGrupo.get(i)=='0') {
+					this.tipoGrupo.add(i,grupo);
+					this.idGrupo.add(i,idgrupo);
+					repetida=true;
+					return;
+				}
+				
+			}
+		}
+		if(repetida==false) {
+			this.siglasAsignaturaActual.add(asignatura.trim());
+			this.tipoGrupo.add(grupo);
+			this.idGrupo.add(idgrupo);
+		}
+		
 	}
 
 	/**
@@ -164,7 +187,7 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 		if (!siglasAsignaturaActual.isEmpty()) {
 			// Docencia recibida (recorremos los arrays)
 			for (int i = 0; i < siglasAsignaturaActual.size(); i++) {
-				if(tipoGrupo.get(i).isEmpty()) {
+				if(tipoGrupo.get(i)=='0') {
 					if(i==siglasAsignaturaActual.size()-1) {
 						buffer.append(siglasAsignaturaActual.get(i)+"\n");
 					}

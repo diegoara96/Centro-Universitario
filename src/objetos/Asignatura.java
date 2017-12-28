@@ -149,6 +149,16 @@ public class Asignatura implements EscribibleEnFichero {
 		return idgrupoB;
 	}
 	
+	
+	
+	public ArrayList<String> getClasegrupoA() {
+		return clasegrupoA;
+	}
+
+	public ArrayList<String> getClasegrupoB() {
+		return clasegrupoB;
+	}
+
 	public String gethora(char tipogrupo, int idgrupo) {
 			if (tipogrupo=='A') {
 				return horagrupoA.get(idgrupoA.indexOf(idgrupo));
@@ -159,6 +169,15 @@ public class Asignatura implements EscribibleEnFichero {
 				return horagrupoB.get(idgrupoB.indexOf(idgrupo));
 			}
 		
+	}
+	
+	public String getclase(char tipogrupo,int idgrupo) {
+		if (tipogrupo=='A') {
+			return clasegrupoA.get(idgrupoA.indexOf(idgrupo));
+		}else 
+		
+		
+		return clasegrupoB.get(idgrupoB.indexOf(idgrupo));
 	}
 	
 
