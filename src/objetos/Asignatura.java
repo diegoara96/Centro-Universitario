@@ -15,10 +15,12 @@ public class Asignatura implements EscribibleEnFichero {
 	private ArrayList<Integer> idgrupoA;
 	private ArrayList<String> diagrupoA;
 	private ArrayList<String> horagrupoA;
+	private ArrayList<String> clasegrupoA;
 	private ArrayList<Integer> idgrupoB;
 	private ArrayList<String> diagrupoB;
 	private ArrayList<String> horagrupoB;
-
+	private ArrayList<String> clasegrupoB;
+	
 	public Asignatura(String siglas, String nombre, String curso, String cuatrimestre, String dniCoordinador,
 			String preRequisitos, String duracionGrupoA, String duracionGrupoB, String grupoA, String grupoB) {
 
@@ -29,7 +31,9 @@ public class Asignatura implements EscribibleEnFichero {
 		this.diagrupoB = new ArrayList<String>();
 		this.horagrupoB = new ArrayList<String>();
 		this.preRequisitos = new ArrayList<String>();
-
+		this.clasegrupoA= new ArrayList<String>();
+		this.clasegrupoB= new ArrayList<String>();
+		
 		this.siglas = siglas;
 		this.nombre = nombre;
 		this.curso = Integer.parseInt(curso);
@@ -47,12 +51,14 @@ public class Asignatura implements EscribibleEnFichero {
 		}
 
 		String[] grupoa = grupoA.split(";");
+		
 		for (int i = 0; i < grupoa.length; i++) {
 			String[] campos = grupoa[i].trim().split(" ");
+			//System.out.println(campos.length);
 			this.idgrupoA.add(Integer.parseInt(campos[0]));
 			this.diagrupoA.add(campos[1]);
 			this.horagrupoA.add(campos[2]);
-
+			this.clasegrupoA.add(campos[3]);
 		}
 		
 		
@@ -62,10 +68,10 @@ public class Asignatura implements EscribibleEnFichero {
 			this.idgrupoB.add(Integer.parseInt(campos[0]));
 			this.diagrupoB.add(campos[1]);
 			this.horagrupoB.add(campos[2]);
-
+			this.clasegrupoB.add(campos[3]);
 		}
 		
-		
+	//	System.out.println(idgrupoA);
 		
 	}
 
@@ -133,6 +139,28 @@ public class Asignatura implements EscribibleEnFichero {
 	public String getHoragrupoB(int i) {
 		return horagrupoB.get(i);
 	}
+	
+
+	public ArrayList<Integer> getIdgrupoA() {
+		return idgrupoA;
+	}
+
+	public ArrayList<Integer> getIdgrupoB() {
+		return idgrupoB;
+	}
+	
+	public String gethora(char tipogrupo, int idgrupo) {
+			if (tipogrupo=='A') {
+				return horagrupoA.get(idgrupoA.indexOf(idgrupo));
+					
+			}
+		
+			else {
+				return horagrupoB.get(idgrupoB.indexOf(idgrupo));
+			}
+		
+	}
+	
 
 	/**
 	 * Convierte los atributos de este objeto a un conjunto de líneas de texto,

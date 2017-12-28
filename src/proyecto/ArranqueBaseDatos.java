@@ -23,8 +23,6 @@ public class ArranqueBaseDatos {
 	public static LinkedHashMap<String, Profesor> profesores = new LinkedHashMap<String, Profesor>();
 	public static LinkedHashMap<String, Aula> aulas = new LinkedHashMap<String, Aula>();
 	public static LinkedHashMap<String, Pod> pod = new LinkedHashMap<String, Pod>();
-	// Atencion la clave para el Pod tiene que ser un concat de
-	// dni+asignatura+tipoGrupo
 	public static LinkedHashMap<String, Asignatura> asignaturas = new LinkedHashMap<String, Asignatura>();
 	public static String cursoAcademico;
 	public static int semanaInicioCurso;
@@ -64,23 +62,16 @@ public class ArranqueBaseDatos {
 							listaAsignaturas.get(i).get(6), listaAsignaturas.get(i).get(7),
 							listaAsignaturas.get(i).get(8), listaAsignaturas.get(i).get(9)));
 			}
-			System.out.println(asignaturas);
-		Set<String> claves = asignaturas.keySet();
-		for (String clave:claves) {
-			System.out.println(asignaturas.get(clave).getSiglas());
-		}
-		
 		
 		
 		// lectura pod
 
 		ArrayList<ArrayList<String>> listaPod = leer("pod.txt");
+		System.out.println(listaPod);
 		for (int i = 0; i < listaPod.size(); i++) {
-			String clave = listaPod.get(i).get(0).trim()
-					.concat(listaPod.get(i).get(1).trim().concat(listaPod.get(i).get(2).trim()));
+			String clave = listaPod.get(i).get(0).trim();
 			
-			pod.put(clave, new Pod(listaPod.get(i).get(0).toString(), listaPod.get(i).get(1).toString(),
-					listaPod.get(i).get(2).toString(), listaPod.get(i).get(3).toString()));
+			pod.put(clave, new Pod(listaPod.get(i).get(0).toString(), listaPod.get(i).get(1).toString()));
 		} 
 		
 		// lectura profesores

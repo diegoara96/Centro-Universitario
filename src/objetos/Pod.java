@@ -30,6 +30,14 @@ public class Pod implements EscribibleEnFichero {
 		 */
 	}
 	
+	public ArrayList<String> getAsignatura() {
+		return asignatura;
+	}
+
+	public ArrayList<Character> getTipoGrupo() {
+		return tipoGrupo;
+	}
+
 	public String getDni() {
 		return dni;
 	}

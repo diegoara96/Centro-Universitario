@@ -1,7 +1,9 @@
 package proyecto;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 import objetos.Alumno;
-import objetos.EscribibleEnFichero;
 import objetos.Persona;
 import objetos.Profesor;
 import proyecto.GestionErrores;
@@ -14,7 +16,7 @@ public class Comandos {
 			insertaPersona(imput);
 			break;
 		case "AsignaGrupo": // WIP
-		//	 asignaGrupo(imput);
+			 asignaGrupo(imput);
 			break;
 		case "Matricula": // WIP
 			// matricula();
@@ -147,7 +149,7 @@ public class Comandos {
 		
 	}
 	
-	/*public static void  asignaGrupo(String[] imput) {
+	public static void  asignaGrupo(String[] imput) {
 		if (imput.length < 7) {
 			GestionErrores.errorComando("AGRUPO", "numero de argumentos incorrecto");
 		}
@@ -156,32 +158,140 @@ public class Comandos {
 		
 				parametros[i-1] = imput[i];
 			}
+		
 		if (parametros[1].contains("profesor")) {
-			System.out.println("profe");
+			//System.out.println("profe");
+			//profesor inexistente
 			if(!ArranqueBaseDatos.profesores.containsKey(parametros[2])) {
 				GestionErrores.errorComando("AGRUPO", "profesor inexistente");
 				return;
 			}
+			//asignatura inexistente
 			if(!ArranqueBaseDatos.asignaturas.containsKey(parametros[3])) {
 				GestionErrores.errorComando("AGRUPO", "Asignatura inexistente");
 				return;
 			}
+			//tipo de grupo incorrecto
+			if(parametros[4].toCharArray()[0]!='A'&&parametros[4].toCharArray()[0]!='B') {
+				GestionErrores.errorComando("AGRUPO", "Tipo de grupo incorrecto");
+				return;
+			}
+			//grupo inexistente
+			if (parametros[4].toCharArray()[0]=='A') {
+				if(!ArranqueBaseDatos.asignaturas.get(parametros[3]).getIdgrupoA().contains(Integer.parseInt(parametros[5]))) {
+					GestionErrores.errorComando("AGRUPO", "Grupo inexistente");
+					return;
+				}
+			}
 			
-			if(!ArranqueBaseDatos.asignaturas.get(parametros[3]).getCurso()) {
-				GestionErrores.errorComando("AGRUPO", "Asignatura inexistente");
+			if (parametros[4].toCharArray()[0]=='B') {
+				if(!ArranqueBaseDatos.asignaturas.get(parametros[3]).getIdgrupoB().contains(Integer.parseInt(parametros[5]))) {
+					GestionErrores.errorComando("AGRUPO", "Grupo inexistente");
+					return;
+				}
+			}
+			//no presente en pod profesor
+			int posicion=0;
+			if(!ArranqueBaseDatos.pod.get(parametros[2]).getAsignatura().contains(parametros[3].trim())) {
+				GestionErrores.errorComando("AGRUPO", "Asignatura no presente en POD del profesor");
+				return;
+			}
+			     //posicion del grupo correspontiente a la asignatura en el pod
+			boolean grupo=false;
+			for(int i=0;i<ArranqueBaseDatos.pod.get(parametros[2]).getAsignatura().size();i++) {
+				if(ArranqueBaseDatos.pod.get(parametros[2]).getAsignatura(i).trim().equals(parametros[3].trim())) {
+					if(ArranqueBaseDatos.pod.get(parametros[2]).getTipoGrupo(i)==parametros[4].trim().toCharArray()[0]) {
+						posicion=i;
+						grupo=true;
+					}
+				}
+			}
+			if(grupo==false) {
+				GestionErrores.errorComando("AGRUPO", "Tipo grupo no presente en POD del profesor");
 				return;
 			}
 			
+			//grupo ya asignado
+			Set<String> claves = ArranqueBaseDatos.profesores.keySet();
+			
+			for(String clave:claves) {
+		    ArrayList <String>repetido=	ArranqueBaseDatos.profesores.get(clave).getSiglasAsignatura(); 
+					for(int i=0;i<repetido.size();i++) {
+						if(repetido.get(i).equals(parametros[3])) {
+							
+							if(ArranqueBaseDatos.profesores.get(clave).getTipoGrupo(i)==parametros[4].toCharArray()[0]) {
+								
+								if(ArranqueBaseDatos.profesores.get(clave).getId_Grupo(i)==Integer.parseInt(parametros[5])) {
+									
+									GestionErrores.errorComando("AGRUPO", "Grupo ya asignado");
+									return;
+								}
+							}
+						}
+					}
+				
+			}
+			
+		
+			//Número de grupos superior al contemplado en POD
+			float nummaxgrupos= ArranqueBaseDatos.pod.get(parametros[2]).getNumeroGrupos(posicion);
+			float numerogruposdados=0;
+		//	System.out.println(parametros[3]);
+			
+			for(int i=0;i<ArranqueBaseDatos.profesores.get(parametros[2]).getSiglasAsignatura().size();i++) {
+			//	System.out.println(parametros[3].trim()+" "+ArranqueBaseDatos.profesores.get(parametros[2]).getSiglas_Asignatura(i));
+				if(parametros[3].trim().equals(ArranqueBaseDatos.profesores.get(parametros[2]).getSiglas_Asignatura(i))) {
+				//	System.out.println(ArranqueBaseDatos.profesores.get(parametros[2]).getTipoGrupo(i));
+					
+					if(ArranqueBaseDatos.profesores.get(parametros[2]).getTipoGrupo(i)==parametros[4].toCharArray()[0]) {
+						numerogruposdados++;
+						
+						
+					}
+				}
+			}
+			
+			if (nummaxgrupos<(numerogruposdados+1)) {
+				
+				GestionErrores.errorComando("AGRUPO", "Número de grupos superior al contemplado en POD");
+				return;
+			}
+		//solape de horas
+			int cuatrimestre=ArranqueBaseDatos.asignaturas.get(parametros[3]).getCuatrimestre();
+			for(int i=0;i<ArranqueBaseDatos.profesores.get(parametros[2]).getSiglasAsignatura().size();i++) {
+				if(cuatrimestre==ArranqueBaseDatos.asignaturas.get(ArranqueBaseDatos.profesores.get(parametros[2]).getSiglas_Asignatura(i)).getCuatrimestre()) {
+					String hora=ArranqueBaseDatos.asignaturas.get(ArranqueBaseDatos.profesores.get(parametros[2]).getSiglas_Asignatura(i)).gethora(ArranqueBaseDatos.profesores.get(parametros[2]).getTipoGrupo(i),ArranqueBaseDatos.profesores.get(parametros[2]).getId_Grupo(i));
+					if(ArranqueBaseDatos.asignaturas.get(parametros[3]).gethora(parametros[4].toCharArray()[0], Integer.parseInt(parametros[5])).equals(hora)) {
+						GestionErrores.errorComando("AGRUPO", "Solape profesor");
+						return;
+					}
+				}
+			}
+			
+		 //agregamos el grupo al profesor
+			ArranqueBaseDatos.profesores.get(parametros[2]).asignagrupo(parametros[3], parametros[4].toCharArray()[0], Integer.parseInt(parametros[5]));
+			System.out.println(ArranqueBaseDatos.profesores.get(parametros[2]).getSiglasAsignatura());
+			
+			
 		}
-		//
+		
 		
 		if(parametros[1].contains("alumno")) {
 			System.out.println("alumno");
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		}
 		
 		
 			
-		}*/
+		}
 		
 		
 		
