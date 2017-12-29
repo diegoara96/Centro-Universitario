@@ -1,4 +1,4 @@
-hgpackage proyecto;
+package proyecto;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -19,7 +19,7 @@ public class Comandos {
 			 asignaGrupo(imput);
 			break;
 		case "Matricula": // WIP
-			// matricula();
+			matricularalumno(imput);
 			break;
 		case "CreaGrupoAsig": // WIP
 			// CreaGrupoAsig();
@@ -381,8 +381,11 @@ public class Comandos {
 		
 		if (!ArranqueBaseDatos.asignaturas.containsKey(parametros[2])) {
 			GestionErrores.errorComando("MAT", "asignatura inexistente");
+			return;
 		}
 		
+		
+		//aqui estas comprobando todos los alumnos pero solo te interesa uno el del dni
 		Set<String> claves = ArranqueBaseDatos.alumnos.keySet();
 		
 		for(String clave:claves) {
