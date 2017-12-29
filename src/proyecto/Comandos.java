@@ -1,4 +1,4 @@
-package proyecto;
+hgpackage proyecto;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -348,7 +348,7 @@ public class Comandos {
 			System.out.println(numeropersonas);
 				if(ArranqueBaseDatos.aulas.get(ArranqueBaseDatos.asignaturas.get(parametros[3]).getclase(parametros[4].trim().toCharArray()[0], Integer.parseInt(parametros[5]))).getCapacidad()<numeropersonas+1) {
 					GestionErrores.errorComando("AGRUPO", "Aula completa");
-					return;
+					return; 
 				}
 				
 			//si llega aqui todo correcto	
@@ -356,12 +356,59 @@ public class Comandos {
 			ArranqueBaseDatos.alumnos.get(parametros[2]).asignargrupo(parametros[3], parametros[4].toCharArray()[0], Integer.parseInt(parametros[5]));
 			System.out.println(ArranqueBaseDatos.alumnos.get(parametros[2]).getTipoGrupo());
 			ArranqueBaseDatos.sobreescribirFicheroAlumnos("alumnos.txt", ArranqueBaseDatos.alumnos);
-		
+
 			
 		}
 		
 	}
 		
+	
+	public static void matricularalumno(String imput[]) {
+		if(imput.length < 4) {
+			GestionErrores.errorComando("MAT","numero de argumentos incorrecto");
+		}
+		
+		String parametros[] = new String[imput.length];
+		for (int i = 1; i < parametros.length ; i++) {
+			
+			parametros[i-1] = imput[i];
+		}
+		
+		if(!ArranqueBaseDatos.alumnos.containsKey(parametros[1])) {
+			GestionErrores.errorComando("MAT", "alumno inexistente");
+			return;
+		}
+		
+		if (!ArranqueBaseDatos.asignaturas.containsKey(parametros[2])) {
+			GestionErrores.errorComando("MAT", "asignatura inexistente");
+		}
+		
+		Set<String> claves = ArranqueBaseDatos.alumnos.keySet();
+		
+		for(String clave:claves) {
+	    ArrayList <String> repetir=	ArranqueBaseDatos.alumnos.get(clave).getSiglasAsignaturaActual(); 
+				for(int i=0; i<repetir.size(); i++) {
+					if(repetir.get(i).equals(parametros[2])) {
+						GestionErrores.errorComando("MAT",  "Ya es alumno de la asignatura indicada");
+					}
+				}
+		}
+		
+		Set<String> claves2 = ArranqueBaseDatos.asignaturas.keySet();
+		
+		for(String clave:claves2) {
+	    String repetir=	ArranqueBaseDatos.asignaturas.get(clave).getPre_Requisitos(Integer.parseInt(parametros[2])); 
+				for(int i=0; i<repetir.length(); i++) {
+				   if(repetir.toCharArray()[i] != (parametros[2].toCharArray()[0])) {
+						GestionErrores.errorComando("MAT",  "No cumple requisitos");
+		
+		
+						}
+
+					}
+		
 	}
+	
+	}}
 
 
