@@ -13,11 +13,11 @@ public class Asignatura implements EscribibleEnFichero {
 	private int duracionGrupoA;
 	private int duracionGrupoB;
 	private ArrayList<Integer> idgrupoA;
-	private ArrayList<String> diagrupoA;
+	private ArrayList<Character> diagrupoA;
 	private ArrayList<String> horagrupoA;
 	private ArrayList<String> clasegrupoA;
 	private ArrayList<Integer> idgrupoB;
-	private ArrayList<String> diagrupoB;
+	private ArrayList<Character> diagrupoB;
 	private ArrayList<String> horagrupoB;
 	private ArrayList<String> clasegrupoB;
 	
@@ -25,10 +25,10 @@ public class Asignatura implements EscribibleEnFichero {
 			String preRequisitos, String duracionGrupoA, String duracionGrupoB, String grupoA, String grupoB) {
 
 		this.idgrupoA = new ArrayList<Integer>();
-		this.diagrupoA = new ArrayList<String>();
+		this.diagrupoA = new ArrayList<Character>();
 		this.horagrupoA = new ArrayList<String>();
 		this.idgrupoB = new ArrayList<Integer>();
-		this.diagrupoB = new ArrayList<String>();
+		this.diagrupoB = new ArrayList<Character>();
 		this.horagrupoB = new ArrayList<String>();
 		this.preRequisitos = new ArrayList<String>();
 		this.clasegrupoA= new ArrayList<String>();
@@ -56,7 +56,7 @@ public class Asignatura implements EscribibleEnFichero {
 			String[] campos = grupoa[i].trim().split(" ");
 			//System.out.println(campos.length);
 			this.idgrupoA.add(Integer.parseInt(campos[0]));
-			this.diagrupoA.add(campos[1]);
+			this.diagrupoA.add(campos[1].trim().toCharArray()[0]);
 			this.horagrupoA.add(campos[2]);
 			this.clasegrupoA.add(campos[3]);
 		}
@@ -66,7 +66,7 @@ public class Asignatura implements EscribibleEnFichero {
 		for (int i = 0; i < grupob.length; i++) {
 			String[] campos = grupob[i].trim().split(" ");
 			this.idgrupoB.add(Integer.parseInt(campos[0]));
-			this.diagrupoB.add(campos[1]);
+			this.diagrupoB.add(campos[1].trim().toCharArray()[0]);
 			this.horagrupoB.add(campos[2]);
 			this.clasegrupoB.add(campos[3]);
 		}
@@ -120,7 +120,7 @@ public class Asignatura implements EscribibleEnFichero {
 		return idgrupoA.get(i);
 	}
 
-	public String getDiagrupoA(int i) {
+	public char getDiagrupoA(int i) {
 		return diagrupoA.get(i);
 	}
 
@@ -132,7 +132,7 @@ public class Asignatura implements EscribibleEnFichero {
 		return idgrupoB.get(i);
 	}
 
-	public String getDiagrupoB(int i) {
+	public char getDiagrupoB(int i) {
 		return diagrupoB.get(i);
 	}
 
@@ -158,6 +158,14 @@ public class Asignatura implements EscribibleEnFichero {
 	public ArrayList<String> getClasegrupoB() {
 		return clasegrupoB;
 	}
+	
+	public String getclaseA(int i) {
+		return clasegrupoA.get(i);
+	}
+	
+	public String getclaseB(int i) {
+		return clasegrupoB.get(i);
+	}
 
 	public String gethora(char tipogrupo, int idgrupo) {
 			if (tipogrupo=='A') {
@@ -179,7 +187,25 @@ public class Asignatura implements EscribibleEnFichero {
 		
 		return clasegrupoB.get(idgrupoB.indexOf(idgrupo));
 	}
-	
+	public void creaGrupo(char tipogrupo,int idgrupo,char dia,String horainicio,String aula) {
+		
+		if (tipogrupo=='A') {
+			this.idgrupoA.add(idgrupo);
+			this.diagrupoA.add(dia);
+			this.horagrupoA.add(horainicio.trim());
+			this.clasegrupoA.add(aula.trim());
+		}else {
+			this.idgrupoB.add(idgrupo);
+		    this.diagrupoB.add(dia);
+		    this.horagrupoB.add(horainicio.trim());
+		    this.clasegrupoB.add(aula.trim());
+		}
+		return ;
+		
+		
+		
+		
+	}
 
 	/**
 	 * Convierte los atributos de este objeto a un conjunto de líneas de texto,
@@ -191,14 +217,53 @@ public class Asignatura implements EscribibleEnFichero {
 	public String toTexto() {
 		// Siglas, nombre, curso, cuatrimestre, coordinador (DNI), prerrequisitos,
 		// duración grupo A y duración grupo B:
-		String inicio = siglas + "\n" + nombre + "\n" + curso + "\n" + cuatrimestre + "\n" + dniCoordinador + "\n"
-				+ preRequisitos + "\n" + duracionGrupoA + "\n" + duracionGrupoB + "\n";
-
-		// TODO: Grupos??
-
+		String inicio = siglas + "\n" + nombre + "\n" + curso + "\n" + cuatrimestre + "\n" + dniCoordinador + "\n";
+		StringBuffer buffer = new StringBuffer();
+		
+		if (!preRequisitos.isEmpty()) {
+			for (int i = 0; i < preRequisitos.size(); i++) {
+		
+				if (i==preRequisitos.size()-1) {
+					buffer.append(preRequisitos.get(i)+"\n");
+				} else
+					buffer.append(preRequisitos.get(i) + "; ");
+			}
+		} else
+			buffer.append("\n");
+		//añadimos la duracion de grupos a y b
+		buffer.append(duracionGrupoA + "\n" + duracionGrupoB + "\n");
+		
+		//añadimos los grupos teoricos
+		if (!idgrupoA.isEmpty()) {
+			for (int i = 0; i < idgrupoA.size(); i++) {
+		//		System.out.println(i+" "+siglasAsignaturaSuperada.size());
+				if (i==idgrupoA.size()-1) {
+					buffer.append(idgrupoA.get(i) + " " + diagrupoA.get(i) + " "
+							+ horagrupoA.get(i)+ " " + clasegrupoA.get(i)+"\n");
+				} else
+					buffer.append(idgrupoA.get(i) + " " + diagrupoA.get(i) + " "
+							+ horagrupoA.get(i)+ " " + clasegrupoA.get(i)+ "; ");
+			}
+		} else
+			buffer.append("\n");
+		
+		//añadimos los grupos practicos
+		if (!idgrupoB.isEmpty()) {
+			for (int i = 0; i < idgrupoB.size(); i++) {
+		//		System.out.println(i+" "+siglasAsignaturaSuperada.size());
+				if (i==idgrupoB.size()-1) {
+					buffer.append(idgrupoB.get(i) + " " + diagrupoB.get(i) + " "
+							+ horagrupoB.get(i)+ " " + clasegrupoB.get(i)+"\n");
+				} else
+					buffer.append(idgrupoB.get(i) + " " + diagrupoB.get(i) + " "
+							+ horagrupoB.get(i)+ " " + clasegrupoB.get(i)+ "; ");
+			}
+		} else
+			buffer.append("\n");
+		
 		// Juntamos todo en un mismo String
-		// String cadena = inicio.concat(new String(buffer));
-		return inicio.substring(0, inicio.length() - 2); // elimina el último salto de línea
+		String cadena = inicio.concat(new String(buffer));
+		return cadena.substring(0, cadena.length() - 1); // elimina el último salto de línea
 
 	}
 

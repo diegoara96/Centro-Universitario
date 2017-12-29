@@ -261,4 +261,47 @@ public class ArranqueBaseDatos {
 	
 	}
 	
+	
+	
+	
+	public static void sobreescribirFicheroAsignaturas(String nombreFichero, LinkedHashMap<String, Asignatura> mapa) {
+		Set<String> claves = mapa.keySet();
+		String ultima=null;
+		for(String clave : claves){ 
+			ultima=clave;
+		}
+		try {
+			FileWriter fw = new FileWriter(nombreFichero);
+			BufferedWriter bw= new BufferedWriter(fw);
+			for(String clave : claves){ 
+				
+				System.out.println(mapa.get(clave.toString()).toTexto());
+				bw.write(mapa.get(clave.toString()).toTexto());
+			if(clave!=ultima) {	bw.write("\n*\n");
+			System.out.println("*");
+			}
+			else {bw.write("\n");
+			System.out.println();
+			}
+		
+		
+			} 
+			bw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
 }
