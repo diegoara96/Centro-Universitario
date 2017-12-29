@@ -152,7 +152,7 @@ public class Comandos {
 	public static void  asignaGrupo(String[] imput) {
 		if (imput.length < 7) {
 			GestionErrores.errorComando("AGRUPO", "numero de argumentos incorrecto");
-		}
+		} 
 		String parametros[] = new String[imput.length];
 		for (int i = 1; i < parametros.length; i++) {
 		
@@ -386,8 +386,8 @@ public class Comandos {
 		
 		
 		//aqui estas comprobando todos los alumnos pero solo te interesa uno el del dni
-		Set<String> claves = ArranqueBaseDatos.alumnos.keySet();
-		
+	    Set <String> claves = ArranqueBaseDatos.alumnos.get(parametros[1]);
+		 
 		for(String clave:claves) {
 	    ArrayList <String> repetir=	ArranqueBaseDatos.alumnos.get(clave).getSiglasAsignaturaActual(); 
 				for(int i=0; i<repetir.size(); i++) {
@@ -396,7 +396,7 @@ public class Comandos {
 					}
 				}
 		}
-		
+
 		Set<String> claves2 = ArranqueBaseDatos.asignaturas.keySet();
 		
 		for(String clave:claves2) {
