@@ -98,6 +98,11 @@ public class Asignatura implements EscribibleEnFichero {
 	public String getPre_Requisitos(int i) {
 		return preRequisitos.get(i);
 	}
+	
+
+	public ArrayList<String> getPreRequisitos() {
+		return preRequisitos;
+	}
 
 	public int getDuracion_GrupoA() {
 		return duracionGrupoA;

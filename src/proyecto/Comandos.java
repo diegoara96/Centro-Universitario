@@ -16,13 +16,13 @@ public class Comandos {
 			insertaPersona(imput);
 			break;
 		case "AsignaGrupo": // WIP
-			 asignaGrupo(imput);
+			asignaGrupo(imput);
 			break;
 		case "Matricula": // WIP
-		//	matricularalumno(imput);
+			matricularalumno(imput);
 			break;
 		case "CreaGrupoAsig": // WIP
-			 creaGrupoAsig(imput);
+			creaGrupoAsig(imput);
 			break;
 		case "Evalua": // WIP
 			// evaluarAsig();
@@ -33,7 +33,7 @@ public class Comandos {
 		case "OcupacionAula": // WIP
 			// CalendarioAulas();
 			break;
-			
+
 		default: // gestion de errores funcion mal escrita
 			GestionErrores.comandoErroneo(imput[1]);
 			break;
@@ -287,7 +287,7 @@ public class Comandos {
 		}
 
 		if (parametros[1].contains("alumno")) {
-			System.out.println("alumno");
+			
 
 			// alumno inexistente
 			if (!ArranqueBaseDatos.alumnos.containsKey(parametros[2])) {
@@ -309,8 +309,7 @@ public class Comandos {
 
 			if (!ArranqueBaseDatos.alumnos.get(parametros[2]).getSiglasAsignaturaActual()
 					.contains(parametros[3].trim())) {
-				System.out.println(ArranqueBaseDatos.alumnos.get(parametros[2]).getSiglasAsignaturaActual() + " "
-						+ parametros[3].trim() + "1");
+				
 				GestionErrores.errorComando("AGRUPO", "Alumno no matriculado");
 				return;
 			}
@@ -356,7 +355,7 @@ public class Comandos {
 							if (ArranqueBaseDatos.alumnos.get(clave).getId_Grupo(i) == Integer
 									.parseInt(parametros[5])) {
 								numeropersonas++;
-								System.out.println("prueba");
+								
 							}
 						}
 					}
@@ -364,7 +363,7 @@ public class Comandos {
 				}
 
 			}
-			System.out.println(numeropersonas);
+			
 			if (ArranqueBaseDatos.aulas
 					.get(ArranqueBaseDatos.asignaturas.get(parametros[3])
 							.getclase(parametros[4].trim().toCharArray()[0], Integer.parseInt(parametros[5])))
@@ -377,13 +376,16 @@ public class Comandos {
 			// guardamos el grupo en el alumno
 			ArranqueBaseDatos.alumnos.get(parametros[2]).asignargrupo(parametros[3], parametros[4].toCharArray()[0],
 					Integer.parseInt(parametros[5]));
-			System.out.println(ArranqueBaseDatos.alumnos.get(parametros[2]).getTipoGrupo());
+			
 			ArranqueBaseDatos.sobreescribirFicheroAlumnos("alumnos.txt", ArranqueBaseDatos.alumnos);
 
 		}
 
 	}
-
+/**
+ * funcion encargada de matricular a un alumno en una asignatura
+ * @param imput datos de entrada
+ */
 	public static void matricularalumno(String imput[]) {
 		if (imput.length < 4) {
 			GestionErrores.errorComando("MAT", "numero de argumentos incorrecto");
@@ -392,7 +394,7 @@ public class Comandos {
 		String parametros[] = new String[imput.length];
 		for (int i = 1; i < parametros.length; i++) {
 
-			parametros[i - 1] = imput[i];
+			parametros[i - 1] = imput[i].trim();
 		}
 
 		if (!ArranqueBaseDatos.alumnos.containsKey(parametros[1])) {
@@ -405,24 +407,29 @@ public class Comandos {
 			return;
 		}
 
-		// aqui estas comprobando todos los alumnos pero solo te interesa uno el del dni
-
-		ArrayList<String> repetir = ArranqueBaseDatos.alumnos.get(clave).getSiglasAsignaturaActual();
-		for (int i = 0; i < repetir.size(); i++) {
-			if (repetir.get(i).equals(parametros[2])) {
+		// se comprueba que el alumno no está matriculado en la asignatura buscando
+		// coincidencias en la lista sigla asignatura actual
+		for (int i = 0; i < ArranqueBaseDatos.alumnos.get(parametros[1]).getSiglasAsignaturaActual().size(); i++) {
+			if (ArranqueBaseDatos.alumnos.get(parametros[1]).getSiglas_Asignatura_Actual(i).equals(parametros[2])) {
 				GestionErrores.errorComando("MAT", "Ya es alumno de la asignatura indicada");
+				return;
 			}
 		}
 
-		String repetir = ArranqueBaseDatos.asignaturas.get(clave).getPre_Requisitos(Integer.parseInt(parametros[2]));
-		for (int i = 0; i < repetir.length(); i++) {
-			if (repetir.toCharArray()[i] != (parametros[2].toCharArray()[0])) {
+		// comprobamos que todas las siglas de las asignaturas requeridas estan en
+		// asignaturas superadas
+		for (int i = 0; i < ArranqueBaseDatos.asignaturas.get(parametros[2]).getPreRequisitos().size(); i++) {
+			if (!ArranqueBaseDatos.alumnos.get(parametros[1]).getSiglasAsignaturaSuperada()
+					.contains(ArranqueBaseDatos.asignaturas.get(parametros[2]).getPre_Requisitos(i))) {
 				GestionErrores.errorComando("MAT", "No cumple requisitos");
-
-			}
-
+				return;
+			}	
 		}
-
+		ArranqueBaseDatos.alumnos.get(parametros[1]).matricula(parametros[2]);
+		ArranqueBaseDatos.sobreescribirFicheroAlumnos("alumnos.txt", ArranqueBaseDatos.alumnos);
+		
+		
+		
 	}
 
 	public static void creaGrupoAsig(String[] imput) {
@@ -484,7 +491,7 @@ public class Comandos {
 			return;
 		}
 
-		//solape de aula
+		// solape de aula
 		Set<String> claves = ArranqueBaseDatos.asignaturas.keySet();
 
 		for (String clave : claves) {
@@ -526,11 +533,11 @@ public class Comandos {
 				}
 
 			}
-			
 
 		}
-		ArranqueBaseDatos.asignaturas.get(parametros[1]).creaGrupo(parametros[2].trim().toCharArray()[0], Integer.parseInt(parametros[3]), parametros[4].trim().toCharArray()[0], parametros[5].trim(), parametros[6].trim());
-		System.out.println(ArranqueBaseDatos.asignaturas.get(parametros[1]).getClasegrupoB());
-		ArranqueBaseDatos.sobreescribirFicheroAsignaturas("asignaturas.txt",ArranqueBaseDatos.asignaturas);
+		ArranqueBaseDatos.asignaturas.get(parametros[1]).creaGrupo(parametros[2].trim().toCharArray()[0],
+				Integer.parseInt(parametros[3]), parametros[4].trim().toCharArray()[0], parametros[5].trim(),
+				parametros[6].trim());
+		ArranqueBaseDatos.sobreescribirFicheroAsignaturas("asignaturas.txt", ArranqueBaseDatos.asignaturas);
 	}
 }

@@ -156,6 +156,15 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 		}
 		
 	}
+	
+	public void matricula(String asignatura) {
+		this.siglasAsignaturaActual.add(asignatura.trim());
+		this.tipoGrupo.add('0');
+		this.idGrupo.add(0);
+		
+	}
+	
+	
 
 	/**
 	 * Convierte los atributos de este objeto a un conjunto de líneas de texto,
