@@ -16,7 +16,7 @@ public class Comandos {
 			insertaPersona(imput);
 			break;
 		case "AsignaGrupo": // WIP
-			asignaGrupo(imput);
+			 asignaGrupo(imput);
 			break;
 		case "Matricula": // WIP
 		//	matricularalumno(imput);
@@ -33,6 +33,7 @@ public class Comandos {
 		case "OcupacionAula": // WIP
 			// CalendarioAulas();
 			break;
+			
 		default: // gestion de errores funcion mal escrita
 			GestionErrores.comandoErroneo(imput[1]);
 			break;
@@ -383,7 +384,7 @@ public class Comandos {
 
 	}
 
-	/*public static void matricularalumno(String imput[]) {
+	public static void matricularalumno(String imput[]) {
 		if (imput.length < 4) {
 			GestionErrores.errorComando("MAT", "numero de argumentos incorrecto");
 		}
@@ -423,7 +424,7 @@ public class Comandos {
 		}
 
 	}
-*/
+
 	public static void creaGrupoAsig(String[] imput) {
 		/*
 		 * parametro 0 = comando parametro 1 = sigla asignatura parametro 2 = tipogrupo
