@@ -178,26 +178,36 @@ public class ArranqueBaseDatos {
 			System.exit(1);
 		}
 		
-		BufferedReader lectura = new BufferedReader(fichero);
+	    BufferedReader lectura = new BufferedReader(fichero);
+	    
 		while ((lineas = lectura.readLine()) != null) {
 			if (lineas.isEmpty())break;
 			
-			if(lineas.toCharArray()[0]=='*'||lineas.toCharArray()[1]=='*') {
-				//System.out.println(lineas.toCharArray()[0]);
+			if(lineas.toCharArray()[0]=='*'||lineas.toCharArray()[1]=='*') {				
 				continue;
+				
 			}
 			else {
 			//	System.out.println(lineas.toCharArray()[0]);
 				lineas=lineas.replaceAll("\\s+"," ");
 				String imput[]=lineas.trim().split(" ");
-
+				//lectura.reset();
 			//	System.out.println(imput[2]);
+				
 				Comandos.comandos(imput);
+				
 			}	
 
 		} 
 		//aqui llamanos a la funcion de sobreescribir los ficheros 
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * Vuelca el contenido del LinkedHashMap al fichero de texto correspondiente

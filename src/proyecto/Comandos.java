@@ -1,9 +1,15 @@
 package proyecto;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Set;
 
 import objetos.Alumno;
+import objetos.Notas;
 import objetos.Persona;
 import objetos.Profesor;
 import proyecto.GestionErrores;
@@ -11,23 +17,25 @@ import proyecto.GestionErrores;
 public class Comandos {
 
 	public static void comandos(String imput[]) {
+
 		switch (imput[1]) {
-		case "InsertaPersona": // WIP
+
+		case "InsertaPersona":
 			insertaPersona(imput);
 			break;
-		case "AsignaGrupo": // WIP
+		case "AsignaGrupo": 
 			asignaGrupo(imput);
 			break;
-		case "Matricula": // WIP
+		case "Matricula": 
 			matricularalumno(imput);
 			break;
-		case "CreaGrupoAsig": // WIP
+		case "CreaGrupoAsig": 
 			creaGrupoAsig(imput);
 			break;
-		case "Evalua": // WIP
-			// evaluarAsig();
+		case "Evalua": 
+			evaluarAsig(imput);
 			break;
-		case "Expediente":
+		case "Expediente": //WIP
 			// obtenerExpediente();
 			break;
 		case "OcupacionAula": // WIP
@@ -287,7 +295,6 @@ public class Comandos {
 		}
 
 		if (parametros[1].contains("alumno")) {
-			
 
 			// alumno inexistente
 			if (!ArranqueBaseDatos.alumnos.containsKey(parametros[2])) {
@@ -309,7 +316,7 @@ public class Comandos {
 
 			if (!ArranqueBaseDatos.alumnos.get(parametros[2]).getSiglasAsignaturaActual()
 					.contains(parametros[3].trim())) {
-				
+
 				GestionErrores.errorComando("AGRUPO", "Alumno no matriculado");
 				return;
 			}
@@ -355,7 +362,7 @@ public class Comandos {
 							if (ArranqueBaseDatos.alumnos.get(clave).getId_Grupo(i) == Integer
 									.parseInt(parametros[5])) {
 								numeropersonas++;
-								
+
 							}
 						}
 					}
@@ -363,7 +370,7 @@ public class Comandos {
 				}
 
 			}
-			
+
 			if (ArranqueBaseDatos.aulas
 					.get(ArranqueBaseDatos.asignaturas.get(parametros[3])
 							.getclase(parametros[4].trim().toCharArray()[0], Integer.parseInt(parametros[5])))
@@ -376,16 +383,19 @@ public class Comandos {
 			// guardamos el grupo en el alumno
 			ArranqueBaseDatos.alumnos.get(parametros[2]).asignargrupo(parametros[3], parametros[4].toCharArray()[0],
 					Integer.parseInt(parametros[5]));
-			
+
 			ArranqueBaseDatos.sobreescribirFicheroAlumnos("alumnos.txt", ArranqueBaseDatos.alumnos);
 
 		}
 
 	}
-/**
- * funcion encargada de matricular a un alumno en una asignatura
- * @param imput datos de entrada
- */
+
+	/**
+	 * funcion encargada de matricular a un alumno en una asignatura
+	 * 
+	 * @param imput
+	 *            datos de entrada
+	 */
 	public static void matricularalumno(String imput[]) {
 		if (imput.length < 4) {
 			GestionErrores.errorComando("MAT", "numero de argumentos incorrecto");
@@ -423,13 +433,11 @@ public class Comandos {
 					.contains(ArranqueBaseDatos.asignaturas.get(parametros[2]).getPre_Requisitos(i))) {
 				GestionErrores.errorComando("MAT", "No cumple requisitos");
 				return;
-			}	
+			}
 		}
 		ArranqueBaseDatos.alumnos.get(parametros[1]).matricula(parametros[2]);
 		ArranqueBaseDatos.sobreescribirFicheroAlumnos("alumnos.txt", ArranqueBaseDatos.alumnos);
-		
-		
-		
+
 	}
 
 	public static void creaGrupoAsig(String[] imput) {
@@ -480,7 +488,7 @@ public class Comandos {
 		if (parametros[4].toCharArray()[0] != 'L' && parametros[4].toCharArray()[0] != 'M'
 				&& parametros[4].toCharArray()[0] != 'X' && parametros[4].toCharArray()[0] != 'J'
 				&& parametros[4].toCharArray()[0] != 'V') {
-			System.out.println(parametros[4].toCharArray()[0]);
+			
 			GestionErrores.errorComando("CGA", "Dia incorrecto");
 			return;
 		}
@@ -540,4 +548,173 @@ public class Comandos {
 				parametros[6].trim());
 		ArranqueBaseDatos.sobreescribirFicheroAsignaturas("asignaturas.txt", ArranqueBaseDatos.asignaturas);
 	}
+
+	public static void evaluarAsig(String[] imput) {
+
+		String parametros[] = new String[imput.length];
+		for (int i = 1; i < parametros.length; i++) {
+
+			parametros[i - 1] = imput[i];
+		}
+		LinkedHashMap<String, Notas> notasalumnos = new LinkedHashMap<String, Notas>();
+
+		// System.out.println(parametros[1]);
+		// parametro 0 = comando parametro 1 = asignatura
+		// parametro 2 = ficheronotasA parametros 3 = ficheronotasB
+
+		// asignatura inexistente
+		if (!ArranqueBaseDatos.asignaturas.containsKey(parametros[1])) {
+			GestionErrores.errorComando("EVALUA", "Asignatura inexistente");
+			
+			return;
+		}
+		// asignatura ya evaluada
+		Set<String> claves = ArranqueBaseDatos.alumnos.keySet();
+
+		for (String clave : claves) {
+			for (int i = 0; i < ArranqueBaseDatos.alumnos.get(clave).getSiglasAsignaturaSuperada().size(); i++) {
+				if (ArranqueBaseDatos.alumnos.get(clave).getSiglas_Asignaturas_Superada(i)
+						.equals(parametros[1].trim())) {
+					if (ArranqueBaseDatos.alumnos.get(clave).getCurso_Academico(i)
+							.equals(ArranqueBaseDatos.cursoAcademico.trim())) {
+						GestionErrores.errorComando("EVALUA", "Asignatura ya evaluada en ese curso académico");
+						return;
+					}
+
+				}
+			}
+		}
+		String lineas;
+		FileReader fichero = null;
+		// bloque try-catch si sale un error intenta el catch (mensaje de error y salir)
+		try {
+			fichero = new FileReader(parametros[2].trim().concat(".txt"));
+		} catch (FileNotFoundException e) {
+			// en caso de error imprime mensaje y sale del programa
+			
+			System.exit(1);
+		}
+
+		BufferedReader lectura = new BufferedReader(fichero);
+		try {
+			int linea = 0;
+			while ((lineas = lectura.readLine()) != null) {
+				lineas = lineas.replaceAll("\\s+", " ");
+				String partes[] = lineas.split(" ");
+
+				if (!ArranqueBaseDatos.alumnos.containsKey(partes[0].trim())) {
+					GestionErrores.errorComando("EVALUA",
+							"Error en linea " + linea + ": Alumno inexistente: " + partes[0].trim());
+				} else {
+					notasalumnos.put(partes[0], new Notas(partes[0], partes[1], linea));
+				}
+
+				linea++;
+
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		try {
+			fichero = new FileReader(parametros[3].trim().concat(".txt"));
+		} catch (FileNotFoundException e) {
+			// en caso de error imprime mensaje y sale del programa
+			System.exit(1);
+		}
+		lectura = new BufferedReader(fichero);
+		try {
+			int linea = 0;
+			while ((lineas = lectura.readLine()) != null) {
+				lineas = lineas.replaceAll("\\s+", " ");
+				String partes[] = lineas.split(" ");
+
+				if (!ArranqueBaseDatos.alumnos.containsKey(partes[0].trim())) {
+					GestionErrores.errorComando("EVALUA",
+							"Error en linea " + linea + ": Alumno inexistente: " + partes[0].trim());
+				} else {
+					if (!notasalumnos.containsKey(partes[0])) {
+						notasalumnos.put(partes[0], new Notas(partes[0], partes[1], linea));
+
+					} else
+						notasalumnos.get(partes[0]).setnotaB(partes[1].trim(), linea);
+
+				}
+
+				linea++;
+
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		claves = notasalumnos.keySet();
+		
+		for (String clave : claves) {
+           
+			// alumno no matriculado en la asignatura
+			if (!ArranqueBaseDatos.alumnos.get(clave).getSiglasAsignaturaActual().contains(parametros[1].trim())) {
+				GestionErrores.errorComando("EVALUA", "Alumno no matriculado: " + clave.trim());
+				continue;
+			}
+
+			// error en nota A/B
+			if(notasalumnos.get(clave).getNotaA()>5||notasalumnos.get(clave).getNotaA()<0) {
+				GestionErrores.errorComando("EVALUA",
+						"Error en linea " + notasalumnos.get(clave).getLineaA() + ": Nota grupo A incorrecta");
+				continue;
+			}
+			
+			if(notasalumnos.get(clave).getNotaB()<0||notasalumnos.get(clave).getNotaB()>5) {
+				GestionErrores.errorComando("EVALUA",
+						"Error en linea " + notasalumnos.get(clave).getLineaB() + ": Nota grupo B incorrecta");
+				continue;
+			}
+			
+
+			// en el caso de que la nota sea superior a 5 se considera asignatura superada
+			if (notasalumnos.get(clave).getNotaTotal() >= 5) {
+			
+				ArranqueBaseDatos.alumnos.get(clave).setAsignaturaSuperada(parametros[1],
+						ArranqueBaseDatos.cursoAcademico, notasalumnos.get(clave).getNotaTotal());
+
+				
+				
+				int valormaximo =ArranqueBaseDatos.alumnos.get(clave).getSiglasAsignaturaActual().size();
+				for (int i = 0; i < valormaximo; i++)  {
+					
+					if (ArranqueBaseDatos.alumnos.get(clave).getSiglas_Asignatura_Actual(i).equals(parametros[1].trim())) {
+						
+						ArranqueBaseDatos.alumnos.get(clave).eliminarAsignatura(i);
+						
+						valormaximo--;
+						i-=1;
+					}
+					
+				}
+				
+
+			}
+			// en caso de que la nota sea inferior a 5 se considera suspensa y se elimina de
+			// asignatura actual
+			if (notasalumnos.get(clave).getNotaTotal() < 5) {
+				
+				int valormaximo =ArranqueBaseDatos.alumnos.get(clave).getSiglasAsignaturaActual().size();
+				for (int i = 0; i < valormaximo; i++) {
+					if (ArranqueBaseDatos.alumnos.get(clave).getSiglas_Asignatura_Actual(i).equals(parametros[1])) {
+						ArranqueBaseDatos.alumnos.get(clave).eliminarAsignatura(i);
+						valormaximo--;
+					}
+				}
+
+			}
+
+		}
+		ArranqueBaseDatos.sobreescribirFicheroAlumnos("alumnos.txt", ArranqueBaseDatos.alumnos);
+		return;
+	}
+
 }

@@ -123,7 +123,17 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 	public ArrayList<Character> getTipoGrupo() {
 		return tipoGrupo;
 	}
+	public void eliminarAsignatura(int i) {
+		this.siglasAsignaturaActual.remove(i);
+		this.idGrupo.remove(i);
+		this.tipoGrupo.remove(i);
+	}
 	
+	public void setAsignaturaSuperada(String asignatura,String curso,float nota) {
+		this.cursoAcademico.add(curso);
+		this.notaAsignatura.add(nota);
+		this.siglasAsignaturaSuperada.add(asignatura);
+	}
 	/**
 	 * añade un grupo a un objeto alumno
 	 * @param asignatura
