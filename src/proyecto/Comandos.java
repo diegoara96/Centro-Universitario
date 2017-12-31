@@ -1,5 +1,7 @@
 package proyecto;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,8 +10,14 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 import objetos.Alumno;
 import objetos.Notas;
+import objetos.OcupacionAula;
 import objetos.Persona;
 import objetos.Profesor;
 import proyecto.GestionErrores;
@@ -23,23 +31,23 @@ public class Comandos {
 		case "InsertaPersona":
 			insertaPersona(imput);
 			break;
-		case "AsignaGrupo": 
+		case "AsignaGrupo":
 			asignaGrupo(imput);
 			break;
-		case "Matricula": 
+		case "Matricula":
 			matricularalumno(imput);
 			break;
-		case "CreaGrupoAsig": 
+		case "CreaGrupoAsig":
 			creaGrupoAsig(imput);
 			break;
-		case "Evalua": 
+		case "Evalua":
 			evaluarAsig(imput);
 			break;
-		case "Expediente": //WIP
+		case "Expediente": // WIP
 			// obtenerExpediente();
 			break;
 		case "OcupacionAula": // WIP
-			// CalendarioAulas();
+			CalendarioAulas(imput);
 			break;
 
 		default: // gestion de errores funcion mal escrita
@@ -488,7 +496,7 @@ public class Comandos {
 		if (parametros[4].toCharArray()[0] != 'L' && parametros[4].toCharArray()[0] != 'M'
 				&& parametros[4].toCharArray()[0] != 'X' && parametros[4].toCharArray()[0] != 'J'
 				&& parametros[4].toCharArray()[0] != 'V') {
-			
+
 			GestionErrores.errorComando("CGA", "Dia incorrecto");
 			return;
 		}
@@ -565,7 +573,7 @@ public class Comandos {
 		// asignatura inexistente
 		if (!ArranqueBaseDatos.asignaturas.containsKey(parametros[1])) {
 			GestionErrores.errorComando("EVALUA", "Asignatura inexistente");
-			
+
 			return;
 		}
 		// asignatura ya evaluada
@@ -591,7 +599,7 @@ public class Comandos {
 			fichero = new FileReader(parametros[2].trim().concat(".txt"));
 		} catch (FileNotFoundException e) {
 			// en caso de error imprime mensaje y sale del programa
-			
+
 			System.exit(1);
 		}
 
@@ -616,7 +624,6 @@ public class Comandos {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 
 		try {
 			fichero = new FileReader(parametros[3].trim().concat(".txt"));
@@ -652,9 +659,9 @@ public class Comandos {
 		}
 
 		claves = notasalumnos.keySet();
-		
+
 		for (String clave : claves) {
-           
+
 			// alumno no matriculado en la asignatura
 			if (!ArranqueBaseDatos.alumnos.get(clave).getSiglasAsignaturaActual().contains(parametros[1].trim())) {
 				GestionErrores.errorComando("EVALUA", "Alumno no matriculado: " + clave.trim());
@@ -662,47 +669,44 @@ public class Comandos {
 			}
 
 			// error en nota A/B
-			if(notasalumnos.get(clave).getNotaA()>5||notasalumnos.get(clave).getNotaA()<0) {
+			if (notasalumnos.get(clave).getNotaA() > 5 || notasalumnos.get(clave).getNotaA() < 0) {
 				GestionErrores.errorComando("EVALUA",
 						"Error en linea " + notasalumnos.get(clave).getLineaA() + ": Nota grupo A incorrecta");
 				continue;
 			}
-			
-			if(notasalumnos.get(clave).getNotaB()<0||notasalumnos.get(clave).getNotaB()>5) {
+
+			if (notasalumnos.get(clave).getNotaB() < 0 || notasalumnos.get(clave).getNotaB() > 5) {
 				GestionErrores.errorComando("EVALUA",
 						"Error en linea " + notasalumnos.get(clave).getLineaB() + ": Nota grupo B incorrecta");
 				continue;
 			}
-			
 
 			// en el caso de que la nota sea superior a 5 se considera asignatura superada
 			if (notasalumnos.get(clave).getNotaTotal() >= 5) {
-			
+
 				ArranqueBaseDatos.alumnos.get(clave).setAsignaturaSuperada(parametros[1],
 						ArranqueBaseDatos.cursoAcademico, notasalumnos.get(clave).getNotaTotal());
 
-				
-				
-				int valormaximo =ArranqueBaseDatos.alumnos.get(clave).getSiglasAsignaturaActual().size();
-				for (int i = 0; i < valormaximo; i++)  {
-					
-					if (ArranqueBaseDatos.alumnos.get(clave).getSiglas_Asignatura_Actual(i).equals(parametros[1].trim())) {
-						
+				int valormaximo = ArranqueBaseDatos.alumnos.get(clave).getSiglasAsignaturaActual().size();
+				for (int i = 0; i < valormaximo; i++) {
+
+					if (ArranqueBaseDatos.alumnos.get(clave).getSiglas_Asignatura_Actual(i)
+							.equals(parametros[1].trim())) {
+
 						ArranqueBaseDatos.alumnos.get(clave).eliminarAsignatura(i);
-						
+
 						valormaximo--;
-						i-=1;
+						i -= 1;
 					}
-					
+
 				}
-				
 
 			}
 			// en caso de que la nota sea inferior a 5 se considera suspensa y se elimina de
 			// asignatura actual
 			if (notasalumnos.get(clave).getNotaTotal() < 5) {
-				
-				int valormaximo =ArranqueBaseDatos.alumnos.get(clave).getSiglasAsignaturaActual().size();
+
+				int valormaximo = ArranqueBaseDatos.alumnos.get(clave).getSiglasAsignaturaActual().size();
 				for (int i = 0; i < valormaximo; i++) {
 					if (ArranqueBaseDatos.alumnos.get(clave).getSiglas_Asignatura_Actual(i).equals(parametros[1])) {
 						ArranqueBaseDatos.alumnos.get(clave).eliminarAsignatura(i);
@@ -716,5 +720,143 @@ public class Comandos {
 		ArranqueBaseDatos.sobreescribirFicheroAlumnos("alumnos.txt", ArranqueBaseDatos.alumnos);
 		return;
 	}
+
+	public static void CalendarioAulas(String[] imput) {
+		String parametros[] = new String[imput.length];
+		for (int i = 1; i < parametros.length; i++) {
+
+			parametros[i - 1] = imput[i];
+		}
+
+		// parametros 0 = comando parametros 1 = aula
+
+		if (parametros[1].equals("*")) {
+			// si el aula es * tenemos que sacar todas de forma ordenada
+
+			// WIP
+		}
+		OcupacionAula ocupacion[][] = new OcupacionAula[10][6];
+		ocupacion[0][0]= new OcupacionAula("hora");
+			
+		Set<String> claves = ArranqueBaseDatos.asignaturas.keySet();
+
+		for (String clave : claves) {
+			for (int i = 0; i < ArranqueBaseDatos.asignaturas.get(clave).getClasegrupoA().size(); i++) {
+				if (ArranqueBaseDatos.asignaturas.get(clave).getclaseA(i).equals(parametros[1])) {
+					char dia = ArranqueBaseDatos.asignaturas.get(clave).getDiagrupoA(i);
+					int hora = Integer.parseInt(ArranqueBaseDatos.asignaturas.get(clave).getHoragrupoA(i));
+					int duracion = ArranqueBaseDatos.asignaturas.get(clave).getDuracion_GrupoA();
+					int x=0,y=0;
+					Set<String> clavesprofe = ArranqueBaseDatos.profesores.keySet();
+					switch(dia) {
+					case 'L':
+						x=0;
+						break;
+					case 'M':
+						x=1;
+						break;
+					case 'X':
+						x=2;
+						break;
+					case 'J':
+						x=3;
+						break;
+					case 'V':
+						x=4;
+						break;
+					}
+					switch(hora) {
+					case 9:
+						y=1;
+						break;
+					case 10:
+						y=2;
+						break;
+					case 11:
+						y=3;
+						break;
+					case 12:
+						y=4;
+						break;
+					case 13:
+						y=5;
+						break;
+					case 14:
+						y=6;
+						break;
+					case 15:
+						y=7;
+						break;
+					case 16:
+						y=8;
+						break;
+					case 17:
+						y=9;
+						break;
+					case 18:
+						y=10;
+						break;
+					}
+							for (String claveprofe : clavesprofe) {
+								ArrayList<String> repetido = ArranqueBaseDatos.profesores.get(claveprofe).getSiglasAsignatura();
+								for (int a = 0; a < repetido.size(); a++) {
+									if (repetido.get(a).equals(clave)) {
+
+										if (ArranqueBaseDatos.profesores.get(claveprofe).getTipoGrupo(a) == ArranqueBaseDatos.aulas.get(parametros[1]).getTipo_Grupo().trim().toCharArray()[0]) {
+
+											if (ArranqueBaseDatos.profesores.get(claveprofe).getId_Grupo(a) == ArranqueBaseDatos.asignaturas.get(clave).getIdgrupoA(i)) {
+												String nombre= ArranqueBaseDatos.profesores.get(claveprofe).getNombre().trim();
+												System.out.println(nombre);
+												String partes[]=nombre.split(" ");
+												String siglas=Character.toString(partes[0].toCharArray()[0]);
+												for(int b=1;b<partes.length;b++) {
+													
+													siglas=siglas.concat(Character.toString(partes[b].toCharArray()[0]));
+													
+													
+												}
+												ocupacion[x][y]= new OcupacionAula(clave,siglas);
+												if(duracion==2) {
+													ocupacion[x+1][y]=ocupacion[x][y];
+												}
+												
+											}
+										}
+									}
+								}
+							}
+					
+					
+				}
+
+			}
+		}
+		
+		for(int a=0;a<10;a++) {
+			for(int b=0;b<6;b++) {
+				if(ocupacion[a][b]==null) ocupacion[a][b]= new OcupacionAula();
+			}
+		}
+		
+		System.out.println(ocupacion[1][3].toString());
+		String[] columnas = {"Hora","Lunes","Martes","Miercoles","Jueves","Viernes"};
+		//JTable tabla= new JTable (ocupacion,columnas);
+		//System.out.println(tabla);
+		JFrame ventana= new JFrame (parametros[1]);
+		ventana.setLayout(new FlowLayout());
+		JTable tabla= new JTable (ocupacion,columnas);
+		JScrollPane Js = new JScrollPane(tabla);
+		Js.setPreferredSize(new Dimension(900, 182));
+		
+		ventana.add(Js);
+		ventana.setSize(new Dimension(1000,300));
+		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		ventana.setVisible(true);
+		
+	}
+	
+	
+	
 
 }
