@@ -14,7 +14,7 @@ Programacion II
 2			 
 1			 
 44331040D
-P-I
+PI
 2
 2
 1 L 9 T218; 2 J 9 T213
