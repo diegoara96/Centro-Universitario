@@ -1,55 +1,48 @@
-41074273T
+﻿41074273T
 Garcia Puentes, Juan
 14/04/1965
 titular
-IngenierÃ­a TelemÃ¡tica
-PI B 1; PI B 2; PI B 4
-*
+Ingeniería Telemática
+PI B 1; PI B 2;PI B 4
+* 
 43006219Y
 Garcia Soto, Martin
-02/10/1983
+2/10/1983
 titular
-IngenierÃ­a TelemÃ¡tica
-PII A 1; PII A 2
+Ingeniería Telemática
+PII A 1;PII A 2
 *
 44331040D
 Lopez Fernandez, Javier
-07/05/1973
+07/5/1973
 titular
-IngenierÃ­a TelemÃ¡tica
-PII B 1; PII B 2; PII B 3; PII B 4; PII B 5; SEG A 1; SEG B 1
-*
+Ingeniería Telemática
+PII B 1;PII B 2;PII B 3;PII B 4;PII B 5; SEG A 1; SEG B 1
+* 
 39053207A
 Hermida Rodriguez , Candido
 18/02/1975
 titular
-IngenierÃ­a TelemÃ¡tica
-CD A 1; CD B 3; CD B 4
-*
+Ingeniería Telemática
+CD A 1;  CD B 3; CD B 4
+* 
 41067281H
 Seoane Alvarez, Jose
 30/06/1982
 titular
-IngenierÃ­a TelemÃ¡tica
+Ingeniería Telemática
 SO A 2; SO B 2; SO B 3
-*
+* 
 40670780B
 Fernandez Vieitez, Juan Carlos
 11/07/1981
 titular
-IngenierÃ­a TelemÃ¡tica
+Ingeniería Telemática
 SINT A 1; SINT B 1; SINT B 2
 *
 48057027S
 Vila Rodriguez, Raul
 21/08/1980
 titular
-IngenierÃ­a TelemÃ¡tica
+Ingeniería Telemática
 ATR A 1; ATR B 2
-*
-39074502W
-Alvarez Gonzalez, Francisco
-05/06/1977
-asociado
-DET
-

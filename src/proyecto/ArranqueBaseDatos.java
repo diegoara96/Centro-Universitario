@@ -31,14 +31,14 @@ public class ArranqueBaseDatos {
 
 		// lectura curso academico
 
-		ArrayList<ArrayList<String>> listacursoAcademico = leer("cursoAcademico.txt");
+		ArrayList<ArrayList<String>> listacursoAcademico = leer(Comandos.cursoAcademico);
 		cursoAcademico = listacursoAcademico.get(0).get(0).toString();
 		String semanaini = listacursoAcademico.get(0).get(1).toString();
 		semanaInicioCurso = Integer.parseInt(semanaini);
 
 		// lectura aulas
 
-		ArrayList<ArrayList<String>> listaAulas = leer("aulas.txt");
+		ArrayList<ArrayList<String>> listaAulas = leer(Comandos.aulas);
 		for (int i = 0; i < listaAulas.size(); i++) {
 			String clave = listaAulas.get(i).get(0).toString();
 			aulas.put(clave, new Aula(listaAulas.get(i).get(0).toString(), listaAulas.get(i).get(1).toString(),
@@ -47,7 +47,7 @@ public class ArranqueBaseDatos {
 
 		// lectura asignaturas
 
-		ArrayList<ArrayList<String>> listaAsignaturas = leer("asignaturas.txt");
+		ArrayList<ArrayList<String>> listaAsignaturas = leer(Comandos.asignaturas);
 
 		for (int i = 0; i < listaAsignaturas.size(); i++) {
 			
@@ -66,8 +66,8 @@ public class ArranqueBaseDatos {
 		
 		// lectura pod
 
-		ArrayList<ArrayList<String>> listaPod = leer("pod.txt");
-		System.out.println(listaPod);
+		ArrayList<ArrayList<String>> listaPod = leer(Comandos.pod);
+		
 		for (int i = 0; i < listaPod.size(); i++) {
 			String clave = listaPod.get(i).get(0).trim();
 			
@@ -76,8 +76,8 @@ public class ArranqueBaseDatos {
 		
 		// lectura profesores
 
-		ArrayList<ArrayList<String>> listaProfesores = leer("profesores.txt");
-		System.out.println(listaProfesores);
+		ArrayList<ArrayList<String>> listaProfesores = leer(Comandos.profesores);
+		
 		for (int i = 0; i < listaProfesores.size(); i++) {
 			String clave = listaProfesores.get(i).get(0).toString();
 			//System.out.println(clave+listaProfesores.get(i).size());
@@ -89,8 +89,8 @@ public class ArranqueBaseDatos {
 		}
 
 		// lectura alumnos
-		ArrayList<ArrayList<String>> listaAlumnos = leer("alumnos.txt");
-		//System.out.println(listaAlumnos);
+		ArrayList<ArrayList<String>> listaAlumnos = leer(Comandos.alumnos);
+		
 		for (int i = 0; i < listaAlumnos.size(); i++) {
 			String clave = listaAlumnos.get(i).get(0).toString();
 			alumnos.put(clave,
@@ -127,7 +127,8 @@ public class ArranqueBaseDatos {
 			// en caso de error imprime mensaje y sale del programa
 			File generarfichero = new File(archivo);
 			
-			System.exit(1);
+			return listas;
+			
 		}
 		BufferedReader lectura = new BufferedReader(isr);
 
@@ -167,14 +168,14 @@ public class ArranqueBaseDatos {
 	
 	public static void lecturaejecucion() throws IOException {
 		String lineas;
-		String archivo= "ejecucion.txt";
+		String archivo= Comandos.ejecucion;
 		FileReader fichero = null;
 		// bloque try-catch si sale un error intenta el catch (mensaje de error y salir)
 		try {
 			fichero = new FileReader(archivo);
 		} catch (FileNotFoundException e) {
 			// en caso de error imprime mensaje y sale del programa
-			System.out.println("444");
+			System.out.println("no detecta fichero ejecucion");
 			System.exit(1);
 		}
 		
@@ -225,13 +226,13 @@ public class ArranqueBaseDatos {
 			BufferedWriter bw= new BufferedWriter(fw);
 			for(String clave : claves){ 
 				
-				System.out.println(mapa.get(clave.toString()).toTexto());
+				
 				bw.write(mapa.get(clave.toString()).toTexto());
 			if(clave!=ultima) {	bw.write("\n*\n");
-			System.out.println("*");
+			
 			}
 			else {bw.write("\n");
-			System.out.println();
+			
 			}
 		
 		
@@ -253,13 +254,13 @@ public class ArranqueBaseDatos {
 			BufferedWriter bw= new BufferedWriter(fw);
 			for(String clave : claves){ 
 				
-				System.out.println(mapa.get(clave.toString()).toTexto());
+				
 				bw.write(mapa.get(clave.toString()).toTexto());
 			if(clave!=ultima) {	bw.write("\n*\n");
-			System.out.println("*");
+			
 			}
 			else {bw.write("\n");
-			System.out.println();
+			
 			}
 		
 		
@@ -285,13 +286,13 @@ public class ArranqueBaseDatos {
 			BufferedWriter bw= new BufferedWriter(fw);
 			for(String clave : claves){ 
 				
-				System.out.println(mapa.get(clave.toString()).toTexto());
+				
 				bw.write(mapa.get(clave.toString()).toTexto());
 			if(clave!=ultima) {	bw.write("\n*\n");
-			System.out.println("*");
+			
 			}
 			else {bw.write("\n");
-			System.out.println();
+			
 			}
 		
 		

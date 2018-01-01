@@ -7,14 +7,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Set;
-
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
 import objetos.Alumno;
 import objetos.Notas;
 import objetos.OcupacionAula;
@@ -23,7 +21,19 @@ import objetos.Profesor;
 import proyecto.GestionErrores;
 
 public class Comandos {
-
+	
+	// declaramos las variables constantes para nuestra comodidad
+	public final static String alumnos="alumnos.txt";
+	public final static String profesores= "profesores.txt";
+	public final static String asignaturas= "asignaturas.txt";
+	public final static String aulas = "aulas.txt";
+	public final static String pod= "pod.txt";
+	public final static String cursoAcademico = "cursoAcademico.txt";
+	public final static String ejecucion = "ejecucion.txt";
+	
+	
+	
+	
 	public static void comandos(String imput[]) {
 
 		switch (imput[1]) {
@@ -40,7 +50,7 @@ public class Comandos {
 		case "CreaGrupoAsig":
 			creaGrupoAsig(imput);
 			break;
-		case "Evalua":
+		case GestionErrores.EVALUAR_ASIGNATURA:
 			evaluarAsig(imput);
 			break;
 		case "Expediente": // WIP
@@ -56,12 +66,12 @@ public class Comandos {
 
 		}
 
-	}
+	} 
 
 	public static void insertaPersona(String imput[]) {
 
 		if (imput.length < 9) {
-			GestionErrores.errorComando("IP", "numero de argumentos incorrecto");
+			GestionErrores.errorComando(GestionErrores.INSERTA_PERSONA, "numero de argumentos incorrecto");
 		}
 
 		String parametros[] = new String[imput.length];
@@ -82,7 +92,7 @@ public class Comandos {
 					nombre = nombre.concat(" ").concat(imput[a]);
 					if (imput[a].contains("\"")) {
 						parametros[b] = nombre.substring(1, nombre.length() - 1);
-						// System.out.println(nombre);
+						
 						i = a;
 
 						break;
@@ -99,64 +109,63 @@ public class Comandos {
 		if (parametros[1].contains("profesor")) {
 
 			if (b != 7) {
-				GestionErrores.errorComando("IP", "numero de argumentos incorrecto");
+				GestionErrores.errorComando(GestionErrores.INSERTA_PERSONA, "numero de argumentos incorrecto");
 				return;
 			}
 
 			if (Persona.comprobarDNI(parametros[2]) == false) {
-				GestionErrores.errorComando("IP", "dni incorrecto");
+				GestionErrores.errorComando(GestionErrores.INSERTA_PERSONA, "dni incorrecto");
 				return;
 			}
 
 			if (ArranqueBaseDatos.profesores.containsKey(parametros[2])) {
-				GestionErrores.errorComando("IP", "Profesor ya existente");
+				GestionErrores.errorComando(GestionErrores.INSERTA_PERSONA, "Profesor ya existente");
 				return;
 			}
 
 			if (Persona.comprobarFecha(parametros[4]) == false) {
-				GestionErrores.errorComando("IP", "Fecha incorrecta");
+				GestionErrores.errorComando(GestionErrores.INSERTA_PERSONA, "Fecha incorrecta");
 				return;
 			}
 
 			else {
 				ArranqueBaseDatos.profesores.put(parametros[2],
 						new Profesor(parametros[2], parametros[3], parametros[4], parametros[5], parametros[6]));
-				// System.out.println(ArranqueBaseDatos.profesores);
-				ArranqueBaseDatos.sobreescribirFicheroProfesores("profesores.txt", ArranqueBaseDatos.profesores);
+			
+				ArranqueBaseDatos.sobreescribirFicheroProfesores(profesores, ArranqueBaseDatos.profesores);
 
 			}
 		}
 
 		if (parametros[1].contains("alumno")) {
 			if (b != 6) {
-				GestionErrores.errorComando("IP", "numero de argumentos incorrecto");
+				GestionErrores.errorComando(GestionErrores.INSERTA_PERSONA, "numero de argumentos incorrecto");
 			}
 
 			if (Persona.comprobarDNI(parametros[2]) == false) {
-				GestionErrores.errorComando("IP", "dni incorrecto");
+				GestionErrores.errorComando(GestionErrores.INSERTA_PERSONA, "dni incorrecto");
 				return;
 			}
 
 			if (ArranqueBaseDatos.alumnos.containsKey(parametros[2])) {
-				GestionErrores.errorComando("IP", "Alumno ya existente");
+				GestionErrores.errorComando(GestionErrores.INSERTA_PERSONA, "Alumno ya existente");
 				return;
 			}
 
 			if (Persona.comprobarFecha(parametros[4]) == false) {
-				GestionErrores.errorComando("IP", "Fecha incorrecta");
+				GestionErrores.errorComando(GestionErrores.INSERTA_PERSONA, "Fecha incorrecta");
 				return;
 			}
 			if (Persona.comprobarFechaIngreso(parametros[4], parametros[5]) == false) {
-				GestionErrores.errorComando("IP", "Fecha ingreso incorrecta");
+				GestionErrores.errorComando(GestionErrores.INSERTA_PERSONA, "Fecha ingreso incorrecta");
 				return;
 			}
 
 			else {
 				ArranqueBaseDatos.alumnos.put(parametros[2],
 						new Alumno(parametros[2], parametros[3], parametros[4], parametros[5]));
-				// System.out.println(ArranqueBaseDatos.alumnos);
-				// System.out.println(ArranqueBaseDatos.alumnos.get(parametros[2]).toTexto());
-				ArranqueBaseDatos.sobreescribirFicheroAlumnos("alumnos.txt", ArranqueBaseDatos.alumnos);
+				
+				ArranqueBaseDatos.sobreescribirFicheroAlumnos(alumnos, ArranqueBaseDatos.alumnos);
 
 			}
 
@@ -166,7 +175,7 @@ public class Comandos {
 
 	public static void asignaGrupo(String[] imput) {
 		if (imput.length < 7) {
-			GestionErrores.errorComando("AGRUPO", "numero de argumentos incorrecto");
+			GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "numero de argumentos incorrecto");
 		}
 		String parametros[] = new String[imput.length];
 		for (int i = 1; i < parametros.length; i++) {
@@ -175,27 +184,27 @@ public class Comandos {
 		}
 
 		if (parametros[1].contains("profesor")) {
-			// System.out.println("profe");
+			
 			// profesor inexistente
 			if (!ArranqueBaseDatos.profesores.containsKey(parametros[2])) {
-				GestionErrores.errorComando("AGRUPO", "profesor inexistente");
+				GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "profesor inexistente");
 				return;
 			}
 			// asignatura inexistente
 			if (!ArranqueBaseDatos.asignaturas.containsKey(parametros[3])) {
-				GestionErrores.errorComando("AGRUPO", "Asignatura inexistente");
+				GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "Asignatura inexistente");
 				return;
 			}
 			// tipo de grupo incorrecto
 			if (parametros[4].toCharArray()[0] != 'A' && parametros[4].toCharArray()[0] != 'B') {
-				GestionErrores.errorComando("AGRUPO", "Tipo de grupo incorrecto");
+				GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "Tipo de grupo incorrecto");
 				return;
 			}
 			// grupo inexistente
 			if (parametros[4].toCharArray()[0] == 'A') {
 				if (!ArranqueBaseDatos.asignaturas.get(parametros[3]).getIdgrupoA()
 						.contains(Integer.parseInt(parametros[5]))) {
-					GestionErrores.errorComando("AGRUPO", "Grupo inexistente");
+					GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "Grupo inexistente");
 					return;
 				}
 			}
@@ -203,14 +212,14 @@ public class Comandos {
 			if (parametros[4].toCharArray()[0] == 'B') {
 				if (!ArranqueBaseDatos.asignaturas.get(parametros[3]).getIdgrupoB()
 						.contains(Integer.parseInt(parametros[5]))) {
-					GestionErrores.errorComando("AGRUPO", "Grupo inexistente");
+					GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "Grupo inexistente");
 					return;
 				}
 			}
 			// no presente en pod profesor
 			int posicion = 0;
 			if (!ArranqueBaseDatos.pod.get(parametros[2]).getAsignatura().contains(parametros[3].trim())) {
-				GestionErrores.errorComando("AGRUPO", "Asignatura no presente en POD del profesor");
+				GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "Asignatura no presente en POD del profesor");
 				return;
 			}
 			// posicion del grupo correspontiente a la asignatura en el pod
@@ -225,7 +234,7 @@ public class Comandos {
 				}
 			}
 			if (grupo == false) {
-				GestionErrores.errorComando("AGRUPO", "Tipo grupo no presente en POD del profesor");
+				GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "Tipo grupo no presente en POD del profesor");
 				return;
 			}
 
@@ -242,7 +251,7 @@ public class Comandos {
 							if (ArranqueBaseDatos.profesores.get(clave).getId_Grupo(i) == Integer
 									.parseInt(parametros[5])) {
 
-								GestionErrores.errorComando("AGRUPO", "Grupo ya asignado");
+								GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "Grupo ya asignado");
 								return;
 							}
 						}
@@ -254,15 +263,13 @@ public class Comandos {
 			// Número de grupos superior al contemplado en POD
 			float nummaxgrupos = ArranqueBaseDatos.pod.get(parametros[2]).getNumeroGrupos(posicion);
 			float numerogruposdados = 0;
-			// System.out.println(parametros[3]);
+			
 
 			for (int i = 0; i < ArranqueBaseDatos.profesores.get(parametros[2]).getSiglasAsignatura().size(); i++) {
-				// System.out.println(parametros[3].trim()+"
-				// "+ArranqueBaseDatos.profesores.get(parametros[2]).getSiglas_Asignatura(i));
+				
 				if (parametros[3].trim()
 						.equals(ArranqueBaseDatos.profesores.get(parametros[2]).getSiglas_Asignatura(i))) {
-					// System.out.println(ArranqueBaseDatos.profesores.get(parametros[2]).getTipoGrupo(i));
-
+				
 					if (ArranqueBaseDatos.profesores.get(parametros[2])
 							.getTipoGrupo(i) == parametros[4].toCharArray()[0]) {
 						numerogruposdados++;
@@ -273,7 +280,7 @@ public class Comandos {
 
 			if (nummaxgrupos < (numerogruposdados + 1)) {
 
-				GestionErrores.errorComando("AGRUPO", "Número de grupos superior al contemplado en POD");
+				GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "Número de grupos superior al contemplado en POD");
 				return;
 			}
 			// solape de horas
@@ -288,7 +295,7 @@ public class Comandos {
 									ArranqueBaseDatos.profesores.get(parametros[2]).getId_Grupo(i));
 					if (ArranqueBaseDatos.asignaturas.get(parametros[3])
 							.gethora(parametros[4].toCharArray()[0], Integer.parseInt(parametros[5])).equals(hora)) {
-						GestionErrores.errorComando("AGRUPO", "Solape profesor");
+						GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "Solape profesor");
 						return;
 					}
 				}
@@ -298,7 +305,7 @@ public class Comandos {
 			ArranqueBaseDatos.profesores.get(parametros[2]).asignagrupo(parametros[3], parametros[4].toCharArray()[0],
 					Integer.parseInt(parametros[5]));
 
-			ArranqueBaseDatos.sobreescribirFicheroProfesores("profesores.txt", ArranqueBaseDatos.profesores);
+			ArranqueBaseDatos.sobreescribirFicheroProfesores(profesores, ArranqueBaseDatos.profesores);
 
 		}
 
@@ -306,17 +313,17 @@ public class Comandos {
 
 			// alumno inexistente
 			if (!ArranqueBaseDatos.alumnos.containsKey(parametros[2])) {
-				GestionErrores.errorComando("AGRUPO", "alumno inexistente");
+				GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "alumno inexistente");
 				return;
 			}
 			// asignatura inexistente
 			if (!ArranqueBaseDatos.asignaturas.containsKey(parametros[3])) {
-				GestionErrores.errorComando("AGRUPO", "Asignatura inexistente");
+				GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "Asignatura inexistente");
 				return;
 			}
 			// tipo de grupo incorrecto
 			if (parametros[4].toCharArray()[0] != 'A' && parametros[4].toCharArray()[0] != 'B') {
-				GestionErrores.errorComando("AGRUPO", "Tipo de grupo incorrecto");
+				GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "Tipo de grupo incorrecto");
 				return;
 			}
 
@@ -325,7 +332,7 @@ public class Comandos {
 			if (!ArranqueBaseDatos.alumnos.get(parametros[2]).getSiglasAsignaturaActual()
 					.contains(parametros[3].trim())) {
 
-				GestionErrores.errorComando("AGRUPO", "Alumno no matriculado");
+				GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "Alumno no matriculado");
 				return;
 			}
 			// Solape alumno
@@ -350,7 +357,7 @@ public class Comandos {
 						if (ArranqueBaseDatos.asignaturas.get(parametros[3])
 								.gethora(parametros[4].toCharArray()[0], Integer.parseInt(parametros[5]))
 								.equals(hora)) {
-							GestionErrores.errorComando("AGRUPO", "Solape alumno");
+							GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "Solape alumno");
 							return;
 						}
 					}
@@ -383,7 +390,7 @@ public class Comandos {
 					.get(ArranqueBaseDatos.asignaturas.get(parametros[3])
 							.getclase(parametros[4].trim().toCharArray()[0], Integer.parseInt(parametros[5])))
 					.getCapacidad() < numeropersonas + 1) {
-				GestionErrores.errorComando("AGRUPO", "Aula completa");
+				GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "Aula completa");
 				return;
 			}
 
@@ -392,7 +399,7 @@ public class Comandos {
 			ArranqueBaseDatos.alumnos.get(parametros[2]).asignargrupo(parametros[3], parametros[4].toCharArray()[0],
 					Integer.parseInt(parametros[5]));
 
-			ArranqueBaseDatos.sobreescribirFicheroAlumnos("alumnos.txt", ArranqueBaseDatos.alumnos);
+			ArranqueBaseDatos.sobreescribirFicheroAlumnos(alumnos, ArranqueBaseDatos.alumnos);
 
 		}
 
@@ -406,7 +413,7 @@ public class Comandos {
 	 */
 	public static void matricularalumno(String imput[]) {
 		if (imput.length < 4) {
-			GestionErrores.errorComando("MAT", "numero de argumentos incorrecto");
+			GestionErrores.errorComando(GestionErrores.MATRICULAR_ALUMNO, "numero de argumentos incorrecto");
 		}
 
 		String parametros[] = new String[imput.length];
@@ -416,12 +423,12 @@ public class Comandos {
 		}
 
 		if (!ArranqueBaseDatos.alumnos.containsKey(parametros[1])) {
-			GestionErrores.errorComando("MAT", "alumno inexistente");
+			GestionErrores.errorComando(GestionErrores.MATRICULAR_ALUMNO, "alumno inexistente");
 			return;
 		}
 
 		if (!ArranqueBaseDatos.asignaturas.containsKey(parametros[2])) {
-			GestionErrores.errorComando("MAT", "asignatura inexistente");
+			GestionErrores.errorComando(GestionErrores.MATRICULAR_ALUMNO, "asignatura inexistente");
 			return;
 		}
 
@@ -429,7 +436,7 @@ public class Comandos {
 		// coincidencias en la lista sigla asignatura actual
 		for (int i = 0; i < ArranqueBaseDatos.alumnos.get(parametros[1]).getSiglasAsignaturaActual().size(); i++) {
 			if (ArranqueBaseDatos.alumnos.get(parametros[1]).getSiglas_Asignatura_Actual(i).equals(parametros[2])) {
-				GestionErrores.errorComando("MAT", "Ya es alumno de la asignatura indicada");
+				GestionErrores.errorComando(GestionErrores.MATRICULAR_ALUMNO, "Ya es alumno de la asignatura indicada");
 				return;
 			}
 		}
@@ -439,12 +446,12 @@ public class Comandos {
 		for (int i = 0; i < ArranqueBaseDatos.asignaturas.get(parametros[2]).getPreRequisitos().size(); i++) {
 			if (!ArranqueBaseDatos.alumnos.get(parametros[1]).getSiglasAsignaturaSuperada()
 					.contains(ArranqueBaseDatos.asignaturas.get(parametros[2]).getPre_Requisitos(i))) {
-				GestionErrores.errorComando("MAT", "No cumple requisitos");
+				GestionErrores.errorComando(GestionErrores.MATRICULAR_ALUMNO, "No cumple requisitos");
 				return;
 			}
 		}
 		ArranqueBaseDatos.alumnos.get(parametros[1]).matricula(parametros[2]);
-		ArranqueBaseDatos.sobreescribirFicheroAlumnos("alumnos.txt", ArranqueBaseDatos.alumnos);
+		ArranqueBaseDatos.sobreescribirFicheroAlumnos(alumnos, ArranqueBaseDatos.alumnos);
 
 	}
 
@@ -455,7 +462,7 @@ public class Comandos {
 		 * = aula
 		 */
 		if (imput.length < 8) {
-			GestionErrores.errorComando("CGA", "numero de argumentos incorrecto");
+			GestionErrores.errorComando(GestionErrores.CREAR_GRUPO_ASIGNATURA, "numero de argumentos incorrecto");
 		}
 
 		String parametros[] = new String[imput.length];
@@ -466,19 +473,19 @@ public class Comandos {
 
 		// asignatura inexistente
 		if (!ArranqueBaseDatos.asignaturas.containsKey(parametros[1])) {
-			GestionErrores.errorComando("CGA", "Asignatura inexistente");
+			GestionErrores.errorComando(GestionErrores.CREAR_GRUPO_ASIGNATURA, "Asignatura inexistente");
 			return;
 		}
 		// tipo de grupo incorrecto
 		if (parametros[2].toCharArray()[0] != 'A' && parametros[2].toCharArray()[0] != 'B') {
-			GestionErrores.errorComando("CGA", "Tipo de grupo incorrecto");
+			GestionErrores.errorComando(GestionErrores.CREAR_GRUPO_ASIGNATURA, "Tipo de grupo incorrecto");
 			return;
 		}
 		// grupo existente
 		if (parametros[2].toCharArray()[0] == 'A') {
 			if (ArranqueBaseDatos.asignaturas.get(parametros[1]).getIdgrupoA()
 					.contains(Integer.parseInt(parametros[3]))) {
-				GestionErrores.errorComando("CGA", "Grupo ya existente");
+				GestionErrores.errorComando(GestionErrores.CREAR_GRUPO_ASIGNATURA, "Grupo ya existente");
 				return;
 
 			}
@@ -486,7 +493,7 @@ public class Comandos {
 		if (parametros[2].toCharArray()[0] == 'B') {
 			if (ArranqueBaseDatos.asignaturas.get(parametros[1]).getIdgrupoB()
 					.contains(Integer.parseInt(parametros[3]))) {
-				GestionErrores.errorComando("CGA", "Grupo ya existente");
+				GestionErrores.errorComando(GestionErrores.CREAR_GRUPO_ASIGNATURA, "Grupo ya existente");
 				return;
 
 			}
@@ -497,13 +504,13 @@ public class Comandos {
 				&& parametros[4].toCharArray()[0] != 'X' && parametros[4].toCharArray()[0] != 'J'
 				&& parametros[4].toCharArray()[0] != 'V') {
 
-			GestionErrores.errorComando("CGA", "Dia incorrecto");
+			GestionErrores.errorComando(GestionErrores.CREAR_GRUPO_ASIGNATURA, "Dia incorrecto");
 			return;
 		}
 
 		// aula no existente
 		if (!ArranqueBaseDatos.aulas.containsKey(parametros[6])) {
-			GestionErrores.errorComando("CGA", "Aula no existente");
+			GestionErrores.errorComando(GestionErrores.CREAR_GRUPO_ASIGNATURA, "Aula no existente");
 			return;
 		}
 
@@ -521,7 +528,7 @@ public class Comandos {
 							if (ArranqueBaseDatos.asignaturas.get(clave).getHoragrupoA(i).equals(parametros[5])) {
 								if (ArranqueBaseDatos.asignaturas.get(clave).getclaseA(i)
 										.equals(parametros[6].trim())) {
-									GestionErrores.errorComando("CGA", "Solape de Aula");
+									GestionErrores.errorComando(GestionErrores.CREAR_GRUPO_ASIGNATURA, "Solape de Aula");
 									return;
 								}
 							}
@@ -540,7 +547,7 @@ public class Comandos {
 									.equals(parametros[5].trim())) {
 								if (ArranqueBaseDatos.asignaturas.get(clave).getclaseB(i)
 										.equals(parametros[6].trim())) {
-									GestionErrores.errorComando("CGA", "Solape de Aula");
+									GestionErrores.errorComando(GestionErrores.CREAR_GRUPO_ASIGNATURA, "Solape de Aula");
 									return;
 								}
 							}
@@ -554,7 +561,7 @@ public class Comandos {
 		ArranqueBaseDatos.asignaturas.get(parametros[1]).creaGrupo(parametros[2].trim().toCharArray()[0],
 				Integer.parseInt(parametros[3]), parametros[4].trim().toCharArray()[0], parametros[5].trim(),
 				parametros[6].trim());
-		ArranqueBaseDatos.sobreescribirFicheroAsignaturas("asignaturas.txt", ArranqueBaseDatos.asignaturas);
+		ArranqueBaseDatos.sobreescribirFicheroAsignaturas(asignaturas, ArranqueBaseDatos.asignaturas);
 	}
 
 	public static void evaluarAsig(String[] imput) {
@@ -566,13 +573,13 @@ public class Comandos {
 		}
 		LinkedHashMap<String, Notas> notasalumnos = new LinkedHashMap<String, Notas>();
 
-		// System.out.println(parametros[1]);
+	
 		// parametro 0 = comando parametro 1 = asignatura
 		// parametro 2 = ficheronotasA parametros 3 = ficheronotasB
 
 		// asignatura inexistente
 		if (!ArranqueBaseDatos.asignaturas.containsKey(parametros[1])) {
-			GestionErrores.errorComando("EVALUA", "Asignatura inexistente");
+			GestionErrores.errorComando(GestionErrores.EVALUAR_ASIGNATURA, "Asignatura inexistente");
 
 			return;
 		}
@@ -585,7 +592,7 @@ public class Comandos {
 						.equals(parametros[1].trim())) {
 					if (ArranqueBaseDatos.alumnos.get(clave).getCurso_Academico(i)
 							.equals(ArranqueBaseDatos.cursoAcademico.trim())) {
-						GestionErrores.errorComando("EVALUA", "Asignatura ya evaluada en ese curso académico");
+						GestionErrores.errorComando(GestionErrores.EVALUAR_ASIGNATURA, "Asignatura ya evaluada en ese curso académico");
 						return;
 					}
 
@@ -611,7 +618,7 @@ public class Comandos {
 				String partes[] = lineas.split(" ");
 
 				if (!ArranqueBaseDatos.alumnos.containsKey(partes[0].trim())) {
-					GestionErrores.errorComando("EVALUA",
+					GestionErrores.errorComando(GestionErrores.EVALUAR_ASIGNATURA,
 							"Error en linea " + linea + ": Alumno inexistente: " + partes[0].trim());
 				} else {
 					notasalumnos.put(partes[0], new Notas(partes[0], partes[1], linea));
@@ -639,7 +646,7 @@ public class Comandos {
 				String partes[] = lineas.split(" ");
 
 				if (!ArranqueBaseDatos.alumnos.containsKey(partes[0].trim())) {
-					GestionErrores.errorComando("EVALUA",
+					GestionErrores.errorComando(GestionErrores.EVALUAR_ASIGNATURA,
 							"Error en linea " + linea + ": Alumno inexistente: " + partes[0].trim());
 				} else {
 					if (!notasalumnos.containsKey(partes[0])) {
@@ -664,19 +671,19 @@ public class Comandos {
 
 			// alumno no matriculado en la asignatura
 			if (!ArranqueBaseDatos.alumnos.get(clave).getSiglasAsignaturaActual().contains(parametros[1].trim())) {
-				GestionErrores.errorComando("EVALUA", "Alumno no matriculado: " + clave.trim());
+				GestionErrores.errorComando(GestionErrores.EVALUAR_ASIGNATURA, "Alumno no matriculado: " + clave.trim());
 				continue;
 			}
 
 			// error en nota A/B
 			if (notasalumnos.get(clave).getNotaA() > 5 || notasalumnos.get(clave).getNotaA() < 0) {
-				GestionErrores.errorComando("EVALUA",
+				GestionErrores.errorComando(GestionErrores.EVALUAR_ASIGNATURA,
 						"Error en linea " + notasalumnos.get(clave).getLineaA() + ": Nota grupo A incorrecta");
 				continue;
 			}
 
 			if (notasalumnos.get(clave).getNotaB() < 0 || notasalumnos.get(clave).getNotaB() > 5) {
-				GestionErrores.errorComando("EVALUA",
+				GestionErrores.errorComando(GestionErrores.EVALUAR_ASIGNATURA,
 						"Error en linea " + notasalumnos.get(clave).getLineaB() + ": Nota grupo B incorrecta");
 				continue;
 			}
@@ -717,7 +724,7 @@ public class Comandos {
 			}
 
 		}
-		ArranqueBaseDatos.sobreescribirFicheroAlumnos("alumnos.txt", ArranqueBaseDatos.alumnos);
+		ArranqueBaseDatos.sobreescribirFicheroAlumnos(alumnos, ArranqueBaseDatos.alumnos);
 		return;
 	}
 
@@ -735,14 +742,38 @@ public class Comandos {
 
 			// WIP
 		}
-		OcupacionAula ocupacion[][] = new OcupacionAula[10][6];
-		ocupacion[0][0]= new OcupacionAula("hora");
+		
 			
 		Set<String> claves = ArranqueBaseDatos.asignaturas.keySet();
-
+		Set<String> setaulas = ArranqueBaseDatos.aulas.keySet();
+		String [] aulas=setaulas.toArray(new String [setaulas.size()]);
+	
+		Arrays.sort(aulas);
+	
+		boolean salir=false;
+		for(String aula:aulas) {
+					if(!parametros[1].equals("*")) {
+						aula=parametros[1];
+						salir=true;
+					}
+					OcupacionAula ocupacion[][] = new OcupacionAula[10][6];
+					ocupacion[0][0]= new OcupacionAula("9-10");
+					ocupacion[1][0]= new OcupacionAula("10-11");
+					ocupacion[2][0]= new OcupacionAula("11-12");
+					ocupacion[3][0]= new OcupacionAula("12-13");
+					ocupacion[4][0]= new OcupacionAula("13-14");
+					ocupacion[5][0]= new OcupacionAula("14-15");
+					ocupacion[6][0]= new OcupacionAula("15-16");
+					ocupacion[7][0]= new OcupacionAula("16-17");
+					ocupacion[8][0]= new OcupacionAula("17-18");
+					ocupacion[9][0]= new OcupacionAula("18-19");
+		
 		for (String clave : claves) {
+			
+			if(ArranqueBaseDatos.aulas.get(aula).getTipo_Grupo().contains("A")) {
+			
 			for (int i = 0; i < ArranqueBaseDatos.asignaturas.get(clave).getClasegrupoA().size(); i++) {
-				if (ArranqueBaseDatos.asignaturas.get(clave).getclaseA(i).equals(parametros[1])) {
+				if (ArranqueBaseDatos.asignaturas.get(clave).getclaseA(i).equals(aula)) {
 					char dia = ArranqueBaseDatos.asignaturas.get(clave).getDiagrupoA(i);
 					int hora = Integer.parseInt(ArranqueBaseDatos.asignaturas.get(clave).getHoragrupoA(i));
 					int duracion = ArranqueBaseDatos.asignaturas.get(clave).getDuracion_GrupoA();
@@ -750,51 +781,51 @@ public class Comandos {
 					Set<String> clavesprofe = ArranqueBaseDatos.profesores.keySet();
 					switch(dia) {
 					case 'L':
-						x=0;
-						break;
-					case 'M':
 						x=1;
 						break;
-					case 'X':
+					case 'M':
 						x=2;
 						break;
-					case 'J':
+					case 'X':
 						x=3;
 						break;
-					case 'V':
+					case 'J':
 						x=4;
+						break;
+					case 'V':
+						x=5;
 						break;
 					}
 					switch(hora) {
 					case 9:
-						y=1;
+						y=0;
 						break;
 					case 10:
-						y=2;
+						y=1;
 						break;
 					case 11:
-						y=3;
+						y=2;
 						break;
 					case 12:
-						y=4;
+						y=3;
 						break;
 					case 13:
-						y=5;
+						y=4;
 						break;
 					case 14:
-						y=6;
+						y=5;
 						break;
 					case 15:
-						y=7;
+						y=6;
 						break;
 					case 16:
-						y=8;
+						y=7;
 						break;
 					case 17:
-						y=9;
+						y=8;
 						break;
 					case 18:
-						y=10;
+						y=9;
 						break;
 					}
 							for (String claveprofe : clavesprofe) {
@@ -802,22 +833,25 @@ public class Comandos {
 								for (int a = 0; a < repetido.size(); a++) {
 									if (repetido.get(a).equals(clave)) {
 
-										if (ArranqueBaseDatos.profesores.get(claveprofe).getTipoGrupo(a) == ArranqueBaseDatos.aulas.get(parametros[1]).getTipo_Grupo().trim().toCharArray()[0]) {
+										if (ArranqueBaseDatos.profesores.get(claveprofe).getTipoGrupo(a) == ArranqueBaseDatos.aulas.get(aula).getTipo_Grupo().trim().toCharArray()[0]) {
 
 											if (ArranqueBaseDatos.profesores.get(claveprofe).getId_Grupo(a) == ArranqueBaseDatos.asignaturas.get(clave).getIdgrupoA(i)) {
 												String nombre= ArranqueBaseDatos.profesores.get(claveprofe).getNombre().trim();
-												System.out.println(nombre);
+												
 												String partes[]=nombre.split(" ");
 												String siglas=Character.toString(partes[0].toCharArray()[0]);
+												char tipogrupo=ArranqueBaseDatos.profesores.get(claveprofe).getTipoGrupo(a);
+												int idgrupo=ArranqueBaseDatos.profesores.get(claveprofe).getId_Grupo(a);
 												for(int b=1;b<partes.length;b++) {
-													
-													siglas=siglas.concat(Character.toString(partes[b].toCharArray()[0]));
+													if(partes[b].toCharArray()[0]==',') continue;
+													if(b==partes.length-1) siglas=Character.toString(partes[b].toCharArray()[0]).concat(siglas);
+													else siglas=siglas.concat(Character.toString(partes[b].toCharArray()[0]));
 													
 													
 												}
-												ocupacion[x][y]= new OcupacionAula(clave,siglas);
+												ocupacion[y][x]= new OcupacionAula(clave,siglas,tipogrupo,idgrupo);
 												if(duracion==2) {
-													ocupacion[x+1][y]=ocupacion[x][y];
+													ocupacion[y+1][x]=ocupacion[y][x];
 												}
 												
 											}
@@ -828,35 +862,141 @@ public class Comandos {
 					
 					
 				}
+				
 
 			}
 		}
-		
+			else {
+				for (int i = 0; i < ArranqueBaseDatos.asignaturas.get(clave).getClasegrupoB().size(); i++) {
+					if (ArranqueBaseDatos.asignaturas.get(clave).getclaseB(i).equals(aula)) {
+						char dia = ArranqueBaseDatos.asignaturas.get(clave).getDiagrupoB(i);
+						int hora = Integer.parseInt(ArranqueBaseDatos.asignaturas.get(clave).getHoragrupoB(i));
+						int duracion = ArranqueBaseDatos.asignaturas.get(clave).getDuracionGrupoB();
+						int x=0,y=0;
+						Set<String> clavesprofe = ArranqueBaseDatos.profesores.keySet();
+						switch(dia) {
+						case 'L':
+							x=1;
+							break;
+						case 'M':
+							x=2;
+							break;
+						case 'X':
+							x=3;
+							break;
+						case 'J':
+							x=4;
+							break;
+						case 'V':
+							x=5;
+							break;
+						}
+						switch(hora) {
+						case 9:
+							y=0;
+							break;
+						case 10:
+							y=1;
+							break;
+						case 11:
+							y=2;
+							break;
+						case 12:
+							y=3;
+							break;
+						case 13:
+							y=4;
+							break;
+						case 14:
+							y=5;
+							break;
+						case 15:
+							y=6;
+							break;
+						case 16:
+							y=7;
+							break;
+						case 17:
+							y=8;
+							break;
+						case 18:
+							y=9;
+							break;
+						}
+								for (String claveprofe : clavesprofe) {
+									ArrayList<String> repetido = ArranqueBaseDatos.profesores.get(claveprofe).getSiglasAsignatura();
+									for (int a = 0; a < repetido.size(); a++) {
+										if (repetido.get(a).equals(clave)) {
+
+											if (ArranqueBaseDatos.profesores.get(claveprofe).getTipoGrupo(a) == ArranqueBaseDatos.aulas.get(aula).getTipo_Grupo().trim().toCharArray()[0]) {
+
+												if (ArranqueBaseDatos.profesores.get(claveprofe).getId_Grupo(a) == ArranqueBaseDatos.asignaturas.get(clave).getIdgrupoB(i)) {
+													String nombre= ArranqueBaseDatos.profesores.get(claveprofe).getNombre().trim();
+												
+													char tipogrupo=ArranqueBaseDatos.profesores.get(claveprofe).getTipoGrupo(a);
+													int idgrupo=ArranqueBaseDatos.profesores.get(claveprofe).getId_Grupo(a);
+													String partes[]=nombre.split(" ");
+													String siglas=Character.toString(partes[0].toCharArray()[0]);
+													for(int b=1;b<partes.length;b++) {
+														if(partes[b].toCharArray()[0]==',') continue;
+														if(b==partes.length-1) siglas=Character.toString(partes[b].toCharArray()[0]).concat(siglas);
+														else siglas=siglas.concat(Character.toString(partes[b].toCharArray()[0]));
+														
+													}
+													ocupacion[y][x]= new OcupacionAula(clave,siglas,tipogrupo,idgrupo);
+													if(duracion==2) {
+														ocupacion[y+1][x]=ocupacion[y][x];
+													}
+													
+												}
+											}
+										}
+									}
+								}
+						
+						
+					}
+					
+
+				}
+			}
+			
+			
+		}
 		for(int a=0;a<10;a++) {
-			for(int b=0;b<6;b++) {
+			for(int b=1;b<6;b++) {
 				if(ocupacion[a][b]==null) ocupacion[a][b]= new OcupacionAula();
+				if(a==5)  ocupacion[a][b]= new OcupacionAula("XXXXXXXXXXXXXXXXXXXXX");
 			}
 		}
+	
+			sacarJtable( ocupacion,aula);
+			if(salir) break;
 		
-		System.out.println(ocupacion[1][3].toString());
-		String[] columnas = {"Hora","Lunes","Martes","Miercoles","Jueves","Viernes"};
-		//JTable tabla= new JTable (ocupacion,columnas);
-		//System.out.println(tabla);
-		JFrame ventana= new JFrame (parametros[1]);
-		ventana.setLayout(new FlowLayout());
-		JTable tabla= new JTable (ocupacion,columnas);
-		JScrollPane Js = new JScrollPane(tabla);
-		Js.setPreferredSize(new Dimension(900, 182));
+		}
 		
-		ventana.add(Js);
-		ventana.setSize(new Dimension(1000,300));
-		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		ventana.setVisible(true);
 		
 	}
 	
-	
+	public static void sacarJtable(OcupacionAula[][] ocupacion,String aula) {
+		//
+		String[] fila = {"Hora","Lunes","Martes","Miercoles","Jueves","Viernes"};
+
+		JFrame ventana= new JFrame (aula);
+		ventana.setLayout(new FlowLayout());
+		JTable tabla= new JTable (ocupacion,fila);
+		tabla.setRowHeight(35);
+		JScrollPane Js = new JScrollPane(tabla);
+		Js.setPreferredSize(new Dimension(900, 372));
+		
+		ventana.add(Js);
+		ventana.setSize(new Dimension(1000,500));
+		//ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		ventana.setVisible(true);
+		
+		
+	}
 	
 
 }

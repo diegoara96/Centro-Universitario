@@ -54,7 +54,7 @@ public class Asignatura implements EscribibleEnFichero {
 		
 		for (int i = 0; i < grupoa.length; i++) {
 			String[] campos = grupoa[i].trim().split(" ");
-			//System.out.println(campos.length);
+			
 			this.idgrupoA.add(Integer.parseInt(campos[0]));
 			this.diagrupoA.add(campos[1].trim().toCharArray()[0]);
 			this.horagrupoA.add(campos[2]);
@@ -71,7 +71,7 @@ public class Asignatura implements EscribibleEnFichero {
 			this.clasegrupoB.add(campos[3]);
 		}
 		
-	//	System.out.println(idgrupoA);
+	
 		
 	}
 
@@ -241,7 +241,7 @@ public class Asignatura implements EscribibleEnFichero {
 		//añadimos los grupos teoricos
 		if (!idgrupoA.isEmpty()) {
 			for (int i = 0; i < idgrupoA.size(); i++) {
-		//		System.out.println(i+" "+siglasAsignaturaSuperada.size());
+		
 				if (i==idgrupoA.size()-1) {
 					buffer.append(idgrupoA.get(i) + " " + diagrupoA.get(i) + " "
 							+ horagrupoA.get(i)+ " " + clasegrupoA.get(i)+"\n");
@@ -255,7 +255,7 @@ public class Asignatura implements EscribibleEnFichero {
 		//añadimos los grupos practicos
 		if (!idgrupoB.isEmpty()) {
 			for (int i = 0; i < idgrupoB.size(); i++) {
-		//		System.out.println(i+" "+siglasAsignaturaSuperada.size());
+		
 				if (i==idgrupoB.size()-1) {
 					buffer.append(idgrupoB.get(i) + " " + diagrupoB.get(i) + " "
 							+ horagrupoB.get(i)+ " " + clasegrupoB.get(i)+"\n");
