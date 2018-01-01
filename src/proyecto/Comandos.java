@@ -50,7 +50,7 @@ public class Comandos {
 		case "CreaGrupoAsig":
 			creaGrupoAsig(imput);
 			break;
-		case GestionErrores.EVALUAR_ASIGNATURA:
+		case "Evalua":
 			evaluarAsig(imput);
 			break;
 		case "Expediente": // WIP
