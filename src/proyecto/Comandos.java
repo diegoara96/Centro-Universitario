@@ -3,9 +3,14 @@ package proyecto;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -727,6 +732,45 @@ public class Comandos {
 		ArranqueBaseDatos.sobreescribirFicheroAlumnos(alumnos, ArranqueBaseDatos.alumnos);
 		return;
 	}
+	
+	//Genera el expediente de un alumno 
+	public static void ExpedienteAlumno(String[] imput) {
+		if (imput.length < 4) {
+			GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "numero de argumentos incorrecto");
+		}
+		
+		String parametros[] = new String[imput.length];
+		for(int i = 1; i < parametros.length; i++) {
+			
+			parametros[i - 1] = imput[i];
+		}
+		
+		if(!ArranqueBaseDatos.alumnos.containsKey(parametros[1])) {
+			GestionErrores.errorComando("EXP", "Alumno inexistente");	
+		}
+		String alumno= parametros[1];
+		
+		try
+		{
+		   FileWriter fw = new FileWriter(parametros[2]);
+		   //Crear un objeto BufferedWriter
+		   BufferedWriter bw = new BufferedWriter(fw);
+		     
+		   for (int i = 0; i < ArranqueBaseDatos.alumnos.get(parametros[1]).getSiglasAsignaturaSuperada().size(); i++) {
+				   
+				   bw.write( ArranqueBaseDatos.alumnos.get(alumno).getSiglas_Asignaturas_Superada(i) + ";" + ArranqueBaseDatos.alumnos.get(alumno).getNota(i+1) + ";" +  ArranqueBaseDatos.alumnos.get(alumno).getCurso_Academico(i+2) );
+				   bw.newLine();
+			   }	       
+		   
+		   bw.close();
+		}
+		
+		catch(Exception e)
+		{
+		   System.exit(1);}
+		}
+		
+		
 
 	public static void CalendarioAulas(String[] imput) {
 		String parametros[] = new String[imput.length];

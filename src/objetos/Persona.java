@@ -155,10 +155,10 @@ public abstract class Persona implements EscribibleEnFichero {
 	public static GregorianCalendar fechaToGregorianCalendar(String fecha) {
 		GregorianCalendar gc = new GregorianCalendar();
 		String []prueba=fecha.split("/");
-		int año = Integer.parseInt(prueba[2]);
+		int anho = Integer.parseInt(prueba[2]);
 		int mes = Integer.parseInt(prueba[1]);
 		int dia = Integer.parseInt(prueba[0]);
-		gc.set(año,mes-1,dia);
+		gc.set(anho,mes-1,dia);
 		//gc.setTime(date);
 		return gc;
 
