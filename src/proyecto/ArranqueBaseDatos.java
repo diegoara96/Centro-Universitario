@@ -31,14 +31,14 @@ public class ArranqueBaseDatos {
 
 		// lectura curso academico
 
-		ArrayList<ArrayList<String>> listacursoAcademico = leer(Comandos.cursoAcademico);
+		ArrayList<ArrayList<String>> listacursoAcademico = leer(Comandos.CURSOACADEMICO);
 		cursoAcademico = listacursoAcademico.get(0).get(0).toString();
 		String semanaini = listacursoAcademico.get(0).get(1).toString();
 		semanaInicioCurso = Integer.parseInt(semanaini);
 
 		// lectura aulas
 
-		ArrayList<ArrayList<String>> listaAulas = leer(Comandos.aulas);
+		ArrayList<ArrayList<String>> listaAulas = leer(Comandos.AULAS);
 		for (int i = 0; i < listaAulas.size(); i++) {
 			String clave = listaAulas.get(i).get(0).toString();
 			aulas.put(clave, new Aula(listaAulas.get(i).get(0).toString(), listaAulas.get(i).get(1).toString(),
@@ -47,7 +47,7 @@ public class ArranqueBaseDatos {
 
 		// lectura asignaturas
 
-		ArrayList<ArrayList<String>> listaAsignaturas = leer(Comandos.asignaturas);
+		ArrayList<ArrayList<String>> listaAsignaturas = leer(Comandos.ASIGNATURAS);
 
 		for (int i = 0; i < listaAsignaturas.size(); i++) {
 			
@@ -66,7 +66,7 @@ public class ArranqueBaseDatos {
 		
 		// lectura pod
 
-		ArrayList<ArrayList<String>> listaPod = leer(Comandos.pod);
+		ArrayList<ArrayList<String>> listaPod = leer(Comandos.POD);
 		
 		for (int i = 0; i < listaPod.size(); i++) {
 			String clave = listaPod.get(i).get(0).trim();
@@ -76,7 +76,7 @@ public class ArranqueBaseDatos {
 		
 		// lectura profesores
 
-		ArrayList<ArrayList<String>> listaProfesores = leer(Comandos.profesores);
+		ArrayList<ArrayList<String>> listaProfesores = leer(Comandos.PROFESORES);
 		
 		for (int i = 0; i < listaProfesores.size(); i++) {
 			String clave = listaProfesores.get(i).get(0).toString();
@@ -89,7 +89,7 @@ public class ArranqueBaseDatos {
 		}
 
 		// lectura alumnos
-		ArrayList<ArrayList<String>> listaAlumnos = leer(Comandos.alumnos);
+		ArrayList<ArrayList<String>> listaAlumnos = leer(Comandos.ALUMNOS);
 		
 		for (int i = 0; i < listaAlumnos.size(); i++) {
 			String clave = listaAlumnos.get(i).get(0).toString();
@@ -168,7 +168,7 @@ public class ArranqueBaseDatos {
 	
 	public static void lecturaejecucion() throws IOException {
 		String lineas;
-		String archivo= Comandos.ejecucion;
+		String archivo= Comandos.EJECUCION;
 		FileReader fichero = null;
 		// bloque try-catch si sale un error intenta el catch (mensaje de error y salir)
 		try {
@@ -189,11 +189,16 @@ public class ArranqueBaseDatos {
 				
 			}
 			else {
-			//	System.out.println(lineas.toCharArray()[0]);
+				 
 				lineas=lineas.replaceAll("\\s+"," ");
+				String prueba[]=lineas.trim().split(" ");
+				try {
+					Integer.parseInt(prueba[0]);
+				}
+				catch(NumberFormatException e) {
+					lineas="0 ".concat(lineas);
+				}
 				String imput[]=lineas.trim().split(" ");
-				//lectura.reset();
-			//	System.out.println(imput[2]);
 				
 				Comandos.comandos(imput);
 				

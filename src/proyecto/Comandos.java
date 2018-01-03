@@ -11,8 +11,10 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Set;
 import javax.swing.JFrame;
@@ -28,50 +30,52 @@ import proyecto.GestionErrores;
 public class Comandos {
 	
 	// declaramos las variables constantes para nuestra comodidad
-	public final static String alumnos="alumnos.txt";
-	public final static String profesores= "profesores.txt";
-	public final static String asignaturas= "asignaturas.txt";
-	public final static String aulas = "aulas.txt";
-	public final static String pod= "pod.txt";
-	public final static String cursoAcademico = "cursoAcademico.txt";
-	public final static String ejecucion = "ejecucion.txt";
+	public final static String ALUMNOS="alumnos.txt";
+	public final static String PROFESORES= "profesores.txt";
+	public final static String ASIGNATURAS= "asignaturas.txt";
+	public final static String AULAS = "aulas.txt";
+	public final static String POD= "pod.txt";
+	public final static String CURSOACADEMICO = "cursoAcademico.txt";
+	public final static String EJECUCION = "ejecucion.txt";
 	
 	
 	
 	
 	public static void comandos(String imput[]) {
+		String comando = imput[1].toLowerCase();
+		System.out.println(comando);
+	switch (comando) {
 
-		switch (imput[1]) {
+	case "insertapersona":
+		insertaPersona(imput);
+		break;
+	case "asignagrupo":
+		asignaGrupo(imput);
+		break;
+	case "matricula":
+		matricularalumno(imput);
+		break;
+	case "creagrupoasig":
+		creaGrupoAsig(imput);
+		break;
+	case "evalua":
+		evaluarAsig(imput);
+		break;
+	case "expediente": // WIP
+		obtenerExpediente(imput);
+		break;
+	case "ocupacionaula": // WIP
+		calendarioAulas(imput);
+		break;
+	
 
-		case "InsertaPersona":
-			insertaPersona(imput);
-			break;
-		case "AsignaGrupo":
-			asignaGrupo(imput);
-			break;
-		case "Matricula":
-			matricularalumno(imput);
-			break;
-		case "CreaGrupoAsig":
-			creaGrupoAsig(imput);
-			break;
-		case "Evalua":
-			evaluarAsig(imput);
-			break;
-		case "Expediente": // WIP
-			// obtenerExpediente();
-			break;
-		case "OcupacionAula": // WIP
-			CalendarioAulas(imput);
-			break;
+	default: // gestion de errores funcion mal escrita
+		GestionErrores.comandoErroneo(imput[1]);
+		break;
 
-		default: // gestion de errores funcion mal escrita
-			GestionErrores.comandoErroneo(imput[1]);
-			break;
+	}
 
-		}
-
-	} 
+} 
 
 	public static void insertaPersona(String imput[]) {
 
@@ -137,7 +141,7 @@ public class Comandos {
 				ArranqueBaseDatos.profesores.put(parametros[2],
 						new Profesor(parametros[2], parametros[3], parametros[4], parametros[5], parametros[6]));
 			
-				ArranqueBaseDatos.sobreescribirFicheroProfesores(profesores, ArranqueBaseDatos.profesores);
+				ArranqueBaseDatos.sobreescribirFicheroProfesores(PROFESORES, ArranqueBaseDatos.profesores);
 
 			}
 		}
@@ -170,7 +174,7 @@ public class Comandos {
 				ArranqueBaseDatos.alumnos.put(parametros[2],
 						new Alumno(parametros[2], parametros[3], parametros[4], parametros[5]));
 				
-				ArranqueBaseDatos.sobreescribirFicheroAlumnos(alumnos, ArranqueBaseDatos.alumnos);
+				ArranqueBaseDatos.sobreescribirFicheroAlumnos(ALUMNOS, ArranqueBaseDatos.alumnos);
 
 			}
 
@@ -310,7 +314,7 @@ public class Comandos {
 			ArranqueBaseDatos.profesores.get(parametros[2]).asignagrupo(parametros[3], parametros[4].toCharArray()[0],
 					Integer.parseInt(parametros[5]));
 
-			ArranqueBaseDatos.sobreescribirFicheroProfesores(profesores, ArranqueBaseDatos.profesores);
+			ArranqueBaseDatos.sobreescribirFicheroProfesores(PROFESORES, ArranqueBaseDatos.profesores);
 
 		}
 
@@ -404,7 +408,7 @@ public class Comandos {
 			ArranqueBaseDatos.alumnos.get(parametros[2]).asignargrupo(parametros[3], parametros[4].toCharArray()[0],
 					Integer.parseInt(parametros[5]));
 
-			ArranqueBaseDatos.sobreescribirFicheroAlumnos(alumnos, ArranqueBaseDatos.alumnos);
+			ArranqueBaseDatos.sobreescribirFicheroAlumnos(ALUMNOS, ArranqueBaseDatos.alumnos);
 
 		}
 
@@ -456,7 +460,7 @@ public class Comandos {
 			}
 		}
 		ArranqueBaseDatos.alumnos.get(parametros[1]).matricula(parametros[2]);
-		ArranqueBaseDatos.sobreescribirFicheroAlumnos(alumnos, ArranqueBaseDatos.alumnos);
+		ArranqueBaseDatos.sobreescribirFicheroAlumnos(ALUMNOS, ArranqueBaseDatos.alumnos);
 
 	}
 
@@ -566,7 +570,7 @@ public class Comandos {
 		ArranqueBaseDatos.asignaturas.get(parametros[1]).creaGrupo(parametros[2].trim().toCharArray()[0],
 				Integer.parseInt(parametros[3]), parametros[4].trim().toCharArray()[0], parametros[5].trim(),
 				parametros[6].trim());
-		ArranqueBaseDatos.sobreescribirFicheroAsignaturas(asignaturas, ArranqueBaseDatos.asignaturas);
+		ArranqueBaseDatos.sobreescribirFicheroAsignaturas(ASIGNATURAS, ArranqueBaseDatos.asignaturas);
 	}
 
 	public static void evaluarAsig(String[] imput) {
@@ -729,14 +733,15 @@ public class Comandos {
 			}
 
 		}
-		ArranqueBaseDatos.sobreescribirFicheroAlumnos(alumnos, ArranqueBaseDatos.alumnos);
+		ArranqueBaseDatos.sobreescribirFicheroAlumnos(ALUMNOS, ArranqueBaseDatos.alumnos);
 		return;
 	}
 	
 	//Genera el expediente de un alumno 
-	public static void ExpedienteAlumno(String[] imput) {
-		if (imput.length < 4) {
-			GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "numero de argumentos incorrecto");
+	public static void obtenerExpediente(String[] imput) {
+		if (imput.length != 4) {
+			GestionErrores.errorComando(GestionErrores.EXPEDIENTE_ALUMNO, "numero de argumentos incorrecto");
+			return;
 		}
 		
 		String parametros[] = new String[imput.length];
@@ -746,33 +751,52 @@ public class Comandos {
 		}
 		
 		if(!ArranqueBaseDatos.alumnos.containsKey(parametros[1])) {
-			GestionErrores.errorComando("EXP", "Alumno inexistente");	
+			GestionErrores.errorComando(GestionErrores.EXPEDIENTE_ALUMNO, "Alumno inexistente");	
 		}
 		String alumno= parametros[1];
 		
-		try
-		{
-		   FileWriter fw = new FileWriter(parametros[2]);
-		   //Crear un objeto BufferedWriter
-		   BufferedWriter bw = new BufferedWriter(fw);
-		     
-		   for (int i = 0; i < ArranqueBaseDatos.alumnos.get(parametros[1]).getSiglasAsignaturaSuperada().size(); i++) {
-				   
-				   bw.write( ArranqueBaseDatos.alumnos.get(alumno).getSiglas_Asignaturas_Superada(i) + ";" + ArranqueBaseDatos.alumnos.get(alumno).getNota(i+1) + ";" +  ArranqueBaseDatos.alumnos.get(alumno).getCurso_Academico(i+2) );
-				   bw.newLine();
-			   }	       
+		
+		 ArrayList<String> lista = new ArrayList<String>();
+		 float notaMedia=0;
+		 	int numero= ArranqueBaseDatos.alumnos.get(parametros[1]).getSiglasAsignaturaSuperada().size();
+		 	 for (int i = 0; i < ArranqueBaseDatos.alumnos.get(parametros[1]).getSiglasAsignaturaSuperada().size(); i++) {
+				   String asignatura =ArranqueBaseDatos.alumnos.get(alumno).getSiglas_Asignaturas_Superada(i);
+				   float nota=ArranqueBaseDatos.alumnos.get(alumno).getNota(i);
+				   String cursoAcademico =ArranqueBaseDatos.alumnos.get(alumno).getCurso_Academico(i);
+				   int cursoAsignatura = ArranqueBaseDatos.asignaturas.get(asignatura).getCurso();
+				   lista.add(cursoAsignatura+"; "+ asignatura + "; " +nota + "; " +  cursoAcademico );
+				  notaMedia+=ArranqueBaseDatos.alumnos.get(alumno).getNota(i)/numero;
+		 	 }
+		 	try {
+			 FileWriter fw = new FileWriter(parametros[2].trim());
+		
 		   
-		   bw.close();
+		      BufferedWriter bw = new BufferedWriter(fw);
+		    
+			 Collections.sort(lista);
+				for(int i=0;i<lista.size();i++) {
+					bw.write(lista.get(i));
+					bw.newLine();
+					
+				}
+					 DecimalFormat formato = new DecimalFormat("#.00");
+			   	     bw.write("Nota Media: "+formato.format(notaMedia));  
+			   	     bw.close();
+		   
+		} catch (IOException e) {
+			
+			e.printStackTrace();
 		}
 		
-		catch(Exception e)
-		{
-		   System.exit(1);}
+		
 		}
+		
+		
 		
 		
 
-	public static void CalendarioAulas(String[] imput) {
+	public static void calendarioAulas(String[] imput) {
+
 		String parametros[] = new String[imput.length];
 		for (int i = 1; i < parametros.length; i++) {
 
@@ -1022,6 +1046,11 @@ public class Comandos {
 		
 	}
 	
+	
+	
+	
+	
+	
 	public static void sacarJtable(OcupacionAula[][] ocupacion,String aula) {
 		//
 		String[] fila = {"Hora","Lunes","Martes","Miercoles","Jueves","Viernes"};
@@ -1035,7 +1064,7 @@ public class Comandos {
 		
 		ventana.add(Js);
 		ventana.setSize(new Dimension(1000,500));
-		//ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		ventana.setVisible(true);
 		
