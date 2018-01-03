@@ -47,8 +47,8 @@ public class GestionErrores {
 		
 	}
 	
-	public static void errorOtro() {
-		// No sé que podría pasar aquí...
+	public static void errorOtro(String error) {
+		nuevaLinea(error);
 	}
 	
 	public static void comandoErroneo(String comando) {

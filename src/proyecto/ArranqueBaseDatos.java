@@ -175,7 +175,7 @@ public class ArranqueBaseDatos {
 			fichero = new FileReader(archivo);
 		} catch (FileNotFoundException e) {
 			// en caso de error imprime mensaje y sale del programa
-			System.out.println("no detecta fichero ejecucion");
+			GestionErrores.errorOtro("Fichero de ejecucion no existente");
 			System.exit(1);
 		}
 		
@@ -184,7 +184,7 @@ public class ArranqueBaseDatos {
 		while ((lineas = lectura.readLine()) != null) {
 			if (lineas.isEmpty())break;
 			
-			if(lineas.toCharArray()[0]=='*'||lineas.toCharArray()[1]=='*') {				
+			if(lineas.toCharArray()[0]=='*'||lineas.toCharArray()[5]=='*') {				
 				continue;
 				
 			}
