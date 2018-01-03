@@ -2,7 +2,12 @@ package objetos;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-
+/**
+ * 
+ * Objeto alumno
+ * 
+ *
+ */
 public class Alumno extends Persona   {
 
 	private ArrayList<String> cursoAcademico;

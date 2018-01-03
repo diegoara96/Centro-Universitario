@@ -1,5 +1,9 @@
 package objetos;
-
+/**
+ * 
+ * Aulas de la universidad
+ *
+ */
 public class Aula {
 
 	private String siglas;

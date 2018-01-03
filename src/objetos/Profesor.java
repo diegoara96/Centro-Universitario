@@ -1,7 +1,11 @@
 package objetos;
 
 import java.util.ArrayList;
-
+/**
+ * 
+ * Profesores de la universidad
+ *
+ */
 public class Profesor extends Persona  {
 
 	private String categoria;

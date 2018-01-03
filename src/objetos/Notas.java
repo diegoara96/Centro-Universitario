@@ -1,5 +1,9 @@
 package objetos;
-
+/**
+ * 
+ * objeto usado para evaluar asignaturas, contiene notas de los grupos A y B  los metodos oportunos para su correcto funcionamiento
+ *
+ */
 public class Notas {
 	private String dni;
 	private String notaA = "0";

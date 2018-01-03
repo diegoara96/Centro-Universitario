@@ -25,7 +25,11 @@ import objetos.OcupacionAula;
 import objetos.Persona;
 import objetos.Profesor;
 import proyecto.GestionErrores;
-
+/**
+ * 
+ * Clase encargada de llevar a cabo las funciones de ejecucion.txt
+ *
+ */
 public class Comandos {
 
 	// declaramos las variables constantes para nuestra comodidad

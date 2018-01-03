@@ -17,7 +17,11 @@ import java.util.LinkedHashMap;
 import java.util.Set;
 
 import objetos.*;
-
+/**
+ * Clase de Gestion de arranque y funciones de entrada y salida
+ * 
+ *
+ */
 public class ArranqueBaseDatos {
 	public static LinkedHashMap<String, Alumno> alumnos = new LinkedHashMap<String, Alumno>();
 	public static LinkedHashMap<String, Profesor> profesores = new LinkedHashMap<String, Profesor>();

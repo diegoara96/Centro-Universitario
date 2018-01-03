@@ -8,7 +8,12 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
+/**
+ * 
+ * Clase abstracta de la que heredan Alumnos y Profesores
+ * contiene dni, nombre,fecha nacimiento y email
+ *
+ */
 public abstract class Persona  {
 
 	private String dni;

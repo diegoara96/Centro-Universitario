@@ -1,7 +1,10 @@
 package objetos;
 
 import java.util.ArrayList;
-
+/**
+ * asignaturas de la universidad, contiene constructores
+ *
+ */
 public class Asignatura   {
 
 	private String siglas;

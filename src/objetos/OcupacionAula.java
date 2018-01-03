@@ -1,6 +1,10 @@
 package objetos;
 
-
+/**
+ * 
+ * Contiene metodos y campos necesarios para crear el Jtable
+ *
+ */
 public class OcupacionAula {
 	private String asignatura;
 	private String Siglas;

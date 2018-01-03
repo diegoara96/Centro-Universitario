@@ -1,7 +1,11 @@
 package objetos;
 
 import java.util.ArrayList;
-
+/**
+ * 
+ * Plan de organizacion Docente
+ *
+ */
 public class Pod  {
 	
 	private String dni; 
