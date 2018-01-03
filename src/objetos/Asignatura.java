@@ -2,7 +2,7 @@ package objetos;
 
 import java.util.ArrayList;
 
-public class Asignatura implements EscribibleEnFichero {
+public class Asignatura   {
 
 	private String siglas;
 	private String nombre;

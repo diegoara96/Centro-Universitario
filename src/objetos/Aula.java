@@ -1,6 +1,6 @@
 package objetos;
 
-public class Aula implements EscribibleEnFichero{
+public class Aula {
 
 	private String siglas;
 	private String tipoGrupo;

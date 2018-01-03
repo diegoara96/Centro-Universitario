@@ -5,7 +5,7 @@ import java.util.GregorianCalendar;
 
 import proyecto.GestionErrores;
 
-public class Alumno extends Persona implements EscribibleEnFichero {
+public class Alumno extends Persona   {
 
 	private ArrayList<String> cursoAcademico;
 	private ArrayList<Float> notaAsignatura;
@@ -184,7 +184,7 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 		
 	}
 	
-	/**Añade una signatura 
+	/**Aï¿½ade una signatura 
 	 * 
 	 * @param asignatura: siglas de la asignatura
 	 */

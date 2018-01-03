@@ -2,7 +2,7 @@ package objetos;
 
 import java.util.ArrayList;
 
-public class Pod implements EscribibleEnFichero {
+public class Pod  {
 	
 	private String dni; 
 	private ArrayList<String> asignatura;

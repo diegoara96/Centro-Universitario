@@ -2,7 +2,7 @@ package objetos;
 
 import java.util.ArrayList;
 
-public class Profesor extends Persona implements EscribibleEnFichero {
+public class Profesor extends Persona  {
 
 	private String categoria;
 	private String departamento;

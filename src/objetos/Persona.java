@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public abstract class Persona implements EscribibleEnFichero {
+public abstract class Persona  {
 
 	private String dni;
 	private String nombre;
