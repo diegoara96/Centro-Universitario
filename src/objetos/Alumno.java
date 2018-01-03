@@ -3,8 +3,6 @@ package objetos;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import proyecto.GestionErrores;
-
 public class Alumno extends Persona   {
 
 	private ArrayList<String> cursoAcademico;

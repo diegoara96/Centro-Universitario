@@ -8,11 +8,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
+
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
+
 import java.util.ArrayList;
-import java.util.Iterator;
+
 import java.util.LinkedHashMap;
 import java.util.Set;
 
@@ -129,8 +129,7 @@ public class ArranqueBaseDatos {
 			fichero = new FileInputStream(archivo);
 			isr = new InputStreamReader(fichero,"ISO-8859-1");
 		} catch (FileNotFoundException e) {
-			// en caso de error imprime mensaje y sale del programa
-			File generarfichero = new File(archivo);
+			new File(archivo);
 			
 			return listas;
 			
