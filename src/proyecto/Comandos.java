@@ -47,7 +47,6 @@ public class Comandos {
 	
 	public static void comandos(String imput[]) {
 		String comando = imput[1].toLowerCase();
-		System.out.println(comando);
 	switch (comando) {
 
 	case "insertapersona":
@@ -591,7 +590,7 @@ public class Comandos {
 	}
 
 	
-/**Añadir una nota a una asignatura
+/**Aï¿½adir una nota a una asignatura
  * 
  * @param imput: array que contiene los datos de la linea correspondiente en el fichero de ejecuciones (ejecucion.txt)
  */
@@ -818,7 +817,7 @@ public class Comandos {
 		}
 		
 		
-	/** Genera el calendario de ocupación semanal de cada aula 
+	/** Genera el calendario de ocupaciï¿½n semanal de cada aula 
 	 * 
 	 * @param imput: array que contiene los datos de la linea correspondiente en el fichero de ejecuciones (ejecucion.txt)
 	 */
@@ -923,6 +922,14 @@ public class Comandos {
 						y=9;
 						break;
 					}
+					
+					//si llega aqui tenemos un grupo de una asignatura en el aula
+					char tipogrupo=ArranqueBaseDatos.aulas.get(aula).getTipo_Grupo().trim().toCharArray()[0];
+					int idgrupo=ArranqueBaseDatos.asignaturas.get(clave).getIdgrupoB(i);
+					ocupacion[y][x]= new OcupacionAula(clave,tipogrupo,idgrupo);
+					if(duracion==2) {
+						ocupacion[y+1][x]=ocupacion[y][x];
+					}
 							for (String claveprofe : clavesprofe) {
 								ArrayList<String> repetido = ArranqueBaseDatos.profesores.get(claveprofe).getSiglasAsignatura();
 								for (int a = 0; a < repetido.size(); a++) {
@@ -935,8 +942,6 @@ public class Comandos {
 												
 												String partes[]=nombre.split(" ");
 												String siglas=Character.toString(partes[0].toCharArray()[0]);
-												char tipogrupo=ArranqueBaseDatos.profesores.get(claveprofe).getTipoGrupo(a);
-												int idgrupo=ArranqueBaseDatos.profesores.get(claveprofe).getId_Grupo(a);
 												for(int b=1;b<partes.length;b++) {
 													if(partes[b].toCharArray()[0]==',') continue;
 													if(b==partes.length-1) siglas=Character.toString(partes[b].toCharArray()[0]).concat(siglas);
@@ -944,10 +949,11 @@ public class Comandos {
 													
 													
 												}
-												ocupacion[y][x]= new OcupacionAula(clave,siglas,tipogrupo,idgrupo);
+												ocupacion[y][x].setSiglas(siglas);
 												if(duracion==2) {
 													ocupacion[y+1][x]=ocupacion[y][x];
 												}
+												
 												
 											}
 										}
@@ -1018,6 +1024,14 @@ public class Comandos {
 							y=9;
 							break;
 						}
+						//si llega aqui tenemos un grupo de una asignatura en el aula
+						char tipogrupo=ArranqueBaseDatos.aulas.get(aula).getTipo_Grupo().trim().toCharArray()[0];
+						int idgrupo=ArranqueBaseDatos.asignaturas.get(clave).getIdgrupoB(i);
+						ocupacion[y][x]= new OcupacionAula(clave,tipogrupo,idgrupo);
+						if(duracion==2) {
+							ocupacion[y+1][x]=ocupacion[y][x];
+						}
+						
 								for (String claveprofe : clavesprofe) {
 									ArrayList<String> repetido = ArranqueBaseDatos.profesores.get(claveprofe).getSiglasAsignatura();
 									for (int a = 0; a < repetido.size(); a++) {
@@ -1028,20 +1042,20 @@ public class Comandos {
 												if (ArranqueBaseDatos.profesores.get(claveprofe).getId_Grupo(a) == ArranqueBaseDatos.asignaturas.get(clave).getIdgrupoB(i)) {
 													String nombre= ArranqueBaseDatos.profesores.get(claveprofe).getNombre().trim();
 												
-													char tipogrupo=ArranqueBaseDatos.profesores.get(claveprofe).getTipoGrupo(a);
-													int idgrupo=ArranqueBaseDatos.profesores.get(claveprofe).getId_Grupo(a);
+													
 													String partes[]=nombre.split(" ");
 													String siglas=Character.toString(partes[0].toCharArray()[0]);
 													for(int b=1;b<partes.length;b++) {
 														if(partes[b].toCharArray()[0]==',') continue;
 														if(b==partes.length-1) siglas=Character.toString(partes[b].toCharArray()[0]).concat(siglas);
 														else siglas=siglas.concat(Character.toString(partes[b].toCharArray()[0]));
+														ocupacion[y][x].setSiglas(siglas);
+														if(duracion==2) {
+															ocupacion[y+1][x]=ocupacion[y][x];
+														}
 														
 													}
-													ocupacion[y][x]= new OcupacionAula(clave,siglas,tipogrupo,idgrupo);
-													if(duracion==2) {
-														ocupacion[y+1][x]=ocupacion[y][x];
-													}
+													
 													
 												}
 											}

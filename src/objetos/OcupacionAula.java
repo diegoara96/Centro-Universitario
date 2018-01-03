@@ -15,9 +15,9 @@ public class OcupacionAula {
 	 * @param idgrupo
 	 * 
 	 */
-	public OcupacionAula(String asignatura,String siglas,char tipogrupo,int idgrupo) {
+	public OcupacionAula(String asignatura,char tipogrupo,int idgrupo) {
 	this.asignatura=asignatura;
-	this.Siglas=siglas;
+	this.Siglas=" ";
 	this.tipogrupo=tipogrupo;
 	this.idgrupo=idgrupo;
 	
@@ -37,7 +37,13 @@ public class OcupacionAula {
 	 this.idgrupo=0;
  }
 
- /**Convierte los atributos de este objeto a un conjunto de lineas de texto, separadas por saltos de linea (\n),
+
+ 
+ public void setSiglas(String siglas) {
+	Siglas = siglas;
+}
+
+/**Convierte los atributos de este objeto a un conjunto de lineas de texto, separadas por saltos de linea (\n),
 	 * para asi facilitar su guardado en un fichero de texto.
 	 * 
 	 * @return (String): conjunto de lineas de texto con los atributos del objeto.
