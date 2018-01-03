@@ -8,7 +8,7 @@ import proyecto.GestionErrores;
 public class Alumno extends Persona   {
 
 	private ArrayList<String> cursoAcademico;
-	private ArrayList<Float> notaAsignatura;
+	private ArrayList<String> notaAsignatura;
 	public ArrayList<String> siglasAsignaturaActual;
 	private GregorianCalendar fechaIngreso;
 	private ArrayList<String> siglasAsignaturaSuperada;
@@ -35,7 +35,7 @@ public class Alumno extends Persona   {
 		// el objeto
 		siglasAsignaturaSuperada = new ArrayList<String>();
 		cursoAcademico = new ArrayList<String>();
-		notaAsignatura = new ArrayList<Float>();
+		notaAsignatura = new ArrayList<String>();
 		siglasAsignaturaActual = new ArrayList<String>();
 		tipoGrupo = new ArrayList<Character>();
 		idGrupo = new ArrayList<Integer>();
@@ -47,7 +47,7 @@ public class Alumno extends Persona   {
 				String[] campos = superadas[i].trim().split(" ");
 				this.siglasAsignaturaSuperada.add(campos[0]);
 				this.cursoAcademico.add(campos[1]);
-				this.notaAsignatura.add(Float.parseFloat(campos[2]));
+				this.notaAsignatura.add(campos[2]);
 			}
 		}
 
@@ -79,7 +79,7 @@ public class Alumno extends Persona   {
 		super(dni, nombre, null, fechaNacimiento);
 		siglasAsignaturaSuperada = new ArrayList<String>();
 		cursoAcademico = new ArrayList<String>();
-		notaAsignatura = new ArrayList<Float>();
+		notaAsignatura = new ArrayList<String>();
 		siglasAsignaturaActual = new ArrayList<String>();
 		tipoGrupo = new ArrayList<Character>();
 		idGrupo = new ArrayList<Integer>();
@@ -119,7 +119,7 @@ public class Alumno extends Persona   {
 		return cursoAcademico.get(i);
 	}
 
-	public float getNota(int i) {
+	public String getNota(int i) {
 		return notaAsignatura.get(i);
 	}
 
@@ -148,7 +148,7 @@ public class Alumno extends Persona   {
 	
 	public void setAsignaturaSuperada(String asignatura,String curso,float nota) {
 		this.cursoAcademico.add(curso);
-		this.notaAsignatura.add(nota);
+		this.notaAsignatura.add(Float.toString(nota));
 		this.siglasAsignaturaSuperada.add(asignatura);
 	}
 	/**Anhade un grupo a un objeto alumno

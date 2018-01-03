@@ -24,16 +24,16 @@ public class Asignatura   {
 	
 	/**Crea el objeto asignatura con los datos correspondientes
 	 * 
-	 * @param siglas: siglas de la asignatura
-	 * @param nombre: nombre de la asignatura
-	 * @param curso: numero del curso al que pertenece la asignatura
-	 * @param cuatrimestre: 1 o 2 (en el que se cursa)
-	 * @param dniCoordinador: dni del profesor coordinador de la asignatura
-	 * @param preRequisitos: siglas de las asignaturas que hay que tener obligatoriamente superadas para poder matricularse en esta
-	 * @param duracionGrupoA: 1 o 2 horas	
-	 * @param duracionGrupoB: 1 o 2 horas
-	 * @param grupoA:  va a contener la id del grupo y los dias, las horas de inicio y las aulas en las que se cursa 
-	 * @param grupoB: va a contener la id del grupo y los dias, las horas de inicio y las aulas en las que se cursa 
+	 * @param siglas : siglas de la asignatura
+	 * @param nombre : nombre de la asignatura
+	 * @param curso : numero del curso al que pertenece la asignatura
+	 * @param cuatrimestre : 1 o 2 (en el que se cursa)
+	 * @param dniCoordinador : dni del profesor coordinador de la asignatura
+	 * @param preRequisitos : siglas de las asignaturas que hay que tener obligatoriamente superadas para poder matricularse en esta
+	 * @param duracionGrupoA : 1 o 2 horas	
+	 * @param duracionGrupoB : 1 o 2 horas
+	 * @param grupoA :  va a contener la id del grupo y los dias, las horas de inicio y las aulas en las que se cursa 
+	 * @param grupoB : va a contener la id del grupo y los dias, las horas de inicio y las aulas en las que se cursa 
 	 * 
 	 */
 	public Asignatura(String siglas, String nombre, String curso, String cuatrimestre, String dniCoordinador,
@@ -204,7 +204,7 @@ public class Asignatura   {
 	
 	/** Devuelve el indice en el que se encuentra la id del grupo
 	 * 
-	 * @param tipogrupo: A o B
+	 * @param tipogrupo : A o B
 	 * @param idgrupo
 	 * @return
 	 */
@@ -219,11 +219,11 @@ public class Asignatura   {
 	
 	/**Crea un grupo 
 	 * 
-	 * @param tipogrupo: A o B
-	 * @param idgrupo: id del grupo
-	 * @param dia: dias en que se cursa
-	 * @param horainicio: hora de inicio de la clase del grupo (valores de 9 a 18)
-	 * @param aula: aula don de se imparte la clase del grupo
+	 * @param tipogrupo : A o B
+	 * @param idgrupo : id del grupo
+	 * @param dia : dias en que se cursa
+	 * @param horainicio : hora de inicio de la clase del grupo (valores de 9 a 18)
+	 * @param aula : aula don de se imparte la clase del grupo
 	 * 
 	 */
 	public void creaGrupo(char tipogrupo,int idgrupo,char dia,String horainicio,String aula) {
@@ -250,7 +250,7 @@ public class Asignatura   {
 	 * separadas por saltos de linea (\n), para asi facilitar su guardado en un
 	 * fichero de texto.
 	 * 
-	 * @return (String): conjunto de lineas de texto con los atributos del objeto.
+	 * @return (String) : conjunto de lineas de texto con los atributos del objeto.
 	 * 
 	 */
 	public String toTexto() {
