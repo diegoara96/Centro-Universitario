@@ -39,7 +39,11 @@ public class Comandos {
 	public final static String EJECUCION = "ejecucion.txt";
 	
 	
-	
+	/** Realiza las operaciones necesarias para llevar a cabo las ordenes que se le indiquen
+	 * 
+	 * @param imput: array de las lineas del fichero ejecucion.txt que contendran las operaciones que
+	 *               habra que llevar a cabo y los parametros necesarios para completarlas
+	 */
 	
 	public static void comandos(String imput[]) {
 		String comando = imput[1].toLowerCase();
@@ -76,7 +80,11 @@ public class Comandos {
 	}
 
 } 
-
+	
+	/**Introduce un alumno o profesor nuevo al sistema
+	 * 
+	 * @param imput: array que contiene los datos de la linea correspondiente en el fichero de ejecuciones (ejecucion.txt)
+	 */
 	public static void insertaPersona(String imput[]) {
 
 		if (imput.length < 9) {
@@ -181,7 +189,12 @@ public class Comandos {
 		}
 
 	}
+	
 
+	/**Asigna un grupo de una asignautra a un profesor o alumno
+	 * 
+	 * @param imput: array que contiene los datos de la linea correspondiente en el fichero de ejecuciones (ejecucion.txt)
+	 */
 	public static void asignaGrupo(String[] imput) {
 		if (imput.length < 7) {
 			GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "numero de argumentos incorrecto");
@@ -414,11 +427,10 @@ public class Comandos {
 
 	}
 
-	/**
-	 * funcion encargada de matricular a un alumno en una asignatura
+	/**Matricular a un alumno en una asignatura 
 	 * 
-	 * @param imput
-	 *            datos de entrada
+	 * @param imput: array que contiene los datos de la linea correspondiente en el fichero de ejecuciones (ejecucion.txt)
+	 *            
 	 */
 	public static void matricularalumno(String imput[]) {
 		if (imput.length < 4) {
@@ -464,6 +476,11 @@ public class Comandos {
 
 	}
 
+	
+	/** Asigna un grupo de una asignatura a un alumno matriculado en ella
+	 * 
+	 * @param imput: array que contiene los datos de la linea correspondiente en el fichero de ejecuciones (ejecucion.txt)
+	 */
 	public static void creaGrupoAsig(String[] imput) {
 		/*
 		 * parametro 0 = comando parametro 1 = sigla asignatura parametro 2 = tipogrupo
@@ -573,6 +590,11 @@ public class Comandos {
 		ArranqueBaseDatos.sobreescribirFicheroAsignaturas(ASIGNATURAS, ArranqueBaseDatos.asignaturas);
 	}
 
+	
+/**Añadir una nota a una asignatura
+ * 
+ * @param imput: array que contiene los datos de la linea correspondiente en el fichero de ejecuciones (ejecucion.txt)
+ */
 	public static void evaluarAsig(String[] imput) {
 
 		String parametros[] = new String[imput.length];
@@ -737,7 +759,10 @@ public class Comandos {
 		return;
 	}
 	
-	//Genera el expediente de un alumno 
+/**Genera el expediente de un alumno, incluyendo todas las asginaturas aprobadas
+ * 
+ * @param imput: array que contiene los datos de la linea correspondiente en el fichero de ejecuciones (ejecucion.txt)
+ */
 	public static void obtenerExpediente(String[] imput) {
 		if (imput.length != 4) {
 			GestionErrores.errorComando(GestionErrores.EXPEDIENTE_ALUMNO, "numero de argumentos incorrecto");
@@ -772,7 +797,7 @@ public class Comandos {
 		
 		   
 		      BufferedWriter bw = new BufferedWriter(fw);
-		    
+		    //Ordena por curso y por siglas de asignatura 
 			 Collections.sort(lista);
 				for(int i=0;i<lista.size();i++) {
 					bw.write(lista.get(i));
@@ -793,9 +818,10 @@ public class Comandos {
 		}
 		
 		
-		
-		
-
+	/** Genera el calendario de ocupación semanal de cada aula 
+	 * 
+	 * @param imput: array que contiene los datos de la linea correspondiente en el fichero de ejecuciones (ejecucion.txt)
+	 */
 	public static void calendarioAulas(String[] imput) {
 
 		String parametros[] = new String[imput.length];
@@ -1050,7 +1076,11 @@ public class Comandos {
 	
 	
 	
-	
+	/** Crea una ventana con una tabla para el calendario
+	 * 
+	 * @param ocupacion: horario en el que el aula esta ocupada
+	 * @param aula: aula de la que se quiere saber la ocupacion semanal
+	 */
 	
 	public static void sacarJtable(OcupacionAula[][] ocupacion,String aula) {
 		//

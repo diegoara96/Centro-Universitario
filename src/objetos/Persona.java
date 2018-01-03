@@ -18,6 +18,14 @@ public abstract class Persona implements EscribibleEnFichero {
 	
 	protected final static DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY"); // permite convertir de DD/MM/YYYY a objeto Date y viceversa
 	
+	
+	/**Crea un objeto persona con los datos correspondientes
+	 * 
+	 * @param dni: dni del profesor o alumno
+	 * @param nombre: nombre y apellidos del profesor o alumno
+	 * @param fechaNacimiento: fecha de nacimiento del profesor o alumno
+	 * 
+	 */
 	public Persona(String dni,String nombre,String fechaNacimiento) {
 		this.dni=dni;
 		this.nombre=nombre;
@@ -32,6 +40,9 @@ public abstract class Persona implements EscribibleEnFichero {
 		if(email==null)this.email="";
 		else this.email=email;
 		
+		/**Se guardan los datos correctamente
+		 * 
+		 */
 	}
 	
 	public String getEmail() {
@@ -58,6 +69,11 @@ public abstract class Persona implements EscribibleEnFichero {
 	
 	// Metodos de comprobacion de atributos
 	
+	/**Combprueba el dni
+	 * 
+	 * @param dni
+	 * @return: si esta mal devuelve false y sino true
+	 */
 	public static boolean comprobarDNI(String dni) {
 		char[] digitosdni= dni.toCharArray();
 		//System.out.println(digitosdni[0]);
@@ -85,6 +101,12 @@ public abstract class Persona implements EscribibleEnFichero {
 		return true;
 	}
 	
+	
+	/**Comprueba la fecha
+	 * 
+	 * @param fecha
+	 * @return: true o false
+	 */
 	public static boolean comprobarFecha(String fecha) {
 		
 		
@@ -131,6 +153,13 @@ public abstract class Persona implements EscribibleEnFichero {
 		
 	}
 	*/
+	
+	/**Comprueba la fecha de ingrese
+	 * 
+	 * @param fechaNacimiento
+	 * @param fechaIngreso
+	 * @return: true o false
+	 */
 	public static boolean comprobarFechaIngreso(String fechaNacimiento, String fechaIngreso) {
 
 		try {
@@ -163,6 +192,12 @@ public abstract class Persona implements EscribibleEnFichero {
 		return gc;
 
 	}
+	
+	/**Pone la fecha en el formato correcto
+	 * 
+	 * @param fecha
+	 * @return: fecha en buen formato
+	 */
 	public static String transformarfecha(String fecha) {
         String prueba[] = fecha.split("/");
 		

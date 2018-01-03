@@ -27,6 +27,12 @@ public class ArranqueBaseDatos {
 	public static String cursoAcademico;
 	public static int semanaInicioCurso;
 
+	
+	/** Lee y almacena los datos en el lugar correspondiente de los ficheros:
+	 *  cursoAcademico.txt, aulas.txt, asinaturas.txt, pod.txt, profesores.txt y alumnos.txt
+	 * 
+	 * @throws IOException
+	 */
 	public static void arranque() throws IOException {
 
 		// lectura curso academico
@@ -102,8 +108,7 @@ public class ArranqueBaseDatos {
 
 	}
 
-	/**
-	 * Esta funcion se usa cuando tengamos varios campos separados por el
+	/**Esta funcion se usa cuando tengamos varios campos separados por el
 	 * delimitador '*'
 	 * 
 	 * @param archivo.txt
@@ -165,7 +170,10 @@ public class ArranqueBaseDatos {
 	}
 	
 	
-	
+	/**Lee el fichero de ejecucion (ejecucion.txt)
+	 * 
+	 * @throws IOException
+	 */
 	public static void lecturaejecucion() throws IOException {
 		String lineas;
 		String archivo= Comandos.EJECUCION;
@@ -215,8 +223,8 @@ public class ArranqueBaseDatos {
 	
 	
 	
-	/**
-	 * Vuelca el contenido del LinkedHashMap al fichero de texto correspondiente
+	/**Vuelca el contenido del LinkedHashMap al fichero de texto correspondiente
+	 * 
 	 * @param nombreFichero (String): nombre del fichero, con su extensión (.txt)
 	 * @param mapa (LinkedHashMap): mapa a escribir en el fichero especificado
 	 */
@@ -248,6 +256,12 @@ public class ArranqueBaseDatos {
 		}
 	
 	}
+	
+	/**Vuelca el contenido del LinkedHashMap al fichero de texto correspondiente
+	 * 
+	 * @param nombreFichero (String): nombre del fichero, con su extensión (.txt)
+	 * @param mapa (LinkedHashMap): mapa a escribir en el fichero especificado
+	 */
 	public static void sobreescribirFicheroProfesores(String nombreFichero, LinkedHashMap<String, Profesor> mapa) {
 		Set<String> claves = mapa.keySet();
 		String ultima=null;
@@ -280,7 +294,11 @@ public class ArranqueBaseDatos {
 	
 	
 	
-	
+	/**Vuelca el contenido del LinkedHashMap al fichero de texto correspondiente
+	 * 
+	 * @param nombreFichero (String): nombre del fichero, con su extensión (.txt)
+	 * @param mapa (LinkedHashMap): mapa a escribir en el fichero especificado
+	 */
 	public static void sobreescribirFicheroAsignaturas(String nombreFichero, LinkedHashMap<String, Asignatura> mapa) {
 		Set<String> claves = mapa.keySet();
 		String ultima=null;

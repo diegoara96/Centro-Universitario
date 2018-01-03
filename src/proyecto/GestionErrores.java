@@ -4,12 +4,12 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-/**
- * Clase de gestión de los errores durante la ejecución del programa.
+/**Clase de gestion de los errores durante la ejecucion del programa.
  * Se encarga de procesar el error y guardarlo en avisos.txt.
+ * 
  * Tipos de error posibles:
  * 		1) Error en comando: depende de cada comando
- * 		2) Comando erróneo: un comando que no existe o con argumentos inválidos
+ * 		2) Comando erroneo: un comando que no existe o con argumentos invalidos
  *
  */
 public class GestionErrores {
@@ -26,8 +26,8 @@ public class GestionErrores {
 	
 	private static void nuevaLinea(String linea) {
 		try {
-			// Escribe una línea en el fichero de avisos
-			// Si avisos.txt aún no existe, lo crea
+			// Escribe una linea en el fichero de avisos
+			// Si avisos.txt aun no existe, lo crea
 			FileWriter fw = new FileWriter(nombreFichero, true);
 			BufferedWriter bw = new BufferedWriter(fw);
 			bw.write(linea);

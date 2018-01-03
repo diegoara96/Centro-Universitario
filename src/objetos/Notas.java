@@ -7,6 +7,13 @@ public class Notas {
 	private String notaB = "0";
 	private int lineaB;
 
+	
+	/**Crea el objeto notas con los datos correspondientes
+	 * 
+	 * @param dni: dni del alumno
+	 * @param notaA: nota en teoria
+	 * @param lineaA
+	 */
 	public Notas(String dni, String notaA, int lineaA) {
 		this.dni = dni;
 		this.notaA = notaA;

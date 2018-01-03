@@ -15,6 +15,19 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 	private ArrayList<Character> tipoGrupo;
 	private ArrayList<Integer> idGrupo;
 
+	
+	/**Crea el objeto alumno con los datos correspondientes 
+	 *  
+	 * @param dni: dni de alumno
+	 * @param nombre: nombre y apellidos del alumno
+	 * @param email: email de alumno
+	 * @param fechaNacimiento: fecha de nacimiento del alumno
+	 * @param fechaIngreso: fecha de ingreso en la titulacion
+	 * @param asignaturasSuperadas: asignatura superadas en cursos previos al actual
+	 *                              (inlcuye las siglas de la asignatura, el curso en el que se aprobo y la nota)
+	 * @param docenciaRecibida: grupos A y B de las asignaturas en las que esta matriculado
+	 * 
+	 */
 	public Alumno(String dni, String nombre, String email, String fechaNacimiento, String fechaIngreso,
 			String asignaturasSuperadas, String docenciaRecibida) {
 		super(dni, nombre, email, fechaNacimiento);
@@ -76,8 +89,12 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 		// System.out.println(toTexto());
 		// TODO: inicializar objeto
 
+		/**Se guardan los datos correctamente
+		 * 
+		 */
 	}
-
+	
+	
 	public GregorianCalendar getFechaIngreso() {
 		return fechaIngreso;
 	}
@@ -134,10 +151,10 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 		this.notaAsignatura.add(nota);
 		this.siglasAsignaturaSuperada.add(asignatura);
 	}
-	/**
-	 * añade un grupo a un objeto alumno
-	 * @param asignatura
-	 * @param grupo
+	/**Anhade un grupo a un objeto alumno
+	 * 
+	 * @param asignatura: siglas de la asignatura 
+	 * @param grupo: A o B
 	 * @param idgrupo
 	 */
 	public void asignargrupo(String asignatura, char grupo,int idgrupo) {
@@ -167,6 +184,10 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 		
 	}
 	
+	/**A�ade una signatura 
+	 * 
+	 * @param asignatura: siglas de la asignatura
+	 */
 	public void matricula(String asignatura) {
 		this.siglasAsignaturaActual.add(asignatura.trim());
 		this.tipoGrupo.add('0');
@@ -176,12 +197,12 @@ public class Alumno extends Persona implements EscribibleEnFichero {
 	
 	
 
-	/**
-	 * Convierte los atributos de este objeto a un conjunto de líneas de texto,
-	 * separadas por saltos de línea (\n), para así facilitar su guardado en un
+	/**Convierte los atributos de este objeto a un conjunto de lineas de texto,
+	 * separadas por saltos de linea (\n), para asi facilitar su guardado en un
 	 * fichero de texto.
 	 * 
-	 * @return (String): conjunto de líneas de texto con los atributos del objeto.
+	 * @return (String): conjunto de lineas de texto con los atributos del objeto.
+	 * 
 	 */
 	public String toTexto() {
 		// DNI, nombre, email, fecha de nacimiento y fecha de ingreso:

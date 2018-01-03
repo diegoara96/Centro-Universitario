@@ -11,6 +11,17 @@ public class Profesor extends Persona implements EscribibleEnFichero {
 	private ArrayList<Integer> idGrupo;
 	// private ArrayList sigla;
 
+	
+	/**Crea ell objeto profesor con los datos correspondientes
+	 * 
+	 * @param dni: dni del profesor
+	 * @param nombre: nombre y apellidos del profesor
+	 * @param fechaNacimiento: fecha de nacimiento del profesor
+	 * @param categoria: titular o asociado
+	 * @param departamento: departamento al que pertenece el profesor
+	 * @param docenciaImpartida:grupos A o B en los que da clase
+	 * 
+	 */
 	public Profesor(String dni, String nombre, String fechaNacimiento, String categoria, String departamento,
 			String docenciaImpartida) {
 		super(dni, nombre, fechaNacimiento);
@@ -57,6 +68,10 @@ public class Profesor extends Persona implements EscribibleEnFichero {
 		this.departamento = departamento;
 
 		// System.out.println(toTexto()+"\n");
+		
+		/**Se guardan los datos correctamente
+		 * 
+		 */
 
 	}
 
@@ -98,12 +113,12 @@ public class Profesor extends Persona implements EscribibleEnFichero {
 		this.tipoGrupo.add(tipo);
 	}
 
-	/**
-	 * Convierte los atributos de este objeto a un conjunto de líneas de texto,
-	 * separadas por saltos de línea (\n), para así facilitar su guardado en un
+	/**Convierte los atributos de este objeto a un conjunto de lineas de texto,
+	 * separadas por saltos de linea (\n), para asi facilitar su guardado en un
 	 * fichero de texto.
 	 * 
-	 * @return (String): conjunto de líneas de texto con los atributos del objeto.
+	 * @return (String): conjunto de lineas de texto con los atributos del objeto.
+	 * 
 	 */
 	public String toTexto() {
 		// DNI, nombre, fecha de nacimiento, categoria y departamento:

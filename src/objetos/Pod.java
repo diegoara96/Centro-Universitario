@@ -9,6 +9,12 @@ public class Pod implements EscribibleEnFichero {
 	private ArrayList<Character> tipoGrupo; //A o B
 	private ArrayList<Float> numeroGrupos; // numero real de maximo 2 digitos y 2 decimales
 	
+	
+	/**Crea el objeto pod con los datos correspondientes
+	 * 
+	 * @param dni: dni del profesor 
+	 * @param grupos: grupos que imparte
+	 */
 	public Pod(String dni,String grupos) {
 		this.asignatura = new ArrayList<String>();
 		this.tipoGrupo = new ArrayList<Character>();
@@ -54,10 +60,11 @@ public class Pod implements EscribibleEnFichero {
 		return numeroGrupos.get(i);
 	}
 	
-	/**
-	 * Convierte los atributos de este objeto a un conjunto de líneas de texto, separadas por saltos de línea (\n),
-	 * para así facilitar su guardado en un fichero de texto.
-	 * @return (String): conjunto de líneas de texto con los atributos del objeto.
+	/**Convierte los atributos de este objeto a un conjunto de lineas de texto, separadas por saltos de linea (\n),
+	 * para asi facilitar su guardado en un fichero de texto.
+	 * 
+	 * @return (String): conjunto de lineas de texto con los atributos del objeto.
+	 * 
 	 */
 	public String toTexto() {
 		// Siglas, tipo grupo y capacidad:
