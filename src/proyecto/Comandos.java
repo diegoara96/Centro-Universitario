@@ -41,7 +41,7 @@ public class Comandos {
 	 * Realiza las operaciones necesarias para llevar a cabo las ordenes que se le
 	 * indiquen
 	 * 
-	 * @param imput:
+	 * @param imput :
 	 *            array de las lineas del fichero ejecucion.txt que contendran las
 	 *            operaciones que habra que llevar a cabo y los parametros
 	 *            necesarios para completarlas
@@ -84,7 +84,7 @@ public class Comandos {
 	/**
 	 * Introduce un alumno o profesor nuevo al sistema
 	 * 
-	 * @param imput:
+	 * @param imput :
 	 *            array que contiene los datos de la linea correspondiente en el
 	 *            fichero de ejecuciones (ejecucion.txt)
 	 */
@@ -197,7 +197,7 @@ public class Comandos {
 	/**
 	 * Asigna un grupo de una asignautra a un profesor o alumno
 	 * 
-	 * @param imput:
+	 * @param imput :
 	 *            array que contiene los datos de la linea correspondiente en el
 	 *            fichero de ejecuciones (ejecucion.txt)
 	 */
@@ -493,7 +493,7 @@ public class Comandos {
 	/**
 	 * Matricular a un alumno en una asignatura
 	 * 
-	 * @param imput:
+	 * @param imput :
 	 *            array que contiene los datos de la linea correspondiente en el
 	 *            fichero de ejecuciones (ejecucion.txt)
 	 * 
@@ -546,7 +546,7 @@ public class Comandos {
 	/**
 	 * Asigna un grupo de una asignatura a un alumno matriculado en ella
 	 * 
-	 * @param imput:
+	 * @param imput :
 	 *            array que contiene los datos de la linea correspondiente en el
 	 *            fichero de ejecuciones (ejecucion.txt)
 	 */
@@ -691,7 +691,7 @@ public class Comandos {
 	/**
 	 * A�adir una nota a una asignatura
 	 * 
-	 * @param imput:
+	 * @param imput :
 	 *            array que contiene los datos de la linea correspondiente en el
 	 *            fichero de ejecuciones (ejecucion.txt)
 	 */
@@ -867,7 +867,7 @@ public class Comandos {
 	/**
 	 * Genera el expediente de un alumno, incluyendo todas las asginaturas aprobadas
 	 * 
-	 * @param imput:
+	 * @param imput :
 	 *            array que contiene los datos de la linea correspondiente en el
 	 *            fichero de ejecuciones (ejecucion.txt)
 	 */
@@ -932,7 +932,7 @@ public class Comandos {
 	/**
 	 * Genera el calendario de ocupaci�n semanal de cada aula
 	 * 
-	 * @param imput:
+	 * @param imput :
 	 *            array que contiene los datos de la linea correspondiente en el
 	 *            fichero de ejecuciones (ejecucion.txt)
 	 */
@@ -1219,9 +1219,9 @@ public class Comandos {
 	/**
 	 * Crea una ventana con una tabla para el calendario
 	 * 
-	 * @param ocupacion:
+	 * @param ocupacion :
 	 *            horario en el que el aula esta ocupada
-	 * @param aula:
+	 * @param aula :
 	 *            aula de la que se quiere saber la ocupacion semanal
 	 */
 

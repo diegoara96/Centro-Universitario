@@ -23,7 +23,10 @@ public class GestionErrores {
 	public final static String CALENDARIO_OCUPACION_AULA = "OCUPAULA";
 	public final static String EXPEDIENTE_ALUMNO = "EXP";
 	
-	
+	/**
+	 * Imprime una linea en el fichero de avisos a continuacion de la ultima, si el fichero no existe se crea
+	 * @param linea
+	 */
 	private static void nuevaLinea(String linea) {
 		try {
 			// Escribe una linea en el fichero de avisos
@@ -41,16 +44,26 @@ public class GestionErrores {
 				
 		
 	}
-	
+	/**
+	 * 
+	 * @param siglas : del comando que genera el error
+	 * @param aviso : mensaje especificando el error
+	 */
 	public static void errorComando(String siglas, String aviso) {
 		nuevaLinea(siglas + " -- " + aviso);
 		
 	}
-	
+	/**
+	 * Error especial no producido por ningun comando
+	 * @param error
+	 */
 	public static void errorOtro(String error) {
 		nuevaLinea(error);
 	}
-	
+	/**
+	 * Error en el nombre de un comando
+	 * @param comando
+	 */
 	public static void comandoErroneo(String comando) {
 		nuevaLinea("Comando incorrecto: " + comando);
 	}

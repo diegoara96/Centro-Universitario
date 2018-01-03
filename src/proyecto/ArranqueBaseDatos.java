@@ -225,8 +225,8 @@ public class ArranqueBaseDatos {
 	
 	/**Vuelca el contenido del LinkedHashMap al fichero de texto correspondiente
 	 * 
-	 * @param nombreFichero (String): nombre del fichero, con su extensión (.txt)
-	 * @param mapa (LinkedHashMap): mapa a escribir en el fichero especificado
+	 * @param nombreFichero (String) : nombre del fichero, con su extensión (.txt)
+	 * @param mapa (LinkedHashMap) : mapa a escribir en el fichero especificado
 	 */
 	public static void sobreescribirFicheroAlumnos(String nombreFichero, LinkedHashMap<String, Alumno> mapa) {
 		Set<String> claves = mapa.keySet();
@@ -259,8 +259,8 @@ public class ArranqueBaseDatos {
 	
 	/**Vuelca el contenido del LinkedHashMap al fichero de texto correspondiente
 	 * 
-	 * @param nombreFichero (String): nombre del fichero, con su extensión (.txt)
-	 * @param mapa (LinkedHashMap): mapa a escribir en el fichero especificado
+	 * @param nombreFichero (String) : nombre del fichero, con su extensión (.txt)
+	 * @param mapa (LinkedHashMap) : mapa a escribir en el fichero especificado
 	 */
 	public static void sobreescribirFicheroProfesores(String nombreFichero, LinkedHashMap<String, Profesor> mapa) {
 		Set<String> claves = mapa.keySet();
@@ -296,8 +296,8 @@ public class ArranqueBaseDatos {
 	
 	/**Vuelca el contenido del LinkedHashMap al fichero de texto correspondiente
 	 * 
-	 * @param nombreFichero (String): nombre del fichero, con su extensión (.txt)
-	 * @param mapa (LinkedHashMap): mapa a escribir en el fichero especificado
+	 * @param nombreFichero (String) : nombre del fichero, con su extensión (.txt)
+	 * @param mapa (LinkedHashMap) : mapa a escribir en el fichero especificado
 	 */
 	public static void sobreescribirFicheroAsignaturas(String nombreFichero, LinkedHashMap<String, Asignatura> mapa) {
 		Set<String> claves = mapa.keySet();
