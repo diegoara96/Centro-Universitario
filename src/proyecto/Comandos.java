@@ -3,14 +3,14 @@ package proyecto;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
+
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -318,14 +318,36 @@ public class Comandos {
 				if (cuatrimestre == ArranqueBaseDatos.asignaturas
 						.get(ArranqueBaseDatos.profesores.get(parametros[2]).getSiglas_Asignatura(i))
 						.getCuatrimestre()) {
-					String hora = ArranqueBaseDatos.asignaturas
+					if (ArranqueBaseDatos.asignaturas
 							.get(ArranqueBaseDatos.profesores.get(parametros[2]).getSiglas_Asignatura(i))
-							.gethora(ArranqueBaseDatos.profesores.get(parametros[2]).getTipoGrupo(i),
-									ArranqueBaseDatos.profesores.get(parametros[2]).getId_Grupo(i));
-					if (ArranqueBaseDatos.asignaturas.get(parametros[3])
-							.gethora(parametros[4].toCharArray()[0], Integer.parseInt(parametros[5])).equals(hora)) {
-						GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "Solape profesor");
-						return;
+							.getdia(ArranqueBaseDatos.profesores.get(parametros[2]).getTipoGrupo(i),
+									ArranqueBaseDatos.profesores.get(parametros[2])
+											.getId_Grupo(i)) == ArranqueBaseDatos.asignaturas.get(parametros[3]).getdia(
+													parametros[4].trim().toCharArray()[0],
+													Integer.parseInt(parametros[5]))) {
+
+						int hora = Integer.parseInt(ArranqueBaseDatos.asignaturas
+								.get(ArranqueBaseDatos.profesores.get(parametros[2]).getSiglas_Asignatura(i))
+								.gethora(ArranqueBaseDatos.profesores.get(parametros[2]).getTipoGrupo(i),
+										ArranqueBaseDatos.profesores.get(parametros[2]).getId_Grupo(i)));
+						int horaGrupo = Integer.parseInt(ArranqueBaseDatos.asignaturas.get(parametros[3])
+								.gethora(parametros[4].toCharArray()[0], Integer.parseInt(parametros[5])));
+						int duracionGrupo = ((parametros[4].toCharArray()[0] == 'A')
+								? ArranqueBaseDatos.asignaturas.get(parametros[3]).getDuracion_GrupoA()
+								: ArranqueBaseDatos.asignaturas.get(parametros[3]).getDuracionGrupoB());
+						int duracionsolape = ((ArranqueBaseDatos.profesores.get(parametros[2]).getTipoGrupo(i) == 'A')
+								? ArranqueBaseDatos.asignaturas
+										.get(ArranqueBaseDatos.profesores.get(parametros[2]).getSiglas_Asignatura(i))
+										.getDuracion_GrupoA()
+								: ArranqueBaseDatos.asignaturas
+										.get(ArranqueBaseDatos.profesores.get(parametros[2]).getSiglas_Asignatura(i))
+										.getDuracionGrupoB());
+						if (horaGrupo == hora || (horaGrupo + duracionGrupo) == (hora + 1)
+								|| (horaGrupo + 1) == (hora + duracionsolape)) {
+							GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "Solape profesor");
+
+							return;
+						}
 					}
 				}
 			}
@@ -375,19 +397,42 @@ public class Comandos {
 					if (cuatrimestre == ArranqueBaseDatos.asignaturas
 							.get(ArranqueBaseDatos.alumnos.get(parametros[2]).getSiglas_Asignatura_Actual(i))
 							.getCuatrimestre()) {
-						String hora = null;
+						
 						if (ArranqueBaseDatos.alumnos.get(parametros[2]).getTipoGrupo(i) == '0') {
 							continue;
-						} else
-							hora = ArranqueBaseDatos.asignaturas
+						} 
+						if (ArranqueBaseDatos.asignaturas.get(parametros[3]).getdia(
+								parametros[4].trim().toCharArray()[0],
+								Integer.parseInt(parametros[5])) == ArranqueBaseDatos.asignaturas
+										.get(ArranqueBaseDatos.alumnos.get(parametros[2])
+												.getSiglas_Asignatura_Actual(i))
+										.getdia(ArranqueBaseDatos.alumnos.get(parametros[2]).getTipoGrupo(i),
+												ArranqueBaseDatos.alumnos.get(parametros[2]).getId_Grupo(i))) {
+							
+							int horaSolape = Integer.parseInt(ArranqueBaseDatos.asignaturas
 									.get(ArranqueBaseDatos.alumnos.get(parametros[2]).getSiglas_Asignatura_Actual(i))
 									.gethora(ArranqueBaseDatos.alumnos.get(parametros[2]).getTipoGrupo(i),
-											ArranqueBaseDatos.alumnos.get(parametros[2]).getId_Grupo(i));
-						if (ArranqueBaseDatos.asignaturas.get(parametros[3])
-								.gethora(parametros[4].toCharArray()[0], Integer.parseInt(parametros[5]))
-								.equals(hora)) {
-							GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "Solape alumno");
-							return;
+											ArranqueBaseDatos.alumnos.get(parametros[2]).getId_Grupo(i)));
+
+							int horaGrupo = Integer.parseInt(ArranqueBaseDatos.asignaturas.get(parametros[3])
+									.gethora(parametros[4].toCharArray()[0], Integer.parseInt(parametros[5])));
+							int duracionGrupo = ((parametros[4].toCharArray()[0] == 'A')
+									? ArranqueBaseDatos.asignaturas.get(parametros[3]).getDuracion_GrupoA()
+									: ArranqueBaseDatos.asignaturas.get(parametros[3]).getDuracionGrupoB());
+							int duracionsolape = ((ArranqueBaseDatos.alumnos.get(parametros[2]).getTipoGrupo(i) == 'A')
+									? ArranqueBaseDatos.asignaturas.get(
+											ArranqueBaseDatos.alumnos.get(parametros[2]).getSiglas_Asignatura_Actual(i))
+											.getDuracion_GrupoA()
+									: ArranqueBaseDatos.asignaturas.get(
+											ArranqueBaseDatos.alumnos.get(parametros[2]).getSiglas_Asignatura_Actual(i))
+											.getDuracionGrupoB());
+
+							if (horaGrupo == horaSolape || (horaGrupo + duracionGrupo) == (horaSolape + 1)
+									|| (horaGrupo + 1) == (horaSolape + duracionsolape)) {
+								GestionErrores.errorComando(GestionErrores.ASIGNAR_GRUPO, "Solape alumno");
+
+								return;
+							}
 						}
 					}
 				}
@@ -577,13 +622,26 @@ public class Comandos {
 					if (parametros[4].trim().toCharArray()[0] == ArranqueBaseDatos.asignaturas.get(clave)
 							.getDiagrupoA(i)) {
 						if (ArranqueBaseDatos.asignaturas.get(clave).getclaseA(i).equals(parametros[6].trim())) {
-							if (ArranqueBaseDatos.asignaturas.get(clave).getHoragrupoA(i).equals(parametros[5])) {
-								if (ArranqueBaseDatos.asignaturas.get(clave).getclaseA(i)
-										.equals(parametros[6].trim())) {
+							if (ArranqueBaseDatos.asignaturas.get(clave).getCuatrimestre()==ArranqueBaseDatos.asignaturas.get(parametros[1].trim()).getCuatrimestre()) {
+								
+								int horaSolape = Integer.parseInt(ArranqueBaseDatos.asignaturas
+										.get(clave).gethora('A', ArranqueBaseDatos.asignaturas.get(clave).getIdgrupoB(i)));
+										
+
+								int horaGrupo = Integer.parseInt(parametros[5]);
+								int duracionGrupo = ((parametros[2].toCharArray()[0] == 'A')
+										? ArranqueBaseDatos.asignaturas.get(parametros[1]).getDuracion_GrupoA()
+										: ArranqueBaseDatos.asignaturas.get(parametros[1]).getDuracionGrupoB());
+								int duracionsolape = ArranqueBaseDatos.asignaturas.get(clave).getDuracionGrupoA();
+
+								if (horaGrupo == horaSolape || (horaGrupo + duracionGrupo) == (horaSolape + 1)
+										|| (horaGrupo + 1) == (horaSolape + duracionsolape)) {
 									GestionErrores.errorComando(GestionErrores.CREAR_GRUPO_ASIGNATURA,
 											"Solape de Aula");
+
 									return;
 								}
+
 							}
 						}
 					}
@@ -596,20 +654,32 @@ public class Comandos {
 					if (parametros[4].trim().toCharArray()[0] == ArranqueBaseDatos.asignaturas.get(clave)
 							.getDiagrupoB(i)) {
 						if (ArranqueBaseDatos.asignaturas.get(clave).getclaseB(i).equals(parametros[6].trim())) {
-							if (ArranqueBaseDatos.asignaturas.get(clave).getHoragrupoB(i)
-									.equals(parametros[5].trim())) {
-								if (ArranqueBaseDatos.asignaturas.get(clave).getclaseB(i)
-										.equals(parametros[6].trim())) {
+						if (ArranqueBaseDatos.asignaturas.get(clave).getCuatrimestre()==ArranqueBaseDatos.asignaturas.get(parametros[1].trim()).getCuatrimestre()) {
+							
+								int horaSolape = Integer.parseInt(ArranqueBaseDatos.asignaturas
+										.get(clave).gethora('B', ArranqueBaseDatos.asignaturas.get(clave).getIdgrupoB(i)));
+										
+
+								int horaGrupo = Integer.parseInt(parametros[5]);
+								int duracionGrupo = ((parametros[2].toCharArray()[0] == 'A')
+										? ArranqueBaseDatos.asignaturas.get(parametros[1]).getDuracion_GrupoA()
+										: ArranqueBaseDatos.asignaturas.get(parametros[1]).getDuracionGrupoB());
+								int duracionsolape = ArranqueBaseDatos.asignaturas.get(clave).getDuracionGrupoB();
+
+								if (horaGrupo == horaSolape || (horaGrupo + duracionGrupo) == (horaSolape + 1)
+										|| (horaGrupo + 1) == (horaSolape + duracionsolape)) {
 									GestionErrores.errorComando(GestionErrores.CREAR_GRUPO_ASIGNATURA,
 											"Solape de Aula");
+
 									return;
 								}
+
 							}
 						}
-					}
+					}}
 				}
 
-			}
+			
 
 		}
 		ArranqueBaseDatos.asignaturas.get(parametros[1]).creaGrupo(parametros[2].trim().toCharArray()[0],
@@ -972,7 +1042,7 @@ public class Comandos {
 
 							// si llega aqui tenemos un grupo de una asignatura en el aula
 							char tipogrupo = ArranqueBaseDatos.aulas.get(aula).getTipo_Grupo().trim().toCharArray()[0];
-							int idgrupo = ArranqueBaseDatos.asignaturas.get(clave).getIdgrupoB(i);
+							int idgrupo = ArranqueBaseDatos.asignaturas.get(clave).getIdgrupoA(i);
 							ocupacion[y][x] = new OcupacionAula(clave, tipogrupo, idgrupo);
 							if (duracion == 2) {
 								ocupacion[y + 1][x] = ocupacion[y][x];

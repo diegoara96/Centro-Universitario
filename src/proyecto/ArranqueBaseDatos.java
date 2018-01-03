@@ -149,6 +149,7 @@ public class ArranqueBaseDatos {
 			if (lineas.isEmpty())lista.add(null);
 			else if (lineas.toCharArray()[0] != '*') {
 				//System.out.println(lineas);
+				lineas = lineas.replaceAll("\\s+", " ");
 				lista.add(lineas.trim());
 				
 				

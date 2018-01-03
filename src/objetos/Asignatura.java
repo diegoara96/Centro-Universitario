@@ -200,6 +200,14 @@ public class Asignatura   {
 			}
 		
 	}
+	public char getdia(char tipogrupo,int idgrupo) {
+		if (tipogrupo=='A') {
+			return diagrupoA.get(idgrupoA.indexOf(idgrupo));
+		}else 
+		
+		
+		return diagrupoB.get(idgrupoB.indexOf(idgrupo));
+	}
 	
 	
 	/** Devuelve el indice en el que se encuentra la id del grupo
