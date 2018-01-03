@@ -10,7 +10,7 @@ public class OcupacionAula {
 	/**Atribuye a las aulas las asignaturas que se imparten en ella
 	 * 
 	 * @param asignatura : nombre de la asignatura	
-	 * @param siglas : siglas de la asignatura
+	 * 
 	 * @param tipogrupo : A o B
 	 * @param idgrupo
 	 * 
