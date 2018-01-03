@@ -12,8 +12,8 @@ public class Pod  {
 	
 	/**Crea el objeto pod con los datos correspondientes
 	 * 
-	 * @param dni: dni del profesor 
-	 * @param grupos: grupos que imparte
+	 * @param dni : dni del profesor 
+	 * @param grupos : grupos que imparte
 	 */
 	public Pod(String dni,String grupos) {
 		this.asignatura = new ArrayList<String>();
@@ -31,9 +31,7 @@ public class Pod  {
 		}
 	
 		
-		/**
-		 * Se guardan los datos correctamente
-		 */
+		
 	}
 	
 	public ArrayList<String> getAsignatura() {
@@ -63,7 +61,7 @@ public class Pod  {
 	/**Convierte los atributos de este objeto a un conjunto de lineas de texto, separadas por saltos de linea (\n),
 	 * para asi facilitar su guardado en un fichero de texto.
 	 * 
-	 * @return (String): conjunto de lineas de texto con los atributos del objeto.
+	 * @return (String) : conjunto de lineas de texto con los atributos del objeto.
 	 * 
 	 */
 	public String toTexto() {

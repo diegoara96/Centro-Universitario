@@ -19,7 +19,12 @@ public class Notas {
 		this.notaA = notaA;
 		this.lineaA = lineaA;
 	}
-
+	/**
+	 * Modificamos el objeto anhadiendo la nota del grupo B y la linea correspondiente al fichero
+	 * @param notaB String
+	 * @param lineaB int
+	 * 
+	 */
 	public void setnotaB(String notaB, int lineaB) {
 		this.notaB = notaB;
 		this.lineaB = lineaB;
@@ -44,7 +49,10 @@ public class Notas {
 	public int getLineaB() {
 		return lineaB;
 	}
-
+	/**
+	 * Devuelve la nota total del alumno
+	 * @return float :notaTotal
+	 */
 	public float getNotaTotal() {
 		return Float.parseFloat(notaA) + Float.parseFloat(notaB);
 	}

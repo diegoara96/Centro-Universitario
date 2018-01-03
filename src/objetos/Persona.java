@@ -21,9 +21,9 @@ public abstract class Persona  {
 	
 	/**Crea un objeto persona con los datos correspondientes
 	 * 
-	 * @param dni: dni del profesor o alumno
-	 * @param nombre: nombre y apellidos del profesor o alumno
-	 * @param fechaNacimiento: fecha de nacimiento del profesor o alumno
+	 * @param dni : dni del profesor o alumno
+	 * @param nombre : nombre y apellidos del profesor o alumno
+	 * @param fechaNacimiento : fecha de nacimiento del profesor o alumno
 	 * 
 	 */
 	public Persona(String dni,String nombre,String fechaNacimiento) {
@@ -40,9 +40,7 @@ public abstract class Persona  {
 		if(email==null)this.email="";
 		else this.email=email;
 		
-		/**Se guardan los datos correctamente
-		 * 
-		 */
+		
 	}
 	
 	public String getEmail() {
@@ -72,7 +70,7 @@ public abstract class Persona  {
 	/**Combprueba el dni
 	 * 
 	 * @param dni
-	 * @return: si esta mal devuelve false y sino true
+	 * @return true/false si esta mal devuelve false y sino true
 	 */
 	public static boolean comprobarDNI(String dni) {
 		char[] digitosdni= dni.toCharArray();
@@ -105,7 +103,7 @@ public abstract class Persona  {
 	/**Comprueba la fecha
 	 * 
 	 * @param fecha
-	 * @return: true o false
+	 * @return  true o false
 	 */
 	public static boolean comprobarFecha(String fecha) {
 		
@@ -128,37 +126,13 @@ public abstract class Persona  {
 		return true;
 	}
     
-		/*
 		
-		try {
-			
-			dateFormat.setLenient(false);
-			//desactivamos el lenient para que, por ejemplo, al aparecer 32 de enero salte error
-			Date date = dateFormat.parse(transformarfecha(fecha));
-			System.out.println(date);
-			//la fecha de nacimiento tiene que estar acotada entre dos fechas, sino error.
-			Date minimaldate = dateFormat.parse("01/01/1960");
-			Date maximaldate = dateFormat.parse("01/01/2018");
-			if(date.before(minimaldate) || date.after(maximaldate)) {
-				return false;
-			}
-			
-			
-		} catch (ParseException e) {
-			
-			//Si hay un error al convertir la fecha es que su formato es incorrecto o la fecha es incorrecta con el lenient
-			return false;
-		}
-		return true;
-		
-	}
-	*/
 	
 	/**Comprueba la fecha de ingrese
 	 * 
 	 * @param fechaNacimiento
 	 * @param fechaIngreso
-	 * @return: true o false
+	 * @return true o false
 	 */
 	public static boolean comprobarFechaIngreso(String fechaNacimiento, String fechaIngreso) {
 
@@ -175,7 +149,7 @@ public abstract class Persona  {
 				return false;
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 		return true;
 		
@@ -196,7 +170,7 @@ public abstract class Persona  {
 	/**Pone la fecha en el formato correcto
 	 * 
 	 * @param fecha
-	 * @return: fecha en buen formato
+	 * @return fecha en buen formato
 	 */
 	public static String transformarfecha(String fecha) {
         String prueba[] = fecha.split("/");
@@ -211,7 +185,7 @@ public abstract class Persona  {
 			fecha=prueba[0].concat("/".concat(prueba[1].concat("/".concat(prueba[2]))));
 			
 		}
-		//System.out.println(fecha);
+		
 		return fecha;
 	}
 	

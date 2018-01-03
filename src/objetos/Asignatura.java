@@ -86,12 +86,13 @@ public class Asignatura   {
 			this.clasegrupoB.add(campos[3]);
 		}
 		
-	/**Se gauradan los datos correctamente
-	 * 
-	 */
+	
 		
 	}
-
+	/**
+	 *  get de siglas
+	 * @return String con las siglas
+	 */
 	public String getSiglas() {
 		return siglas;
 	}
@@ -116,7 +117,10 @@ public class Asignatura   {
 		return preRequisitos.get(i);
 	}
 	
-
+	/**
+	 * funcion desninada a devolver el arraylist de Prerequisitos
+	 * @return ArrayList (String)
+	 */
 	public ArrayList<String> getPreRequisitos() {
 		return preRequisitos;
 	}
@@ -188,7 +192,12 @@ public class Asignatura   {
 	public String getclaseB(int i) {
 		return clasegrupoB.get(i);
 	}
-
+	/**
+	 * Devuelve la hora del tipo de grupo y id correspontiente
+	 * @param tipogrupo
+	 * @param idgrupo
+	 * @return String : hora
+	 */
 	public String gethora(char tipogrupo, int idgrupo) {
 			if (tipogrupo=='A') {
 				return horagrupoA.get(idgrupoA.indexOf(idgrupo));
@@ -200,6 +209,12 @@ public class Asignatura   {
 			}
 		
 	}
+	/**
+	 * Devuelve el dia correspondiente al tipo de grupo e idgrupo dado
+	 * @param tipogrupo
+	 * @param idgrupo
+	 * @return char : con el dia de la semana
+	 */
 	public char getdia(char tipogrupo,int idgrupo) {
 		if (tipogrupo=='A') {
 			return diagrupoA.get(idgrupoA.indexOf(idgrupo));

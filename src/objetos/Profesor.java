@@ -14,12 +14,12 @@ public class Profesor extends Persona  {
 	
 	/**Crea ell objeto profesor con los datos correspondientes
 	 * 
-	 * @param dni: dni del profesor
-	 * @param nombre: nombre y apellidos del profesor
-	 * @param fechaNacimiento: fecha de nacimiento del profesor
-	 * @param categoria: titular o asociado
-	 * @param departamento: departamento al que pertenece el profesor
-	 * @param docenciaImpartida:grupos A o B en los que da clase
+	 * @param dni : dni del profesor
+	 * @param nombre : nombre y apellidos del profesor
+	 * @param fechaNacimiento : fecha de nacimiento del profesor
+	 * @param categoria : titular o asociado
+	 * @param departamento : departamento al que pertenece el profesor
+	 * @param docenciaImpartida : grupos A o B en los que da clase
 	 * 
 	 */
 	public Profesor(String dni, String nombre, String fechaNacimiento, String categoria, String departamento,
@@ -53,10 +53,17 @@ public class Profesor extends Persona  {
 		this.categoria = categoria;
 		this.departamento = departamento;
 
-		// System.out.println(toTexto()+"\n");
+
 
 	}
-
+	/**
+	 *  Constructor para nuevos profesores
+	 * @param dni : dni del profesor
+	 * @param nombre : nombre y apellidos del profesor
+	 * @param fechaNacimiento : fecha de nacimiento del profesor
+	 * @param categoria : titular o asociado
+	 * @param departamento : departamento al que pertenece el profesor
+	 */
 	public Profesor(String dni, String nombre, String fechaNacimiento, String categoria, String departamento) {
 		super(dni, nombre, fechaNacimiento);
 
@@ -67,11 +74,7 @@ public class Profesor extends Persona  {
 		this.categoria = categoria;
 		this.departamento = departamento;
 
-		// System.out.println(toTexto()+"\n");
 		
-		/**Se guardan los datos correctamente
-		 * 
-		 */
 
 	}
 
@@ -106,7 +109,12 @@ public class Profesor extends Persona  {
 	public ArrayList<Integer> getIdGrupo() {
 		return idGrupo;
 	}
-	
+	/**
+	 * Anhade un grupo a un profesor
+	 * @param siglas
+	 * @param tipo
+	 * @param id
+	 */
 	public void asignagrupo(String siglas,char tipo,int id) {
 		this.idGrupo.add(id);
 		this.siglasAsignatura.add(siglas);
@@ -117,7 +125,7 @@ public class Profesor extends Persona  {
 	 * separadas por saltos de linea (\n), para asi facilitar su guardado en un
 	 * fichero de texto.
 	 * 
-	 * @return (String): conjunto de lineas de texto con los atributos del objeto.
+	 * @return (String) : conjunto de lineas de texto con los atributos del objeto.
 	 * 
 	 */
 	public String toTexto() {

@@ -16,14 +16,14 @@ public class Alumno extends Persona   {
 	
 	/**Crea el objeto alumno con los datos correspondientes 
 	 *  
-	 * @param dni: dni de alumno
-	 * @param nombre: nombre y apellidos del alumno
-	 * @param email: email de alumno
-	 * @param fechaNacimiento: fecha de nacimiento del alumno
-	 * @param fechaIngreso: fecha de ingreso en la titulacion
-	 * @param asignaturasSuperadas: asignatura superadas en cursos previos al actual
+	 * @param dni : dni de alumno
+	 * @param nombre : nombre y apellidos del alumno
+	 * @param email : email de alumno
+	 * @param fechaNacimiento : fecha de nacimiento del alumno
+	 * @param fechaIngreso : fecha de ingreso en la titulacion
+	 * @param asignaturasSuperadas : asignatura superadas en cursos previos al actual
 	 *                              (inlcuye las siglas de la asignatura, el curso en el que se aprobo y la nota)
-	 * @param docenciaRecibida: grupos A y B de las asignaturas en las que esta matriculado
+	 * @param docenciaRecibida : grupos A y B de las asignaturas en las que esta matriculado
 	 * 
 	 */
 	public Alumno(String dni, String nombre, String email, String fechaNacimiento, String fechaIngreso,
@@ -84,12 +84,7 @@ public class Alumno extends Persona   {
 
 		this.fechaIngreso = Persona.fechaToGregorianCalendar(fechaIngreso);
 
-		// System.out.println(toTexto());
-		// TODO: inicializar objeto
-
-		/**Se guardan los datos correctamente
-		 * 
-		 */
+		
 	}
 	
 	
@@ -151,8 +146,8 @@ public class Alumno extends Persona   {
 	}
 	/**Anhade un grupo a un objeto alumno
 	 * 
-	 * @param asignatura: siglas de la asignatura 
-	 * @param grupo: A o B
+	 * @param asignatura : siglas de la asignatura 
+	 * @param grupo : A o B
 	 * @param idgrupo
 	 */
 	public void asignargrupo(String asignatura, char grupo,int idgrupo) {
@@ -182,9 +177,9 @@ public class Alumno extends Persona   {
 		
 	}
 	
-	/**A�ade una signatura 
+	/**Anhade una signatura 
 	 * 
-	 * @param asignatura: siglas de la asignatura
+	 * @param asignatura : siglas de la asignatura
 	 */
 	public void matricula(String asignatura) {
 		this.siglasAsignaturaActual.add(asignatura.trim());
@@ -199,7 +194,7 @@ public class Alumno extends Persona   {
 	 * separadas por saltos de linea (\n), para asi facilitar su guardado en un
 	 * fichero de texto.
 	 * 
-	 * @return (String): conjunto de lineas de texto con los atributos del objeto.
+	 * @return (String) : conjunto de lineas de texto con los atributos del objeto.
 	 * 
 	 */
 	public String toTexto() {

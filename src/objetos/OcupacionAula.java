@@ -9,9 +9,9 @@ public class OcupacionAula {
 
 	/**Atribuye a las aulas las asignaturas que se imparten en ella
 	 * 
-	 * @param asignatura: nombre de la asignatura	
-	 * @param siglas: siglas de la asignatura
-	 * @param tipogrupo: A o B
+	 * @param asignatura : nombre de la asignatura	
+	 * @param siglas : siglas de la asignatura
+	 * @param tipogrupo : A o B
 	 * @param idgrupo
 	 * 
 	 */
@@ -29,7 +29,10 @@ public class OcupacionAula {
 	 this.tipogrupo='0';
 
  }
- 
+ /**
+  * Construimos un objeto ocupacion para introducir las horas en la tabla
+  * @param hora
+  */
  public OcupacionAula(String hora) {
 	 this.asignatura=hora;
 	 this.Siglas=" ";
@@ -46,7 +49,7 @@ public class OcupacionAula {
 /**Convierte los atributos de este objeto a un conjunto de lineas de texto, separadas por saltos de linea (\n),
 	 * para asi facilitar su guardado en un fichero de texto.
 	 * 
-	 * @return (String): conjunto de lineas de texto con los atributos del objeto.
+	 * @return (String) : conjunto de lineas de texto con los atributos del objeto.
 	 * 
 	 */
 	public String toString() {
