@@ -113,8 +113,10 @@ public class Comandos {
 		for (i = 1; i < parametros.length; i++) {
 			if (imput[i].contains("\"")) {
 				nombre = imput[i];
-				for (int a = i + 1; a < 10; a++) {
+				System.out.println(nombre);
+				for (int a = i + 1; a < 20; a++) {
 					nombre = nombre.concat(" ").concat(imput[a]);
+					System.out.println(nombre);
 					if (imput[a].contains("\"")) {
 						parametros[b] = nombre.substring(1, nombre.length() - 1);
 
@@ -129,8 +131,10 @@ public class Comandos {
 			}
 
 			b++;
+			
 		}
-
+		System.out.println(b);
+		System.out.println(parametros[b-1]);
 		if (parametros[1].contains("profesor")) {
 
 			if (b != 7) {
